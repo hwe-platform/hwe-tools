@@ -1,0 +1,1 @@
+# HWE — Visión del proyecto
