@@ -10,7 +10,7 @@ Documentación técnica de cómo funciona HWE internamente.
 | [bloques.md](bloques.md) | Arquitectura de bloques: page builder, schemas Zod, registry, variantes | ✅ Definido |
 | [booking.md](booking.md) | Sistema de reservas | 🔲 Pendiente |
 | [payload.md](payload.md) | Modelo de datos — Payload CMS | 🔲 Pendiente |
-| [tokens.md](tokens.md) | Tokens y tematización | 🔲 Pendiente |
+| [tokens.md](tokens.md) | Sistema de tokens de diseño: pipeline Figma → CSS, capas de theming | ✅ Definido |
 | [despliegue.md](despliegue.md) | Despliegue e infraestructura | 🔲 Pendiente |
 | [personalizacion.md](personalizacion.md) | Personalización por segmento | 🔲 Pendiente |
 | [contenido-ia.md](contenido-ia.md) | Pipeline de gestión de contenido | 🔲 Pendiente |
