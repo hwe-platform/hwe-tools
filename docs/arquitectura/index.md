@@ -6,7 +6,6 @@ Documentación técnica de cómo funciona HWE internamente.
 
 | Archivo | Contenido | Estado |
 |---------|-----------|--------|
-| [decisiones.md](decisiones.md) | Registro de decisiones arquitectónicas (DEC-001 a DEC-008) | ✅ Definido |
 | [metodologia.md](metodologia.md) | Niveles de autonomía, ciclo de vida de historias, retroalimentación y skills | ✅ Definido |
 | [bloques.md](bloques.md) | Sistema de bloques | 🔲 Pendiente |
 | [booking.md](booking.md) | Sistema de reservas | 🔲 Pendiente |
@@ -18,3 +17,5 @@ Documentación técnica de cómo funciona HWE internamente.
 | [personalizacion.md](personalizacion.md) | Personalización por segmento | 🔲 Pendiente |
 | [contenido-ia.md](contenido-ia.md) | Pipeline de gestión de contenido | 🔲 Pendiente |
 | [paginas-routing.md](paginas-routing.md) | Sistema de páginas y routing | 🔲 Pendiente |
+
+Las decisiones arquitectónicas (DECs) viven en [../decisiones/index.md](../decisiones/index.md), no aquí.
