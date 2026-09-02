@@ -81,3 +81,9 @@ Retro obligatoria cuando una tarea necesita correcciones significativas. La corr
 - Slugs traducidos por idioma, contenido del slug libre (sin estructura forzada)
 - Prefijo de idioma configurable por cliente en `site-config`: todos con prefijo o principal sin prefijo
 - N idiomas configurables por cliente, sin tope técnico
+
+---
+
+## Regla general
+
+El catálogo de bloques es un repertorio, no una lista de tareas. Cada cliente usa los bloques que su diseño y contenido necesitan. Los bloques se construyen bajo demanda cuando un Figma o una historia los requiere. No hay un número fijo de bloques que completar.
