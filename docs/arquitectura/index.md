@@ -7,7 +7,7 @@ Documentación técnica de cómo funciona HWE internamente.
 | Archivo | Contenido | Estado |
 |---------|-----------|--------|
 | [metodologia.md](metodologia.md) | Niveles de autonomía, ciclo de vida de historias, retroalimentación y skills | ✅ Definido |
-| [bloques.md](bloques.md) | Sistema de bloques | 🔲 Pendiente |
+| [bloques.md](bloques.md) | Arquitectura de bloques: page builder, schemas Zod, registry, variantes | ✅ Definido |
 | [booking.md](booking.md) | Sistema de reservas | 🔲 Pendiente |
 | [payload.md](payload.md) | Modelo de datos — Payload CMS | 🔲 Pendiente |
 | [tokens.md](tokens.md) | Tokens y tematización | 🔲 Pendiente |
