@@ -11,7 +11,7 @@ Los agentes IA leen estos documentos antes de escribir código.
 | [naming.md](naming.md) | Convenciones de nombrado (archivos, componentes, variables, tipos) | ✅ Definido |
 | [commits.md](commits.md) | Git: commits, ramas, PRs, trazabilidad con historias | ✅ Definido |
 | [herramientas.md](herramientas.md) | Prettier + ESLint: qué son, configuración concreta | ✅ Definido |
-| [testing.md](testing.md) | TDD, cobertura, herramientas de test | 🔲 Pendiente |
+| [testing.md](testing.md) | Herramientas, niveles, cobertura y convenciones de testing | ✅ Definido |
 | [seguridad.md](seguridad.md) | Reglas de seguridad en código | 🔲 Pendiente |
 | [seo.md](seo.md) | Reglas de SEO/rendimiento en código | 🔲 Pendiente |
 | [mejora-continua.md](mejora-continua.md) | Niveles de mejora autónoma | 🔲 Pendiente |
