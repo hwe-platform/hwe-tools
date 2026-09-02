@@ -1,1 +1,1 @@
-# Personalización por segmento de visitante
+# Personalización por segmento

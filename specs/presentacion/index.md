@@ -1,3 +1,3 @@
-# Dominio: Presentacion
+# Dominio: Presentación
 
-Especificaciones del dominio de presentacion.
+Especificaciones del dominio de presentación.
