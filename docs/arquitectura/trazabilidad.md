@@ -1,1 +1,0 @@
-# Trazabilidad y versionado

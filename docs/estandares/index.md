@@ -14,7 +14,8 @@ Los agentes IA leen estos documentos antes de escribir código.
 | [testing.md](testing.md) | Herramientas, niveles, cobertura y convenciones de testing | ✅ Definido |
 | [seguridad.md](seguridad.md) | Reglas de seguridad en código | 🔲 Pendiente |
 | [seo.md](seo.md) | Reglas de SEO/rendimiento en código | 🔲 Pendiente |
-| [mejora-continua.md](mejora-continua.md) | Niveles de mejora autónoma | 🔲 Pendiente |
+
+Los niveles de mejora autónoma están cubiertos por [../arquitectura/metodologia.md](../arquitectura/metodologia.md).
 
 ## Regla general
 

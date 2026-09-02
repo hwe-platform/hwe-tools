@@ -1,1 +1,0 @@
-# Mejora continua de agentes
