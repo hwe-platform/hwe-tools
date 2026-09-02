@@ -216,3 +216,39 @@ import { Accommodation } from '@hwe/core-ui'
 // ✅ Bien — explícito: solo necesito el tipo
 import type { Accommodation } from '@hwe/core-ui'
 ```
+
+---
+
+## Dependencias externas
+
+### No añadir dependencias sin justificación
+
+Antes de instalar un paquete npm, preguntarse: ¿puedo resolver esto con código propio en menos de 50 líneas? Si sí, no instales la dependencia. Cada paquete nuevo es más peso en el bundle, más riesgo de seguridad, más mantenimiento de versiones, y más posibilidad de que quede abandonado.
+
+### Dependencias justificadas
+
+Las que resuelven problemas complejos que no tiene sentido reimplementar. Están en el stack por decisión explícita: Zod, Tailwind, Payload, Playwright, Swiper, next-intl, msw, class-variance-authority, lucide-react.
+
+### Dependencias injustificadas
+
+```typescript
+// ❌ Mal — paquete para algo que el lenguaje ya hace
+import { format } from 'date-fns'
+format(date, 'dd/MM/yyyy')
+
+// ✅ Bien — API nativa del navegador
+new Intl.DateTimeFormat('es', { dateStyle: 'short' }).format(date)
+```
+
+```typescript
+// ❌ Mal — paquete para 3 líneas de código
+import slugify from 'slugify'
+
+// ✅ Bien — función propia
+const toSlug = (text: string) =>
+  text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-')
+```
+
+### Regla para el agente
+
+Si el Code Builder necesita una dependencia nueva, la justifica en la PR. Si no hay justificación, el Reviewer la rechaza.
