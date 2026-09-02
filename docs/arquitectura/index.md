@@ -14,7 +14,7 @@ Documentación técnica de cómo funciona HWE internamente.
 | [despliegue.md](despliegue.md) | Despliegue e infraestructura | 🔲 Pendiente |
 | [personalizacion.md](personalizacion.md) | Personalización por segmento | 🔲 Pendiente |
 | [contenido-ia.md](contenido-ia.md) | Pipeline de gestión de contenido | 🔲 Pendiente |
-| [paginas-routing.md](paginas-routing.md) | Sistema de páginas y routing | 🔲 Pendiente |
+| [paginas-routing.md](paginas-routing.md) | Páginas y routing: catch-all, resolución, multilingüe, breadcrumbs, ISR | ✅ Definido |
 
 Las decisiones arquitectónicas (DECs) viven en [../decisiones/index.md](../decisiones/index.md), no aquí.
 

@@ -301,7 +301,11 @@ site-config
 ├── languages
 │   ├── available           (array de codes — ["fr", "en", "es", "de"])
 │   ├── default             (select — "fr")
-│   └── prefixDefault       (boolean)
+│   ├── prefixDefault       (boolean — si el idioma principal lleva prefijo en URL)
+│   ├── strategy            (select: prefix, domain)
+│   └── domainMap           (array, si strategy=domain)
+│       ├── locale          (text — "en")
+│       └── domain          (text — "dominio.uk")
 │
 ├── social
 │   ├── instagram           (text, opcional)
