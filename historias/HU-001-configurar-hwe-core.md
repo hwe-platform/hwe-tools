@@ -12,8 +12,8 @@ dependencias: []
 ## Contexto
 
 Sin `hwe-core` no hay paquetes compartidos. Es el repositorio que contiene
-`@hwe/core-ui` y `@hwe/config`, que todos los sites de cliente consumen
-via npm. Es la primera pieza del Hito 1.
+`@hwe/core-ui`, que todos los sites de cliente consumen via npm.
+Es la primera pieza del Hito 1.
 
 ## Qué hacer
 
@@ -27,20 +27,16 @@ via npm. Es la primera pieza del Hito 1.
    - `src/theme/` (vacío, preparado para token contract)
    - `package.json` con nombre `@hwe/core-ui`, entry points configurados
    - `tsconfig.json` con strict: true
-3. Crear paquete `packages/config/` con estructura base:
-   - `src/` con un export vacío
-   - `package.json` con nombre `@hwe/config`
-   - `tsconfig.json` con strict: true
-4. Configurar GitHub Packages como npm registry privado
-5. Configurar GitHub Actions para CI:
+3. Configurar GitHub Packages como npm registry privado
+4. Configurar GitHub Actions para CI:
    - Lint (ESLint)
    - Format check (Prettier)
    - Tests (Vitest, aunque no hay tests aún, el runner debe funcionar)
    - Build
    - Publish a GitHub Packages en merge a main
-6. Configurar ESLint + Prettier en la raíz del monorepo según
+5. Configurar ESLint + Prettier en la raíz del monorepo según
    `docs/estandares/herramientas.md`
-7. Crear `README.md` con instrucciones de setup para desarrollo local
+6. Crear `README.md` con instrucciones de setup para desarrollo local
 
 ## Leer antes
 
@@ -52,12 +48,11 @@ via npm. Es la primera pieza del Hito 1.
 ## Criterios de aceptación
 
 - [ ] `pnpm install` funciona sin errores
-- [ ] `pnpm build` compila ambos paquetes
+- [ ] `pnpm build` compila el paquete
 - [ ] `pnpm lint` ejecuta ESLint sin errores
 - [ ] `pnpm format:check` ejecuta Prettier sin errores
 - [ ] `pnpm test` ejecuta Vitest (aunque no haya tests, el runner arranca)
-- [ ] TypeScript strict activado en ambos paquetes
-- [ ] `@hwe/core-ui` y `@hwe/config` son importables entre sí
+- [ ] TypeScript strict activado en `@hwe/core-ui`
 - [ ] GitHub Actions CI pasa en una PR de prueba
 - [ ] Los paquetes se publican a GitHub Packages en merge a main
 

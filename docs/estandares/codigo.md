@@ -194,7 +194,6 @@ import { cva } from 'class-variance-authority'
 
 // 3. Paquetes internos del monorepo (@hwe/*)
 import { BlockRenderer } from '@hwe/core-ui'
-import { siteConfig } from '@hwe/config'
 
 // 4. Código local del mismo proyecto (rutas relativas)
 import { applyVAT } from '../utils/pricing'
