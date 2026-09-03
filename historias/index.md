@@ -12,7 +12,7 @@ esta tabla para saber qué es lo siguiente.
 | HU-001 | Configurar hwe-core como monorepo con paquetes publicables | 1 | 1 | en-revisión | code-builder | main | — |
 | HU-002 | Configurar hwe-template con Next.js + Payload CMS | 1 | 1 | spec-lista | — | — | HU-001 |
 | HU-003 | Conectar hwe-tools como submodule en hwe-core y hwe-template | 1 | 2 | en-curso | code-builder | main | HU-001, HU-002 |
-| HU-004 | Schemas Zod de todas las colecciones y globals de Payload | 1 | 1 | spec-lista | — | — | HU-001 |
+| HU-004 | Schemas Zod de todas las colecciones y globals de Payload | 1 | 1 | en-revisión | code-builder | feat/HU-004-schemas-zod-payload | HU-001 |
 | HU-005 | Colecciones y globals de Payload derivadas de schemas Zod | 1 | 1 | spec-lista | — | — | HU-002, HU-004 |
 | HU-006 | Sistema de tokens y primitivas base | 1 | 2 | spec-lista | — | — | HU-001 |
 | HU-007 | Layout components (TopBar, SecondaryNav, Footer, MobileMenu, Banner) | 1 | 2 | spec-lista | — | — | HU-005, HU-006 |

@@ -98,6 +98,21 @@ export type HeroBlockData = z.infer<typeof heroSchema>
 
 Payload deriva sus configs de estos schemas (DEC-004). No al revés.
 
+### Stub en `pages.schema.ts` vs. schema completo del bloque
+
+`pages.schema.ts` (en `@hwe-platform/core-ui/src/schemas/collections/`) define
+la unión discriminada `pageBlockSchema` con los `blockType` de todos los
+bloques disponibles, para que `pages.blocks` valide qué tipo de bloque es cada
+entrada. Antes de que un bloque exista de verdad (HU-009 en adelante), su
+entrada en esa unión es un stub — solo `z.object({ blockType: z.literal('hero') })`,
+sin campos de contenido.
+
+Cuando el bloque se construye, su schema completo (con todos los campos, como
+el `heroSchema` de arriba) se define en `blocks/{name}/{name}.schema.ts` y
+sustituye al stub dentro de la unión de `pages.schema.ts`. El schema del
+bloque vive junto a su componente, no en `pages.schema.ts` — este último solo
+compone la unión.
+
 ---
 
 ## Variantes

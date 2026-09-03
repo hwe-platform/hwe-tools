@@ -442,3 +442,6 @@ site-config → media (logo, logoInverted)
   su propia spec cuando se construya desde el Figma
 - **Access control:** se define cuando se aborde el estándar de seguridad
   (roles: super-admin, agency, client)
+- **Organización de schemas:** `schemas/collections/` para colecciones,
+  `schemas/globals/` para globals, `schemas/common.schema.ts` para piezas
+  compartidas. Tipos co-localizados con su schema. Index.ts en cada carpeta.
