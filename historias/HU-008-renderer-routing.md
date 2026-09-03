@@ -40,7 +40,7 @@ no hay site.
 
 ### Catch-all routing
 
-4. Crear `hwe-template/src/app/[...slug]/page.tsx`:
+4. Crear `apps/site-demo/src/app/[...slug]/page.tsx`:
    - Server Component que recibe el slug
    - Busca en Payload en orden: pages → accommodations → entities → articles
    - Si encuentra page → renderiza hero (si tiene) + BlockRenderer con sus blocks
@@ -49,16 +49,16 @@ no hay site.
    - Si encuentra article → renderiza template de artículo (placeholder por ahora)
    - Si no encuentra nada → `notFound()`
 
-5. Crear `hwe-template/src/app/page.tsx`:
+5. Crear `apps/site-demo/src/app/page.tsx`:
    - Home page: busca la page con type='home' en Payload
    - Renderiza hero + BlockRenderer
 
-6. Crear middleware de idioma `hwe-template/src/middleware.ts`:
+6. Crear middleware de idioma `apps/site-demo/src/middleware.ts`:
    - Detecta locale desde el prefijo de URL
    - Si no hay prefijo, usa el default de site-config
    - Pasa el locale al contexto de Next.js
 
-7. Crear `hwe-template/src/app/[...slug]/generateStaticParams.ts`:
+7. Crear `apps/site-demo/src/app/[...slug]/generateStaticParams.ts`:
    - Genera las rutas estáticas desde todas las colecciones
    - Para ISR con revalidación
 

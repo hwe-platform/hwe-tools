@@ -60,11 +60,14 @@ Un único archivo `.prettierrc` en la raíz del monorepo:
 
 ## Configuración de ESLint
 
-Hay dos variantes según el tipo de repo. La base de reglas propias
-(TypeScript estricto, complejidad, etc.) es idéntica en ambas — lo único
-que cambia es de dónde vienen las reglas de React/Next.js.
+Hay dos variantes según el tipo de paquete o app — no según el repo: desde
+que `apps/site-demo/` vive dentro de `hwe-core` (DEC-007), un mismo repo
+puede tener ambas variantes en carpetas distintas, cada una con su propio
+`eslint.config.mjs`. La base de reglas propias (TypeScript estricto,
+complejidad, etc.) es idéntica en ambas — lo único que cambia es de dónde
+vienen las reglas de React/Next.js.
 
-### Repos-app (`hwe-template`, sites de cliente)
+### Apps Next.js (`apps/site-demo/` en hwe-core, `hwe-template`, sites de cliente)
 
 Estos repos corren Next.js de verdad, así que usan `eslint-config-next`:
 
@@ -102,15 +105,17 @@ Este paquete oficial de Next.js trae reglas de tres áreas:
 
 Reglas específicas para TypeScript: no usar `any`, tipos consistentes, imports de tipo correctos.
 
-### Repos-librería (`hwe-core`)
+### Paquetes de componentes (`packages/core-ui/` en hwe-core)
 
-`hwe-core` no es una app Next.js — es un paquete de componentes que
-consumen otras apps. **No uses `eslint-config-next` aquí**: su parser
+`packages/core-ui/` no es una app Next.js — es un paquete de componentes
+que consumen otras apps. **No uses `eslint-config-next` aquí**: su parser
 intenta cargar `next/dist/compiled/babel/eslint-parser`, que solo existe
 si el paquete `next` está instalado de verdad. Añadirlo únicamente para
 que el linter no falle sería una dependencia de varios cientos de MB sin
 ningún uso real (viola la regla de "no añadir dependencias sin
-justificación" de `codigo.md`).
+justificación" de `codigo.md`). Esto aplica al paquete, no al repo entero
+— `apps/site-demo/`, en el mismo `hwe-core`, sí es una app Next.js real
+y usa la variante de arriba.
 
 En su lugar, compón directamente los mismos plugins que
 `eslint-config-next` trae por debajo, sin pasar por Next.js:

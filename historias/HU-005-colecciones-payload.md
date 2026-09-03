@@ -11,20 +11,20 @@ dependencias: [HU-002, HU-004]
 
 ## Contexto
 
-Con los schemas Zod definidos y el template configurado, toca crear
+Con los schemas Zod definidos y `apps/site-demo/` configurado, toca crear
 las colecciones y globals de Payload que dan vida al modelo de datos.
 Es lo que permite que el editor pueda crear contenido.
 
 ## Qué hacer
 
-1. Crear colecciones en `hwe-template/src/collections/`:
+1. Crear colecciones en `apps/site-demo/src/collections/`:
    - `media.ts` — upload con sizes configurados (thumbnail, card, hero, og)
    - `accommodations.ts` — todos los campos de la spec
    - `entities.ts` — con condicionales por type
    - `pages.ts` — con blocks field y hero group
    - `articles.ts` — blog/actualités
    - `categories.ts` — categorías simples
-2. Crear globals en `hwe-template/src/globals/`:
+2. Crear globals en `apps/site-demo/src/globals/`:
    - `site-config.ts` — con todas las secciones (general, contact, location,
      languages, social, payments, legal, tracking, customCode, booking)
    - `header.ts` — topBar + navigation con children

@@ -110,7 +110,8 @@ Dashboard operativo (gestión visual de bloques, páginas, contenido, personaliz
 - Personalización
 - Dashboard
 - Portal cliente
-- Template de cliente (`hwe-template` vacío)
+- Template de cliente (`hwe-template` — se extrae de `apps/site-demo/`
+  al final del Hito 1, no existe todavía)
 - Datos reales
 
 ---
@@ -152,5 +153,10 @@ No son fases — son criterios de aceptación de cada pieza.
 | Repo | Propósito |
 |------|-----------|
 | `hwe-tools` | Documentación, specs, historias, estándares, skills, agentes |
-| `hwe-core` | Paquete npm compartido (`@hwe-platform/core-ui`) |
-| `hwe-template` | Template para crear sites de cliente (Next.js + Payload + Vercel Postgres) |
+| `hwe-core` | Monorepo Turborepo: paquete npm `@hwe-platform/core-ui` + `apps/site-demo/` (Next.js + Payload, entorno de desarrollo y validación) |
+| `hwe-template` | Se extrae de `apps/site-demo/` al final del Hito 1 — template para crear sites de cliente |
+
+Durante el Hito 1, todo el desarrollo (bloques + el site que los prueba
+con datos reales) ocurre dentro de `hwe-core`. `hwe-template` no se
+construye en paralelo — nace cuando el site demo funciona completo
+(ver DEC-007).

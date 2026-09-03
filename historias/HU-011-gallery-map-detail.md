@@ -57,7 +57,7 @@ para decidir reservar.
 
 ### Accommodation Detail template
 
-5. Crear `hwe-template/src/templates/AccommodationDetail.tsx`:
+5. Crear `apps/site-demo/src/templates/AccommodationDetail.tsx`:
    - Compone: Hero (imagen) + GalleryThumbnails + SpecBar +
      description + bedroomDetails + EquipmentList +
      bloques custom (si tiene) + ComparisonCard (si tiene)

@@ -10,8 +10,8 @@ esta tabla para saber qué es lo siguiente.
 | ID | Título | Hito | Prioridad | Estado | Agente | Rama | Dependencias |
 |----|--------|------|-----------|--------|--------|------|--------------|
 | HU-001 | Configurar hwe-core como monorepo con paquetes publicables | 1 | 1 | en-revisión | code-builder | main | — |
-| HU-002 | Configurar hwe-template con Next.js + Payload CMS | 1 | 1 | spec-lista | — | — | HU-001 |
-| HU-003 | Conectar hwe-tools como submodule en hwe-core y hwe-template | 1 | 2 | en-curso | code-builder | main | HU-001, HU-002 |
+| HU-002 | Crear apps/site-demo con Next.js + Payload CMS en el monorepo | 1 | 1 | spec-lista | — | — | HU-001, HU-004 |
+| HU-003 | Conectar hwe-tools como submodule en hwe-core y hwe-template | 1 | 2 | hecha | code-builder | main | HU-001, HU-002 |
 | HU-004 | Schemas Zod de todas las colecciones y globals de Payload | 1 | 1 | en-revisión | code-builder | feat/HU-004-schemas-zod-payload | HU-001 |
 | HU-005 | Colecciones y globals de Payload derivadas de schemas Zod | 1 | 1 | spec-lista | — | — | HU-002, HU-004 |
 | HU-006 | Sistema de tokens y primitivas base | 1 | 2 | spec-lista | — | — | HU-001 |
@@ -24,15 +24,16 @@ esta tabla para saber qué es lo siguiente.
 
 ### Orden de ejecución
 
-1. **Prioridad 1 (en paralelo):** HU-001 (hwe-core) + HU-002 (hwe-template)
+1. **Prioridad 1:** HU-001 (hwe-core)
 2. **Prioridad 1 (tras HU-001):** HU-004 (schemas Zod)
-3. **Prioridad 1 (tras HU-002 + HU-004):** HU-005 (colecciones Payload)
-4. **Prioridad 1 (tras HU-005 + HU-006):** HU-008 (renderer + routing)
-5. **Prioridad 2 (tras HU-001):** HU-003 (submodule) + HU-006 (tokens + primitivas)
-6. **Prioridad 2 (tras HU-005 + HU-006):** HU-007 (layout)
-7. **Prioridad 2 (tras HU-008):** HU-009 (hero + mediatext)
-8. **Prioridad 3 (tras HU-008):** HU-010 (grids) + HU-011 (gallery + map + detail)
-9. **Prioridad 3 (tras todo):** HU-012 (site demo)
+3. **Prioridad 1 (tras HU-001 + HU-004):** HU-002 (apps/site-demo)
+4. **Prioridad 1 (tras HU-002 + HU-004):** HU-005 (colecciones Payload)
+5. **Prioridad 1 (tras HU-005 + HU-006):** HU-008 (renderer + routing)
+6. **Prioridad 2 (tras HU-001):** HU-006 (tokens + primitivas) — HU-003 (submodule) ya está hecha
+7. **Prioridad 2 (tras HU-005 + HU-006):** HU-007 (layout)
+8. **Prioridad 2 (tras HU-008):** HU-009 (hero + mediatext)
+9. **Prioridad 3 (tras HU-008):** HU-010 (grids) + HU-011 (gallery + map + detail)
+10. **Prioridad 3 (tras todo):** HU-012 (site demo con contenido real + extracción de hwe-template)
 
 ---
 
