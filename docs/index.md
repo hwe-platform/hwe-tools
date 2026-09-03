@@ -22,6 +22,7 @@ Mapa general. Busca lo que necesitas y ve directamente al documento.
 | Saber qué agentes existen | [.claude/agentes/definiciones.md](../.claude/agentes/definiciones.md) |
 | Consultar checklists de auditoría | [referencia/](../referencia/index.md) |
 | Onboarding (primer día) | [docs/guias/](guias/index.md) |
+| Ver los comandos disponibles | [.claude/commands/](../.claude/commands/index.md) |
 
 ---
 

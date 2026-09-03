@@ -140,6 +140,18 @@ Para tareas específicas, la historia te dice qué más leer.
 
 ---
 
+## Comandos disponibles
+
+Antes de implementar manualmente, comprueba si hay un comando que automatice
+parte del trabajo:
+
+- `/import-figma <url>` — importar y analizar un Figma Make de cliente
+- `/scaffold-block <Name> [--variants a,b]` — crear estructura de un bloque nuevo
+
+Ver `.claude/commands/index.md` para la lista completa.
+
+---
+
 ## Qué NO hacer
 
 - No empieces sin presentar el plan
