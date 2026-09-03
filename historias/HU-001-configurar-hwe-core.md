@@ -1,11 +1,11 @@
 ---
 id: HU-001
 titulo: Configurar hwe-core como monorepo con paquetes publicables
-estado: spec-lista
+estado: en-revisión
 prioridad: 1
 hito: 1
-agente: —
-rama: —
+agente: code-builder
+rama: main
 dependencias: []
 ---
 

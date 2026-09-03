@@ -9,7 +9,7 @@ esta tabla para saber qué es lo siguiente.
 
 | ID | Título | Hito | Prioridad | Estado | Agente | Rama | Dependencias |
 |----|--------|------|-----------|--------|--------|------|--------------|
-| HU-001 | Configurar hwe-core como monorepo con paquetes publicables | 1 | 1 | spec-lista | — | — | — |
+| HU-001 | Configurar hwe-core como monorepo con paquetes publicables | 1 | 1 | en-revisión | code-builder | main | — |
 | HU-002 | Configurar hwe-template con Next.js + Payload CMS | 1 | 1 | spec-lista | — | — | HU-001 |
 | HU-003 | Conectar hwe-tools como submodule en hwe-core y hwe-template | 1 | 2 | spec-lista | — | — | HU-001, HU-002 |
 | HU-004 | Schemas Zod de todas las colecciones y globals de Payload | 1 | 1 | spec-lista | — | — | HU-001 |
