@@ -14,7 +14,7 @@ esta tabla para saber qué es lo siguiente.
 | HU-003 | Conectar hwe-tools como submodule en hwe-core y hwe-template | 1 | 2 | hecha | code-builder | main | HU-001, HU-002 |
 | HU-004 | Schemas Zod de todas las colecciones y globals de Payload | 1 | 1 | en-revisión | code-builder | feat/HU-004-schemas-zod-payload | HU-001 |
 | HU-005 | Colecciones y globals de Payload derivadas de schemas Zod | 1 | 1 | spec-lista | — | — | HU-002, HU-004 |
-| HU-006 | Sistema de tokens y primitivas base | 1 | 2 | spec-lista | — | — | HU-001 |
+| HU-006 | Sistema de tokens y primitivas base | 1 | 2 | en-revisión | code-builder | feat/HU-006-tokens-primitivas | HU-001 |
 | HU-007 | Layout components (TopBar, SecondaryNav, Footer, MobileMenu, Banner) | 1 | 2 | spec-lista | — | — | HU-005, HU-006 |
 | HU-008 | BlockRenderer, registry de bloques y catch-all routing | 1 | 1 | spec-lista | — | — | HU-005, HU-006 |
 | HU-009 | Bloques Hero y MediaText | 1 | 2 | spec-lista | — | — | HU-008 |
