@@ -81,9 +81,9 @@ _(se llena después si aplica)_
 
 ### Decisiones de diseño no cubiertas literalmente por la spec
 
-- **Coverage real:** hay tests para cada schema (nominal, rechazo, defaults,
-  opcionales), pero el paquete no tiene `@vitest/coverage-v8` configurado —
-  el >95% no está medido con una herramienta, solo cubierto por diseño de tests.
+- **Coverage real:** configurado `@vitest/coverage-v8` con umbral 95% en
+  `src/schemas/` (lines/statements/functions/branches). Verificado: 100%
+  de cobertura en los 11 archivos de schema.
 - **Relaciones auto-referenciadas** (`accommodations.comparison`, `pages.parent`):
   en vez de `z.lazy()` sobre el schema completo (ciclo de tipos TS difícil de
   mantener en modo estricto), se modelan como referencia superficial
@@ -91,7 +91,6 @@ _(se llena después si aplica)_
   a poca profundidad en la práctica.
 - **Bloques con campos abiertos** (`icon` sin lista cerrada en la spec):
   tipados como `z.string()` en vez de inventar un enum no autorizado por producto.
-- **`accommodations.comparison`:** la spec dice "(relationship — accommodations,
-  opcional)" en singular; se implementó como array, por ser el uso más común
-  de una función de "comparar alojamientos". Revisar si el editor solo necesita
-  comparar contra uno.
+- **`accommodations.comparison`:** confirmado como array — alojamientos
+  recomendados; si vacío, el frontend muestra otros de la misma categoría
+  automáticamente. La spec y el schema ya reflejan esto (ver modelo-datos.md).

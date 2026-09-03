@@ -99,7 +99,9 @@ accommodations
 │   ├── icon                (select)
 │   └── label               (text, localized — "Vue forêt")
 │
-├── comparison              (relationship — accommodations, opcional)
+├── comparison              (array de relationship → accommodations, opcional —
+│                            si vacío, el frontend muestra automáticamente
+│                            otros alojamientos de la misma categoría)
 │
 ├── category                (relationship — categories)
 ├── featured                (boolean)
