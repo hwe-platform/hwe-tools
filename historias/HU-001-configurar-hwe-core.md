@@ -17,7 +17,7 @@ Es la primera pieza del Hito 1.
 
 ## Qué hacer
 
-1. Crear repo `hwe-core` con Turborepo + pnpm como monorepo
+1. Inicializar hwe-core (repo ya existe en GitHub, vacío) con Turborepo + pnpm como monorepo
 2. Crear paquete `packages/core-ui/` con estructura base:
    - `src/blocks/` (vacío, preparado para bloques)
    - `src/primitives/` (vacío, preparado para primitivas)
@@ -37,6 +37,7 @@ Es la primera pieza del Hito 1.
 5. Configurar ESLint + Prettier en la raíz del monorepo según
    `docs/estandares/herramientas.md`
 6. Crear `README.md` con instrucciones de setup para desarrollo local
+7. Crear CLAUDE.md en la raíz con referencia a hwe-tools como fuente de documentación y estándares
 
 ## Leer antes
 
