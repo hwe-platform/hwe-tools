@@ -48,15 +48,42 @@ Es la primera pieza del Hito 1.
 
 ## Criterios de aceptación
 
-- [ ] `pnpm install` funciona sin errores
-- [ ] `pnpm build` compila el paquete
-- [ ] `pnpm lint` ejecuta ESLint sin errores
-- [ ] `pnpm format:check` ejecuta Prettier sin errores
-- [ ] `pnpm test` ejecuta Vitest (aunque no haya tests, el runner arranca)
-- [ ] TypeScript strict activado en `@hwe/core-ui`
-- [ ] GitHub Actions CI pasa en una PR de prueba
-- [ ] Los paquetes se publican a GitHub Packages en merge a main
+- [x] `pnpm install` funciona sin errores
+- [x] `pnpm build` compila el paquete
+- [x] `pnpm lint` ejecuta ESLint sin errores
+- [x] `pnpm format:check` ejecuta Prettier sin errores
+- [x] `pnpm test` ejecuta Vitest (aunque no haya tests, el runner arranca)
+- [x] TypeScript strict activado en `@hwe/core-ui`
+- [ ] GitHub Actions CI pasa en una PR de prueba _(pendiente de verificar en GitHub — repo privado, no verificable desde el agente)_
+- [ ] Los paquetes se publican a GitHub Packages en merge a main _(workflow configurado y pusheado a main; pendiente de confirmar en la pestaña Actions)_
 
 ## Retrospectiva
 
-_(se llena después si aplica)_
+### Qué falló
+
+`docs/estandares/herramientas.md` documentaba un único `eslint.config.mjs`
+(con `eslint-config-next`) como el estándar para todo el monorepo. Al
+aplicarlo tal cual en `hwe-core`, ESLint fallaba: el parser de
+`eslint-config-next` intenta cargar `next/dist/compiled/babel/eslint-parser`,
+que solo existe si el paquete `next` está instalado.
+
+### Causa raíz
+
+El estándar asumía implícitamente que todo repo del proyecto es una app
+Next.js. `hwe-core` es una librería de componentes (consumida por apps
+Next.js, pero no una app en sí misma), así que esa asunción no aplica.
+Añadir `next` como dependencia solo para satisfacer al linter habría sido
+una dependencia de cientos de MB sin ningún uso real.
+
+### Corrección aplicada
+
+- En `hwe-core`: se configuró ESLint con `typescript-eslint` +
+  `eslint-plugin-react` + `eslint-plugin-react-hooks` +
+  `eslint-plugin-jsx-a11y` directamente, sin pasar por
+  `eslint-config-next`, cubriendo el mismo alcance de reglas.
+- Se actualizó `docs/estandares/herramientas.md` para documentar ambas
+  variantes: "repos-app" (`eslint-config-next`, como antes) y
+  "repos-librería" (la config nueva), con una tabla de equivalencia y la
+  nota sobre el import con extensión `.js` explícita
+  (`eslint-config-next/core-web-vitals.js`), que también dejó de
+  funcionar sin ella en la versión actual del paquete.
