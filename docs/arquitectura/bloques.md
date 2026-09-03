@@ -1,6 +1,6 @@
 # Arquitectura de bloques
 
-Sistema de page builder propio construido en Next.js 15 + React 19 + TypeScript,
+Sistema de page builder propio construido en Next.js 16 + React 19 + TypeScript,
 con Zod como fuente de verdad y Payload CMS como gestor de contenido.
 
 ---

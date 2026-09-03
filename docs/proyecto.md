@@ -134,7 +134,7 @@ No son fases — son criterios de aceptación de cada pieza.
 
 | Componente | Tecnología |
 |------------|------------|
-| Framework | Next.js 15 + React 19 (App Router) |
+| Framework | Next.js 16 + React 19 (App Router) |
 | Estilos | Tailwind CSS v4 (CSS-first `@theme`) |
 | CMS | Payload CMS v3 embebido en Next.js |
 | Base de datos | Vercel Postgres (una por cliente) |

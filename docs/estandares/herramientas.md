@@ -69,27 +69,17 @@ vienen las reglas de React/Next.js.
 
 ### Apps Next.js (`apps/site-demo/` en hwe-core, `hwe-template`, sites de cliente)
 
-Estos repos corren Next.js de verdad, así que usan `eslint-config-next`.
-
-`eslint-config-next` (verificado en la 15.4.x, la que usa `apps/site-demo/`)
-todavía exporta sus configs en formato legado (`.eslintrc`, con `extends`),
-no como arrays de flat config — `...nextVitals` falla con
-`TypeError: nextVitals is not iterable`. Hace falta el puente `FlatCompat`
-de `@eslint/eslintrc` (el mismo patrón que genera `create-next-app`):
+Estos repos corren Next.js de verdad, así que usan `eslint-config-next`:
 
 ```javascript
-import { dirname } from 'path'
-import { fileURLToPath } from 'url'
-import { FlatCompat } from '@eslint/eslintrc'
 import { defineConfig } from 'eslint/config'
+import nextVitals from 'eslint-config-next/core-web-vitals'
+import nextTypescript from 'eslint-config-next/typescript'
 import prettier from 'eslint-config-prettier'
 
-const compat = new FlatCompat({
-  baseDirectory: dirname(fileURLToPath(import.meta.url)),
-})
-
 export default defineConfig([
-  ...compat.extends('next/core-web-vitals', 'next/typescript'),
+  ...nextVitals,
+  ...nextTypescript,
   prettier,
   {
     rules: {
@@ -99,9 +89,18 @@ export default defineConfig([
 ])
 ```
 
-Requiere `@eslint/eslintrc` como devDependency. Si una versión futura de
-`eslint-config-next` publica flat config nativo, este puente deja de hacer
-falta — revisar antes de copiar este patrón a un repo nuevo.
+**Ojo con la versión de `eslint-config-next`** (verificado al implementar
+HU-002): a partir de la 16.x exporta flat config nativo y se hace spread
+directo, como arriba. La rama 15.4.x exportaba todavía el formato legado
+(`.eslintrc`, con `extends`) y ahí `...nextVitals` revienta con
+`TypeError: nextVitals is not iterable` — en ese caso hace falta el puente
+`FlatCompat` de `@eslint/eslintrc`. Como el stack está en Next 16
+(`docs/proyecto.md`), lo que aplica es el spread directo; si alguna vez hay
+que fijar una versión 15.x, hay que meter el puente.
+
+Un síntoma engañoso: usar `FlatCompat` sobre la 16.x no da un error claro,
+sino `TypeError: Converting circular structure to JSON` — el validador de
+configs legado intenta serializar un flat config y se ahoga.
 
 #### Qué incluye `eslint-config-next/core-web-vitals`
 
@@ -147,7 +146,7 @@ export default defineConfig([
   prettier,
   {
     settings: {
-      // Fija la versión de React que consumen los sites (Next 15 → React 19)
+      // Fija la versión de React que consumen los sites (Next 16 → React 19)
       // para que eslint-plugin-react no intente detectarla desde una
       // dependencia "react" que este paquete no instala.
       react: { version: '19.0.0' },

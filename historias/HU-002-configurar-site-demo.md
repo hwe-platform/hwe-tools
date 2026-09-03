@@ -23,12 +23,13 @@ todo el desarrollo se hace aquí.
 ## Qué hacer
 
 1. Crear `apps/site-demo/` dentro del monorepo hwe-core
-2. Inicializar Next.js 15 con App Router y TypeScript strict
+2. Inicializar Next.js 16 con App Router y TypeScript strict
 3. Instalar Payload CMS v3 embebido en el directorio `/app`
    - Payload admin accesible en `/admin`
    - Configurar `payload.config.ts` base (sin colecciones todavía — vienen en HU-005)
 4. Conectar base de datos Postgres para desarrollo local
-   - `@payloadcms/db-vercel-postgres` como adapter
+   - `@payloadcms/db-postgres` como adapter (el genérico — ver retrospectiva:
+     el de Vercel arrastra el SDK de `@vercel/postgres` y da problemas)
    - Postgres local o Docker para desarrollo
    - Variables de entorno para conexión
 5. Configurar Tailwind CSS v4 con `@theme inline`
@@ -93,27 +94,41 @@ confirmarlo (los env vars dummy ya están en `ci.yml`).
 
 ### Qué falló y causa raíz
 
-- **`eslint-config-next` no es iterable:** la 15.4.x instalada exporta
-  formato `.eslintrc` legado, no flat config — `...nextVitals` rompía.
-  Corregido con el puente `FlatCompat` (`@eslint/eslintrc`). Doc
-  `estandares/herramientas.md` actualizada con el ejemplo correcto.
-- **`postgresAdapter` no existe:** el export real de
-  `@payloadcms/db-vercel-postgres` es `vercelPostgresAdapter`, y recibe
-  `connectionString` en el nivel superior de sus args, no anidado bajo `pool`.
-- **`next` 15.5.x no es compatible con `@payloadcms/next` 3.88:** el peer
-  dependency exige un rango concreto (`>=15.4.11 <15.5.0` entre otros).
-  Fijado `next` en `15.4.11` exacto en vez de `^15.0.0`.
-- **Dev colgado indefinidamente en "Pulling schema from database":** el
-  adapter usa `DATABASE_URI` (nombre elegido en el plan) para la conexión
-  de Payload, pero su CLI de introspección de esquema (drizzle-kit) usa
-  el SDK de `@vercel/postgres` por debajo, que solo lee la variable
-  `POSTGRES_URL` — sin ella, falla en bucle silenciosamente. Renombrada
-  la variable a `POSTGRES_URL` en `.env.example`, `.env`, `payload.config.ts`
-  y `ci.yml`. Vale la pena tenerlo presente para cualquier otro adapter de
-  Payload: el nombre de la variable de conexión no es libre, lo exige el
-  paquete del adapter.
+- **Dev colgado indefinidamente en "Pulling schema from database":** con
+  `@payloadcms/db-vercel-postgres`, la conexión de Payload sí funcionaba
+  (pasándole `connectionString`), pero su CLI de introspección de esquema
+  (drizzle-kit) usa el SDK de `@vercel/postgres` por debajo, que solo lee la
+  variable `POSTGRES_URL` — sin ella falla en bucle, sin error visible.
+  **Causa raíz:** ese adapter mete una capa (el SDK de Vercel, hoy además
+  deprecado en favor de Neon) que no aporta nada contra una Postgres normal.
+  **Corrección:** se cambió al adapter genérico `@payloadcms/db-postgres`
+  (driver `pg`), que no impone el nombre de la variable — se recuperó
+  `DATABASE_URI` — y sirve igual para Postgres local, Docker o gestionada.
+  La spec (paso 4) pedía el de Vercel; se actualizó.
+- **Versión de Next mal elegida:** `docs/proyecto.md` decía "Next.js 15", así
+  que se instaló `next@^15`; al chocar con el peer dependency de
+  `@payloadcms/next@3.88` se fijó `15.4.11`, el parche más alto de esa rama
+  que encajaba. **Causa raíz:** el mismo rango
+  (`>=15.2.9 <15.3.0 || >=15.3.9 <15.4.0 || >=15.4.11 <15.5.0 || >=16.2.6 <17.0.0`)
+  admite la banda 16 completa y solo tres ventanas mínimas de la 15 — señal de
+  que Payload soporta la 16 de forma amplia. La decisión de stack estaba
+  desactualizada y no se escaló a tiempo. **Corrección:** Next 16.2.6, y
+  `docs/proyecto.md` + `arquitectura/bloques.md` actualizados.
+- **`postgresAdapter` no existe en el adapter de Vercel:** su export real era
+  `vercelPostgresAdapter`, y recibía `connectionString` en el nivel superior,
+  no bajo `pool`. Con `@payloadcms/db-postgres` el export sí es
+  `postgresAdapter` y la conexión va anidada en `pool` (como en la doc oficial).
+- **`eslint-config-next`, dos veces:** la 15.4.x exportaba formato `.eslintrc`
+  legado y `...nextVitals` rompía con "not iterable", así que se metió el
+  puente `FlatCompat`. Al subir a la 16.2.6 el puente pasó a ser el problema
+  (`TypeError: Converting circular structure to JSON`), porque esa versión ya
+  exporta flat config nativo. **Corrección:** spread directo y fuera la
+  devDependency `@eslint/eslintrc`. `estandares/herramientas.md` documenta
+  ahora ambos casos y el síntoma de cada uno.
 
 ### Corrección aplicada
 
-Todas las correcciones de arriba ya están en el código de esta misma PR.
-La única pendiente es confirmar el build de CI con un push real.
+Todo lo anterior está en el código de esta misma PR. Tras el cambio de
+adapter, el arranque en dev bajó de ~5 s a ~1,9 s y el log queda sin errores
+(antes salía `VercelPostgresError` en bucle). Sigue pendiente confirmar el
+build de CI con un push real.
