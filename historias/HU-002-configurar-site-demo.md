@@ -1,11 +1,11 @@
 ---
 id: HU-002
 titulo: Crear apps/site-demo con Next.js + Payload CMS en el monorepo
-estado: spec-lista
+estado: en-revisión
 prioridad: 1
 hito: 1
-agente: —
-rama: —
+agente: code-builder
+rama: feat/HU-002-site-demo-monorepo
 dependencias: [HU-001, HU-004]
 ---
 
@@ -65,19 +65,55 @@ todo el desarrollo se hace aquí.
 
 ## Criterios de aceptación
 
-- [ ] `pnpm dev --filter site-demo` arranca sin errores
-- [ ] Payload admin accesible en `localhost:3000/admin`
-- [ ] Base de datos Postgres conectada (migrations corren)
-- [ ] TypeScript strict sin errores de compilación
-- [ ] ESLint + Prettier configurados y sin errores
-- [ ] Tailwind v4 con `@theme inline` renderizando tokens de La Civelle
-- [ ] Fuentes Bitter y Inter cargando via `next/font`
-- [ ] `@hwe-platform/core-ui` importable via `workspace:*` (sin publicar a npm)
-- [ ] Cambios en `packages/core-ui/` se reflejan en site-demo al refrescar
-- [ ] `src/services/` existe como carpeta preparada
-- [ ] `.env.example` documenta todas las variables necesarias
+- [x] `pnpm dev --filter site-demo` arranca sin errores
+- [x] Payload admin accesible en `localhost:3000/admin`
+- [x] Base de datos Postgres conectada (migrations corren)
+- [x] TypeScript strict sin errores de compilación
+- [x] ESLint + Prettier configurados y sin errores
+- [x] Tailwind v4 con `@theme inline` renderizando tokens de La Civelle
+- [x] Fuentes Bitter y Inter cargando via `next/font`
+- [x] `@hwe-platform/core-ui` importable via `workspace:*` (sin publicar a npm)
+- [x] Cambios en `packages/core-ui/` se reflejan en site-demo al refrescar
+- [x] `src/services/` existe como carpeta preparada
+- [x] `.env.example` documenta todas las variables necesarias
 - [ ] CI funciona con el app añadido al pipeline de Turborepo
 
 ## Retrospectiva
 
-_(se llena después si aplica)_
+### Verificación real, más allá de lo previsto en el plan
+
+Había una Postgres local real disponible (Laragon, credenciales encontradas
+en el `.env` del proyecto hermano `hospitality-web-platform-payloadcms`).
+Se creó una base `site-demo` propia (no compartida, DEC-003) y se verificó
+de punta a punta: `next build`, `pnpm dev`, creación real de tablas
+(`users`, `users_sessions`, `payload_migrations`, etc.) y la vista de
+"crear primer usuario" en `/admin`. El único criterio no verificable desde
+aquí es el pipeline de GitHub Actions — hace falta un push real para
+confirmarlo (los env vars dummy ya están en `ci.yml`).
+
+### Qué falló y causa raíz
+
+- **`eslint-config-next` no es iterable:** la 15.4.x instalada exporta
+  formato `.eslintrc` legado, no flat config — `...nextVitals` rompía.
+  Corregido con el puente `FlatCompat` (`@eslint/eslintrc`). Doc
+  `estandares/herramientas.md` actualizada con el ejemplo correcto.
+- **`postgresAdapter` no existe:** el export real de
+  `@payloadcms/db-vercel-postgres` es `vercelPostgresAdapter`, y recibe
+  `connectionString` en el nivel superior de sus args, no anidado bajo `pool`.
+- **`next` 15.5.x no es compatible con `@payloadcms/next` 3.88:** el peer
+  dependency exige un rango concreto (`>=15.4.11 <15.5.0` entre otros).
+  Fijado `next` en `15.4.11` exacto en vez de `^15.0.0`.
+- **Dev colgado indefinidamente en "Pulling schema from database":** el
+  adapter usa `DATABASE_URI` (nombre elegido en el plan) para la conexión
+  de Payload, pero su CLI de introspección de esquema (drizzle-kit) usa
+  el SDK de `@vercel/postgres` por debajo, que solo lee la variable
+  `POSTGRES_URL` — sin ella, falla en bucle silenciosamente. Renombrada
+  la variable a `POSTGRES_URL` en `.env.example`, `.env`, `payload.config.ts`
+  y `ci.yml`. Vale la pena tenerlo presente para cualquier otro adapter de
+  Payload: el nombre de la variable de conexión no es libre, lo exige el
+  paquete del adapter.
+
+### Corrección aplicada
+
+Todas las correcciones de arriba ya están en el código de esta misma PR.
+La única pendiente es confirmar el build de CI con un push real.

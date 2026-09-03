@@ -10,7 +10,7 @@ esta tabla para saber qué es lo siguiente.
 | ID | Título | Hito | Prioridad | Estado | Agente | Rama | Dependencias |
 |----|--------|------|-----------|--------|--------|------|--------------|
 | HU-001 | Configurar hwe-core como monorepo con paquetes publicables | 1 | 1 | en-revisión | code-builder | main | — |
-| HU-002 | Crear apps/site-demo con Next.js + Payload CMS en el monorepo | 1 | 1 | spec-lista | — | — | HU-001, HU-004 |
+| HU-002 | Crear apps/site-demo con Next.js + Payload CMS en el monorepo | 1 | 1 | en-revisión | code-builder | feat/HU-002-site-demo-monorepo | HU-001, HU-004 |
 | HU-003 | Conectar hwe-tools como submodule en hwe-core y hwe-template | 1 | 2 | hecha | code-builder | main | HU-001, HU-002 |
 | HU-004 | Schemas Zod de todas las colecciones y globals de Payload | 1 | 1 | en-revisión | code-builder | feat/HU-004-schemas-zod-payload | HU-001 |
 | HU-005 | Colecciones y globals de Payload derivadas de schemas Zod | 1 | 1 | spec-lista | — | — | HU-002, HU-004 |
