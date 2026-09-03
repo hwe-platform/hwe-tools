@@ -152,3 +152,27 @@ FOOTER (en el commit)
 ══════════════════════
 Refs: HU-005
 ```
+
+---
+
+## Versionado de paquetes (semver)
+
+`@hwe-platform/core-ui` usa versionado semántico. El número de versión
+se actualiza en `package.json` antes de mergear a main. El CI publica
+automáticamente.
+
+### Cuándo cambiar cada número
+
+| Cambio | Ejemplo | Cuándo |
+|--------|---------|--------|
+| **Patch** (`1.0.0` → `1.0.1`) | Fix de un bug en un bloque | Corrección que no cambia la API |
+| **Minor** (`1.0.0` → `1.1.0`) | Bloque nuevo, función nueva | Añades algo, no rompes nada |
+| **Major** (`1.0.0` → `2.0.0`) | Renombrar componente, cambiar props | Cambio que rompe código existente |
+
+### Regla para el Code Builder
+
+- Fix de bug → incrementar patch
+- Feature nueva (bloque, utilidad, primitiva) → incrementar minor
+- Cambio que rompe compatibilidad → incrementar major y justificar en la PR
+- Si dudas entre patch y minor → minor
+- Nunca publicar un major sin aprobación explícita del Planner
