@@ -1,11 +1,11 @@
 ---
 id: HU-003
 titulo: Conectar hwe-tools como submodule en hwe-core y hwe-template
-estado: spec-lista
+estado: en-curso
 prioridad: 2
 hito: 1
-agente: —
-rama: —
+agente: code-builder
+rama: main
 dependencias: [HU-001, HU-002]
 ---
 
