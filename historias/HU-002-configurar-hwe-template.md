@@ -39,6 +39,9 @@ paquetes de `hwe-core`. Sin esto no se puede construir ningún site.
    - `src/block-registry.ts` — registry del cliente (extiende base)
 9. Configurar `.env.example` con todas las variables necesarias
 10. Crear `README.md` con instrucciones de setup
+11. Documentar en `README.md` cómo usar `pnpm link` con `@hwe-platform/core-ui`
+    durante desarrollo local para ver cambios de core-ui al instante sin
+    publicar a npm
 
 ## Leer antes
 
@@ -60,6 +63,7 @@ paquetes de `hwe-core`. Sin esto no se puede construir ningún site.
 - [ ] `@hwe-platform/core-ui` importable desde el proyecto (cuando se publique)
 - [ ] `.env.example` documenta todas las variables necesarias
 - [ ] El repo está marcado como Template en GitHub
+- [ ] README documenta el flujo de pnpm link para desarrollo con core-ui
 
 ## Retrospectiva
 

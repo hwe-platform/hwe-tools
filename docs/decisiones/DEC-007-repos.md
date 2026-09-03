@@ -11,7 +11,7 @@ Tres repositorios con ciclos de vida distintos:
 | `hwe-core` | Paquete npm compartido (`@hwe-platform/core-ui`) via GitHub Packages |
 | `hwe-template` | Template GitHub para crear sites de cliente (Next.js + Payload + Vercel Postgres) |
 
-`hwe-tools` es git submodule consumido por los otros dos.
+`hwe-tools` es git submodule consumido únicamente por `hwe-core`.
 
 Los sites de cliente se crean clonando `hwe-template` y viven
 en repos independientes. Consumen `@hwe-platform/core-ui`
@@ -26,7 +26,13 @@ Separar permite versionar y desplegar cada pieza a su ritmo.
 
 ## Conexión entre repos
 
-`hwe-tools` se monta como git submodule en `docs/` de los otros repos.
+`hwe-tools` se monta como git submodule en `docs/` de `hwe-core` únicamente.
+`hwe-template` y los repos de cliente NO tienen submodule — consumen
+`@hwe-platform/core-ui` via npm y no necesitan acceso a docs/skills.
+
+Durante desarrollo, se usa `pnpm link` para conectar core-ui local
+con hwe-template sin publicar a npm. En producción, siempre npm.
+
 Los agentes y comandos de Claude Code viven en `hwe-tools/.claude/` pero
 Claude Code busca comandos en `.claude/commands/` de la raíz del repo
 donde trabaja.
