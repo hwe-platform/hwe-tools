@@ -1,11 +1,11 @@
 ---
-description: Scaffoldar un nuevo bloque en @hwe/core-ui — crea la carpeta blocks/{name}/ con los 5 archivos obligatorios (schema, types, component, test, index), listos para implementar. Usar al añadir una nueva sección reutilizable al design system.
+description: Scaffoldar un nuevo bloque en @hwe-platform/core-ui — crea la carpeta blocks/{name}/ con los 5 archivos obligatorios (schema, types, component, test, index), listos para implementar. Usar al añadir una nueva sección reutilizable al design system.
 argument-hint: <BlockName> [--variants <a,b,...>]
 ---
 
 # Scaffold Block
 
-Scaffoldas un nuevo bloque en `@hwe/core-ui`. Creas la carpeta con la
+Scaffoldas un nuevo bloque en `@hwe-platform/core-ui`. Creas la carpeta con la
 estructura obligatoria para que el Code Builder solo tenga que implementar
 el render visual — la arquitectura ya está puesta.
 
@@ -293,7 +293,7 @@ Siguientes pasos:
 
 ## Bloques de cliente (override)
 
-Este comando scaffolda bloques de plataforma en `@hwe/core-ui`.
+Este comando scaffolda bloques de plataforma en `@hwe-platform/core-ui`.
 Para overrides de cliente (~15% de los casos), no se necesita un
 comando — el desarrollador crea manualmente:
 

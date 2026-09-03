@@ -20,7 +20,7 @@ no hay site.
 
 ### BlockRenderer y Registry
 
-1. Crear `@hwe/core-ui/src/renderer/BlockRenderer.tsx`:
+1. Crear `@hwe-platform/core-ui/src/renderer/BlockRenderer.tsx`:
    - Recibe un array de bloques de Payload (`BlockInstance[]`)
    - Para cada bloque, busca el componente en el registry
    - Registry del cliente tiene prioridad sobre el de plataforma
@@ -28,12 +28,12 @@ no hay site.
    - No valida schemas — cada bloque valida los suyos internamente
    - Pasa los datos como `unknown` al componente
 
-2. Crear `@hwe/core-ui/src/renderer/blockRegistry.ts`:
+2. Crear `@hwe-platform/core-ui/src/renderer/blockRegistry.ts`:
    - Objeto que mapea `blockType → React.ComponentType`
    - Vacío inicialmente, se llena conforme se crean bloques
    - Exporta tipo `BlockRegistry` para que el cliente pueda extenderlo
 
-3. Crear `@hwe/core-ui/src/renderer/types.ts`:
+3. Crear `@hwe-platform/core-ui/src/renderer/types.ts`:
    - `BlockInstance`: `{ blockType: string; id: string; [key: string]: unknown }`
    - `BlockRegistry`: `Record<string, React.ComponentType<{ data: unknown }>>`
    - `BlockRendererProps`: `{ blocks: BlockInstance[]; customRegistry?: BlockRegistry }`

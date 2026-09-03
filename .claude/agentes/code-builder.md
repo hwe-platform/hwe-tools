@@ -122,7 +122,7 @@ Siempre, en toda tarea, independiente de la historia:
 - [ ] Commits atómicos — un cambio lógico por commit
 
 ### Imports
-- [ ] Orden: framework → externas → @hwe/* → locales → tipos
+- [ ] Orden: framework → externas → @hwe-platform/* → locales → tipos
 - [ ] `import type` para tipos
 
 ---

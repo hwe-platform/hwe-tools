@@ -181,7 +181,7 @@ messages/
 ```
 
 Estos archivos son los mismos para todos los clientes (viven en
-`@hwe/core-ui` o en `hwe-template`). No son contenido editorial —
+`@hwe-platform/core-ui` o en `hwe-template`). No son contenido editorial —
 son la interfaz del sistema.
 
 ---

@@ -20,10 +20,10 @@ construir ningún bloque.
 
 ### Tokens
 
-1. Crear `@hwe/core-ui/src/theme/token-contract.ts`:
+1. Crear `@hwe-platform/core-ui/src/theme/token-contract.ts`:
    - Lista de todas las CSS variables que un theme.css debe definir
    - Valores por defecto como fallback
-2. Crear un `theme.css` de referencia en `@hwe/core-ui/src/theme/`
+2. Crear un `theme.css` de referencia en `@hwe-platform/core-ui/src/theme/`
    basado en los tokens de La Civelle (primary, secondary, background, etc.)
 3. Crear la configuración de `@theme inline` en `tailwind.css`
    que mapea CSS variables a clases de Tailwind
@@ -31,21 +31,21 @@ construir ningún bloque.
 
 ### Primitivas
 
-5. Crear `@hwe/core-ui/src/primitives/Button.tsx`:
+5. Crear `@hwe-platform/core-ui/src/primitives/Button.tsx`:
    - Variantes con CVA: primary, secondary, outline, ghost
    - Tamaños: sm, md, lg
    - Acepta como `<button>` o como `<a>` (con href)
    - Accesible: focus visible, aria-label si solo icono
-6. Crear `@hwe/core-ui/src/primitives/Image.tsx`:
+6. Crear `@hwe-platform/core-ui/src/primitives/Image.tsx`:
    - Wrapper de `next/image` con srcSet basado en los sizes de media
    - `alt` obligatorio (error si no se pasa)
    - Aspect ratios predefinidos: 16/9, 4/3, 1/1, 3/4
    - Placeholder blur opcional
-7. Crear `@hwe/core-ui/src/primitives/Icon.tsx`:
+7. Crear `@hwe-platform/core-ui/src/primitives/Icon.tsx`:
    - Wrapper de `lucide-react`
    - Set de iconos predefinidos para el proyecto (utensils, bed, waves, etc.)
    - Tamaños consistentes con el sistema de tokens
-8. Crear `@hwe/core-ui/src/primitives/Link.tsx`:
+8. Crear `@hwe-platform/core-ui/src/primitives/Link.tsx`:
    - Wrapper de `next/link`
    - Detecta enlaces internos vs externos automáticamente
    - Externos abren en nueva pestaña con `rel="noopener noreferrer"`
@@ -53,7 +53,7 @@ construir ningún bloque.
    - Renderizado correcto con props válidas
    - Accesibilidad (vitest-axe)
    - Variantes y tamaños
-10. Exportar todo desde el entry point de `@hwe/core-ui`
+10. Exportar todo desde el entry point de `@hwe-platform/core-ui`
 
 ## Leer antes
 
@@ -74,7 +74,7 @@ construir ningún bloque.
 - [ ] Todas las primitivas pasan vitest-axe sin violaciones
 - [ ] Tests de cada primitiva — cobertura >80%
 - [ ] JSDoc en castellano en todos los componentes exportados
-- [ ] Las primitivas son importables desde `@hwe/core-ui`
+- [ ] Las primitivas son importables desde `@hwe-platform/core-ui`
 
 ## Retrospectiva
 

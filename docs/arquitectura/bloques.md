@@ -7,10 +7,10 @@ con Zod como fuente de verdad y Payload CMS como gestor de contenido.
 
 ## Estructura de carpetas
 
-### En `@hwe/core-ui` (bloques de plataforma)
+### En `@hwe-platform/core-ui` (bloques de plataforma)
 
 ```
-@hwe/core-ui/src/
+@hwe-platform/core-ui/src/
 ├── blocks/
 │   └── {name}/
 │       ├── {Name}Block.tsx           — componente principal (resuelve variante)
@@ -154,7 +154,7 @@ const buttonVariants = cva('inline-flex items-center font-bold rounded-2xl', {
 
 ## Registry de dos niveles
 
-### Registry de plataforma (`@hwe/core-ui`)
+### Registry de plataforma (`@hwe-platform/core-ui`)
 
 ```typescript
 // blockRegistry.ts
@@ -175,7 +175,7 @@ export const blockRegistry: Record<string, React.ComponentType<any>> = {
 
 ```typescript
 // block-registry.ts del cliente
-import { blockRegistry as baseRegistry } from '@hwe/core-ui'
+import { blockRegistry as baseRegistry } from '@hwe-platform/core-ui'
 import { HeroBlock } from './blocks/hero'
 
 export const blockRegistry = {
@@ -216,13 +216,13 @@ piezas del bloque de plataforma (primitivas, schemas) y cambiar
 solo lo que necesita.
 
 Si la variante es reutilizable por otros clientes, se promueve
-a `@hwe/core-ui` como variante nueva en vez de dejarla en el cliente.
+a `@hwe-platform/core-ui` como variante nueva en vez de dejarla en el cliente.
 
 ### Full custom (~5%)
 
 El cliente crea un bloque nuevo que no existe en la plataforma.
 Define su schema Zod, su componente, sus tests, y lo registra
-en su registry. No toca `@hwe/core-ui`.
+en su registry. No toca `@hwe-platform/core-ui`.
 
 Si con el tiempo otros clientes lo necesitan, se promueve
 a la plataforma.
@@ -343,6 +343,6 @@ tipados. La validación es una red de seguridad, no el flujo principal.
 - Las variantes estructurales son componentes separados, resueltas por mapa
 - Las variantes de estilo se resuelven con CVA o clases Tailwind
 - La personalización visual entre clientes viene de los tokens, no de código
-- Nunca `if (client === 'nombre')` en `@hwe/core-ui` — usar el registry del cliente
+- Nunca `if (client === 'nombre')` en `@hwe-platform/core-ui` — usar el registry del cliente
 - La resolución del registry es: cliente → plataforma → warning
 - Los bloques de referencia no duplican datos — configuran una query

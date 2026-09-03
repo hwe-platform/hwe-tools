@@ -142,7 +142,7 @@ No son fases — son criterios de aceptación de cada pieza.
 | Validación | Zod (fuente de verdad) |
 | Testing | Vitest + testing-library + vitest-axe + Playwright |
 | CI/CD | GitHub Actions + Vercel |
-| Paquetes | GitHub Packages (`@hwe/*`) |
+| Paquetes | GitHub Packages (`@hwe-platform/*`) |
 | IA | Claude API server-side via Route Handlers |
 
 ---
@@ -152,5 +152,5 @@ No son fases — son criterios de aceptación de cada pieza.
 | Repo | Propósito |
 |------|-----------|
 | `hwe-tools` | Documentación, specs, historias, estándares, skills, agentes |
-| `hwe-core` | Paquete npm compartido (`@hwe/core-ui`) |
+| `hwe-core` | Paquete npm compartido (`@hwe-platform/core-ui`) |
 | `hwe-template` | Template para crear sites de cliente (Next.js + Payload + Vercel Postgres) |

@@ -20,7 +20,7 @@ para decidir reservar.
 
 ### Gallery
 
-1. Crear `@hwe/core-ui/src/blocks/gallery/`:
+1. Crear `@hwe-platform/core-ui/src/blocks/gallery/`:
    - `gallery.schema.ts` — title, variant (carousel/thumbnails),
      images array (media + caption opcional)
    - `GalleryBlock.tsx` — resuelve variante por mapa
@@ -31,7 +31,7 @@ para decidir reservar.
 
 ### Map
 
-2. Crear `@hwe/core-ui/src/blocks/map/`:
+2. Crear `@hwe-platform/core-ui/src/blocks/map/`:
    - `map.schema.ts` — title, showTransport (boolean)
    - `MapBlock.tsx` — lee coordenadas y transporte de site-config.
      Google Maps embed (iframe) o mapa estático según config.
@@ -40,9 +40,9 @@ para decidir reservar.
 
 ### SpecBar
 
-3. Crear `@hwe/core-ui/src/blocks/spec-bar/`:
+3. Crear `@hwe-platform/core-ui/src/blocks/spec-bar/`:
    - No es un bloque del page builder — es un componente de la ficha
-     de alojamiento. Vive en `@hwe/core-ui/src/blocks/accommodation-detail/`
+     de alojamiento. Vive en `@hwe-platform/core-ui/src/blocks/accommodation-detail/`
    - `SpecBar.tsx` — barra horizontal con iconos:
      capacidad, habitaciones, superficie, climatización
    - Datos vienen de `accommodations.specs`
@@ -50,7 +50,7 @@ para decidir reservar.
 
 ### EquipmentList
 
-4. Crear en `@hwe/core-ui/src/blocks/accommodation-detail/`:
+4. Crear en `@hwe-platform/core-ui/src/blocks/accommodation-detail/`:
    - `EquipmentList.tsx` — checklist con iconos incluido/no incluido
    - Datos vienen de `accommodations.equipment`
    - Tests y exports

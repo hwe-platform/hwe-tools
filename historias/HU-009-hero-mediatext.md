@@ -20,7 +20,7 @@ del contenido visual del site.
 
 ### Hero
 
-1. Crear `@hwe/core-ui/src/blocks/hero/`:
+1. Crear `@hwe-platform/core-ui/src/blocks/hero/`:
    - `hero.schema.ts` — schema Zod con variant (video/image/minimal/none),
      media, title, subtitle, showBreadcrumbs
    - `hero.types.ts` — tipo derivado con `z.infer`
@@ -34,7 +34,7 @@ del contenido visual del site.
 
 ### MediaText
 
-2. Crear `@hwe/core-ui/src/blocks/media-text/`:
+2. Crear `@hwe-platform/core-ui/src/blocks/media-text/`:
    - `media-text.schema.ts` — schema Zod con image, title, text (richText),
      orientation (imageLeft/imageRight), features (array opcional con
      icon+label+detail), ctas (array opcional), badge (text opcional)
@@ -66,7 +66,7 @@ del contenido visual del site.
 - [ ] MediaText renderiza en dos columnas con imagen izquierda o derecha
 - [ ] MediaText muestra features y CTAs si los tiene
 - [ ] MediaText es responsive (apila en mobile)
-- [ ] Ambos bloques usan primitivas de @hwe/core-ui (Image, Button, Link)
+- [ ] Ambos bloques usan primitivas de @hwe-platform/core-ui (Image, Button, Link)
 - [ ] Ambos bloques usan tokens de Tailwind, no estilos inline
 - [ ] Ambos pasan vitest-axe sin violaciones
 - [ ] Tests — cobertura >80%

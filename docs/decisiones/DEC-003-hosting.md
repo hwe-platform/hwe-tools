@@ -21,7 +21,7 @@ Tres tipos de datos, cada uno en su sitio:
 
 Flujo: editor cambia contenido en Payload → Payload guarda
 en Postgres + media en Blob Storage → Next.js lee los datos
-vía Local API → renderiza con @hwe/core-ui.
+vía Local API → renderiza con @hwe-platform/core-ui.
 
 Plataforma por defecto para la fase de desarrollo y primeros
 clientes: Vercel (hosting + Postgres + Blob Storage + Route

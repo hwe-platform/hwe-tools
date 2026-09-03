@@ -18,27 +18,27 @@ site-config) para funcionar.
 
 ## Qué hacer
 
-1. Crear `@hwe/core-ui/src/layout/TopBar.tsx`:
+1. Crear `@hwe-platform/core-ui/src/layout/TopBar.tsx`:
    - Links utility configurables desde header.topBar
    - Selector de idioma (lee languages de site-config)
    - Botón de reservar con label configurable
    - Botón burger para mobile
    - Responsive: visible en desktop, colapsado en mobile
 
-2. Crear `@hwe/core-ui/src/layout/SecondaryNav.tsx`:
+2. Crear `@hwe-platform/core-ui/src/layout/SecondaryNav.tsx`:
    - Logo desde site-config
    - Items de navegación desde header.navigation
    - Dropdowns para items con children
    - Sticky on scroll
    - Responsive: horizontal en desktop, oculto en mobile (usa MobileMenu)
 
-3. Crear `@hwe/core-ui/src/layout/MobileMenu.tsx`:
+3. Crear `@hwe-platform/core-ui/src/layout/MobileMenu.tsx`:
    - Drawer lateral derecho
    - Mismos items de navegación que SecondaryNav
    - Dropdowns expandibles (accordion)
    - Se abre con el botón burger del TopBar
 
-4. Crear `@hwe/core-ui/src/layout/Footer.tsx`:
+4. Crear `@hwe-platform/core-ui/src/layout/Footer.tsx`:
    - Virtual assistant section (si enabled)
    - Columnas configurables por tipo (links, text, schedule, newsletter)
    - Partners con logos
@@ -48,13 +48,13 @@ site-config) para funcionar.
    - Copyright
    - Responsive: columnas apilan en mobile
 
-5. Crear `@hwe/core-ui/src/layout/Banner.tsx`:
+5. Crear `@hwe-platform/core-ui/src/layout/Banner.tsx`:
    - Mensaje con tipo (info, warning, promo)
    - Botón cerrar si dismissible
    - Link opcional
    - Oculto si enabled=false
 
-6. Crear `@hwe/core-ui/src/layout/SiteLayout.tsx`:
+6. Crear `@hwe-platform/core-ui/src/layout/SiteLayout.tsx`:
    - Componente wrapper que compone: Banner + TopBar + SecondaryNav +
      {children} + Footer
    - Recibe los globals de Payload como props
@@ -64,7 +64,7 @@ site-config) para funcionar.
    - Accesibilidad (vitest-axe)
    - Responsive (viewport tests si aplica)
 
-8. Exportar todo desde `@hwe/core-ui`
+8. Exportar todo desde `@hwe-platform/core-ui`
 
 ## Leer antes
 

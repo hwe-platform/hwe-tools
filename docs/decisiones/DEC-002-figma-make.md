@@ -18,7 +18,7 @@ de producción. De cada exportación se extraen:
 - **Dirección de imagen:** estilo fotográfico, ratios predominantes,
   uso de vídeo, tratamiento visual del contenido multimedia.
 
-El código real se construye con @hwe/core-ui a partir de estos datos.
+El código real se construye con @hwe-platform/core-ui a partir de estos datos.
 
 Un repositorio git independiente por cliente en figma-makes/{slug}/.
 Cada importación se sella con git tag import-YYYY-MM-DD.

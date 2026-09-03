@@ -20,7 +20,7 @@ consulta colecciones de Payload en vez de contener datos propios.
 
 ### IconGrid
 
-1. Crear `@hwe/core-ui/src/blocks/icon-grid/`:
+1. Crear `@hwe-platform/core-ui/src/blocks/icon-grid/`:
    - `icon-grid.schema.ts` — title, subtitle, columns (3/4/6),
      items array (icon, title, description opcional)
    - `IconGridBlock.tsx` — grid responsive con iconos circulares
@@ -28,7 +28,7 @@ consulta colecciones de Payload en vez de contener datos propios.
 
 ### CardGrid
 
-2. Crear `@hwe/core-ui/src/blocks/card-grid/`:
+2. Crear `@hwe-platform/core-ui/src/blocks/card-grid/`:
    - `card-grid.schema.ts` — title, subtitle, variant
      (standard/asymmetric), source (select: manual/accommodations/
      entities/articles), sourceConfig (category, limit, featured filter),
@@ -41,7 +41,7 @@ consulta colecciones de Payload en vez de contener datos propios.
 
 ### ReviewsGrid
 
-3. Crear `@hwe/core-ui/src/blocks/reviews-grid/`:
+3. Crear `@hwe-platform/core-ui/src/blocks/reviews-grid/`:
    - `reviews-grid.schema.ts` — title, subtitle, reviews array
      (stars, quote, author, date, source)
    - `ReviewsGridBlock.tsx` — 3 columnas de tarjetas de reseña
@@ -68,7 +68,7 @@ consulta colecciones de Payload en vez de contener datos propios.
 - [ ] CardGrid consulta Payload cuando source es una colección
 - [ ] CardGrid variante asimétrica (5/7) funciona
 - [ ] ReviewsGrid muestra estrellas, cita, autor
-- [ ] Todos los bloques usan primitivas de @hwe/core-ui
+- [ ] Todos los bloques usan primitivas de @hwe-platform/core-ui
 - [ ] Todos usan tokens de Tailwind
 - [ ] Todos pasan vitest-axe
 - [ ] Tests — cobertura >80%

@@ -8,7 +8,7 @@ Cada comando tiene su archivo `.md` en esta carpeta.
 | Comando | Qué hace | Agente |
 |---------|----------|--------|
 | `/import-figma` | Clona un repo Figma Make, extrae tokens y bloques, genera documentos de análisis | Code Builder |
-| `/scaffold-block` | Crea la estructura de carpetas de un nuevo bloque en `@hwe/core-ui` | Code Builder |
+| `/scaffold-block` | Crea la estructura de carpetas de un nuevo bloque en `@hwe-platform/core-ui` | Code Builder |
 
 ## Uso
 

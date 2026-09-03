@@ -192,15 +192,15 @@ import Link from 'next/link'
 import { z } from 'zod'
 import { cva } from 'class-variance-authority'
 
-// 3. Paquetes internos del monorepo (@hwe/*)
-import { BlockRenderer } from '@hwe/core-ui'
+// 3. Paquetes internos del monorepo (@hwe-platform/*)
+import { BlockRenderer } from '@hwe-platform/core-ui'
 
 // 4. Código local del mismo proyecto (rutas relativas)
 import { applyVAT } from '../utils/pricing'
 import { AccommodationCard } from './AccommodationCard'
 
 // 5. Tipos (siempre al final, con import type)
-import type { Accommodation } from '@hwe/core-ui'
+import type { Accommodation } from '@hwe-platform/core-ui'
 import type { PageProps } from '../types'
 ```
 
@@ -210,10 +210,10 @@ Cuando solo se importa un tipo (no código ejecutable), usar siempre `import typ
 
 ```typescript
 // ❌ Mal — importa el tipo como si fuera código
-import { Accommodation } from '@hwe/core-ui'
+import { Accommodation } from '@hwe-platform/core-ui'
 
 // ✅ Bien — explícito: solo necesito el tipo
-import type { Accommodation } from '@hwe/core-ui'
+import type { Accommodation } from '@hwe-platform/core-ui'
 ```
 
 ---

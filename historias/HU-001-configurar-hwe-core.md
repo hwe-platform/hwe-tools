@@ -12,7 +12,7 @@ dependencias: []
 ## Contexto
 
 Sin `hwe-core` no hay paquetes compartidos. Es el repositorio que contiene
-`@hwe/core-ui`, que todos los sites de cliente consumen via npm.
+`@hwe-platform/core-ui`, que todos los sites de cliente consumen via npm.
 Es la primera pieza del Hito 1.
 
 ## Qué hacer
@@ -25,7 +25,7 @@ Es la primera pieza del Hito 1.
    - `src/layout/` (vacío, preparado para layout components)
    - `src/adapters/` (vacío, preparado para adapters)
    - `src/theme/` (vacío, preparado para token contract)
-   - `package.json` con nombre `@hwe/core-ui`, entry points configurados
+   - `package.json` con nombre `@hwe-platform/core-ui`, entry points configurados
    - `tsconfig.json` con strict: true
 3. Configurar GitHub Packages como npm registry privado
 4. Configurar GitHub Actions para CI:
@@ -53,7 +53,7 @@ Es la primera pieza del Hito 1.
 - [x] `pnpm lint` ejecuta ESLint sin errores
 - [x] `pnpm format:check` ejecuta Prettier sin errores
 - [x] `pnpm test` ejecuta Vitest (aunque no haya tests, el runner arranca)
-- [x] TypeScript strict activado en `@hwe/core-ui`
+- [x] TypeScript strict activado en `@hwe-platform/core-ui`
 - [ ] GitHub Actions CI pasa en una PR de prueba _(pendiente de verificar en GitHub — repo privado, no verificable desde el agente)_
 - [ ] Los paquetes se publican a GitHub Packages en merge a main _(workflow configurado y pusheado a main; pendiente de confirmar en la pestaña Actions)_
 

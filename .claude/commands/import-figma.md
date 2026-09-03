@@ -8,7 +8,7 @@ argument-hint: <git-url> [slug]
 
 Importas un repositorio Figma Make como referencia visual. Tu trabajo es:
 clonar el repo, tagearlo, extraer tokens y bloques, y escribir los documentos
-que el Code Builder necesita para construir el site con `@hwe/core-ui`.
+que el Code Builder necesita para construir el site con `@hwe-platform/core-ui`.
 
 El resultado: el Code Builder puede construir el site leyendo solo los
 documentos generados, sin abrir el repo Figma Make manualmente.
@@ -155,7 +155,7 @@ Crear el directorio si no existe.
 ## Responsive
 {breakpoints y cambios de layout detectados}
 
-## Notas para @hwe/core-ui
+## Notas para @hwe-platform/core-ui
 - {observaciones clave para el Code Builder}
 ```
 
@@ -199,7 +199,7 @@ Identificar patrones visuales recurrentes:
 - Tarjetas: {aspect ratio, object-fit}
 - Galería: {tipo, navegación}
 
-## Patrones — Primitivas @hwe/core-ui
+## Patrones — Primitivas @hwe-platform/core-ui
 | Patrón detectado | Primitiva correspondiente |
 |------------------|--------------------------|
 | CTA redondeado relleno | Button variant=primary |

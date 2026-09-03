@@ -30,7 +30,7 @@ paquetes de `hwe-core`. Sin esto no se puede construir ningún site.
    - Crear `src/styles/globals.css` con `@layer base` para tipografía
    - Configurar fuentes (Bitter + Inter via next/font)
 6. Configurar ESLint + Prettier según `docs/estandares/herramientas.md`
-7. Añadir `@hwe/core-ui` como dependencia npm desde GitHub Packages
+7. Añadir `@hwe-platform/core-ui` como dependencia npm desde GitHub Packages
 8. Crear estructura de carpetas:
    - `src/app/(frontend)/` — rutas del sitio público
    - `src/app/(payload)/admin/` — admin panel de Payload
@@ -57,7 +57,7 @@ paquetes de `hwe-core`. Sin esto no se puede construir ningún site.
 - [ ] ESLint + Prettier configurados y sin errores
 - [ ] Tailwind v4 con `@theme inline` renderizando tokens correctamente
 - [ ] Fuentes Bitter y Inter cargando via `next/font`
-- [ ] `@hwe/core-ui` importable desde el proyecto (cuando se publique)
+- [ ] `@hwe-platform/core-ui` importable desde el proyecto (cuando se publique)
 - [ ] `.env.example` documenta todas las variables necesarias
 - [ ] El repo está marcado como Template en GitHub
 

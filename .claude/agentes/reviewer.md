@@ -120,7 +120,7 @@ Devuelvo al Code Builder.
 ### Estructura
 
 - [ ] Los archivos están en la carpeta correcta según la arquitectura
-- [ ] Los imports siguen el orden: framework → externas → @hwe/* → locales → tipos
+- [ ] Los imports siguen el orden: framework → externas → @hwe-platform/* → locales → tipos
 - [ ] No hay código duplicado (lógica copiada que debería ser un util compartido)
 - [ ] Las funciones no superan 50 líneas (warning) / 80 líneas (error)
 - [ ] La complejidad no supera 10 (warning) / 15 (error)

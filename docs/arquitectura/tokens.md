@@ -224,7 +224,7 @@ Los componentes son idénticos. Los tokens hacen todo el trabajo visual.
 | `theme-{season}.css` | Repo del cliente (`src/styles/`) | Temporadas son por cliente |
 | `personalization.css` | Generado desde Payload config | Los segmentos se definen en Payload |
 | `@theme inline` | Repo del cliente (`src/styles/`) | Conecta CSS vars con Tailwind |
-| Tipografía base | `@hwe/core-ui` o repo cliente | Escalas tipográficas son estándar |
+| Tipografía base | `@hwe-platform/core-ui` o repo cliente | Escalas tipográficas son estándar |
 
 ---
 
