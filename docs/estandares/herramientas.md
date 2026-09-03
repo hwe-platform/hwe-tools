@@ -69,17 +69,27 @@ vienen las reglas de React/Next.js.
 
 ### Apps Next.js (`apps/site-demo/` en hwe-core, `hwe-template`, sites de cliente)
 
-Estos repos corren Next.js de verdad, así que usan `eslint-config-next`:
+Estos repos corren Next.js de verdad, así que usan `eslint-config-next`.
+
+`eslint-config-next` (verificado en la 15.4.x, la que usa `apps/site-demo/`)
+todavía exporta sus configs en formato legado (`.eslintrc`, con `extends`),
+no como arrays de flat config — `...nextVitals` falla con
+`TypeError: nextVitals is not iterable`. Hace falta el puente `FlatCompat`
+de `@eslint/eslintrc` (el mismo patrón que genera `create-next-app`):
 
 ```javascript
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import { FlatCompat } from '@eslint/eslintrc'
 import { defineConfig } from 'eslint/config'
-import nextVitals from 'eslint-config-next/core-web-vitals.js'
-import nextTypescript from 'eslint-config-next/typescript.js'
 import prettier from 'eslint-config-prettier'
 
+const compat = new FlatCompat({
+  baseDirectory: dirname(fileURLToPath(import.meta.url)),
+})
+
 export default defineConfig([
-  ...nextVitals,
-  ...nextTypescript,
+  ...compat.extends('next/core-web-vitals', 'next/typescript'),
   prettier,
   {
     rules: {
@@ -89,9 +99,9 @@ export default defineConfig([
 ])
 ```
 
-Nota: los subpaths se importan con extensión `.js` explícita
-(`eslint-config-next/core-web-vitals.js`, no `.../core-web-vitals`) —
-la versión actual del paquete no resuelve el import sin ella.
+Requiere `@eslint/eslintrc` como devDependency. Si una versión futura de
+`eslint-config-next` publica flat config nativo, este puente deja de hacer
+falta — revisar antes de copiar este patrón a un repo nuevo.
 
 #### Qué incluye `eslint-config-next/core-web-vitals`
 
