@@ -23,3 +23,21 @@ constantemente (documentación), `hwe-core` cambia cuando se
 añaden bloques (versiones npm), `hwe-template` se clona una vez
 por cliente y luego vive independiente con su propio contenido.
 Separar permite versionar y desplegar cada pieza a su ritmo.
+
+## Conexión entre repos
+
+`hwe-tools` se monta como git submodule en `docs/` de los otros repos.
+Los agentes y comandos de Claude Code viven en `hwe-tools/.claude/` pero
+Claude Code busca comandos en `.claude/commands/` de la raíz del repo
+donde trabaja.
+
+Para que los comandos sean descubribles, cada repo consumidor crea
+stubs en `.claude/commands/` con una línea que carga el comando real:
+
+```
+Load and follow docs/.claude/commands/nombre-comando.md exactly.
+```
+
+Cada comando nuevo en hwe-tools requiere crear un stub en los repos
+que lo consuman. Se usa stubs en vez de symlinks por compatibilidad
+con Windows.
