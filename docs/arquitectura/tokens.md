@@ -263,3 +263,26 @@ y se versionan en Git. No se editan en Payload.
 | Hito 1 | Capa 1 (tema base). Un `theme.css` por cliente. Pipeline Figma → CSS. |
 | Hito 3 | Capa 3 (personalización). Generación de `personalization.css` desde config en Payload. |
 | Cuando se necesite | Capa 2 (temporadas). Múltiples `theme-{season}.css` + lógica de fecha. |
+
+---
+
+## Nota para la extracción del template (Hito 1 → Hito 5)
+
+Actualmente las tres piezas del tema (valores del cliente, mapeo Tailwind,
+y estilos base) están inline en `apps/site-demo/src/styles/globals.css`.
+Es lo correcto para el Hito 1 con un solo site.
+
+Cuando se extraiga `hwe-template` y haya múltiples clientes, las piezas 2
+y 3 (mapeo Tailwind y estilos base) deben moverse a core-ui como CSS
+importable. El `globals.css` de cada cliente quedaría:
+
+```css
+@import "@hwe-platform/core-ui/styles/base.css";
+@import "./theme.css";
+```
+
+Así, cuando se añada un token nuevo en core-ui, los clientes lo reciben
+al actualizar la dependencia npm — sin tocar su `globals.css`.
+
+El `theme.css` con los valores (colores, tipografía, radios) siempre
+vive en el repo del cliente. Nunca en core-ui ni en Payload.

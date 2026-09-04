@@ -1,7 +1,7 @@
 ---
 id: HU-002
 titulo: Crear apps/site-demo con Next.js + Payload CMS en el monorepo
-estado: en-revisión
+estado: hecha
 prioridad: 1
 hito: 1
 agente: code-builder
@@ -77,7 +77,10 @@ todo el desarrollo se hace aquí.
 - [x] Cambios en `packages/core-ui/` se reflejan en site-demo al refrescar
 - [x] `src/services/` existe como carpeta preparada
 - [x] `.env.example` documenta todas las variables necesarias
-- [ ] CI funciona con el app añadido al pipeline de Turborepo
+- [ ] CI funciona con el app añadido al pipeline de Turborepo — verificado en
+      local con los mismos comandos y env vars dummy de `ci.yml` (lint, format
+      check, test y build pasan); falta confirmar el run real de GitHub Actions
+      sobre el merge a `main`
 
 ## Retrospectiva
 

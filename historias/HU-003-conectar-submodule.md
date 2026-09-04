@@ -41,11 +41,16 @@ sin tener que copiarlos.
 
 ## Criterios de aceptación
 
-- [ ] `git clone --recursive` de hwe-core trae hwe-tools
-- [ ] `git clone --recursive` de hwe-template trae hwe-tools
-- [ ] Los docs son accesibles desde ambos repos (ej: `docs/estandares/codigo.md`)
-- [ ] GitHub Actions CI funciona con submodules
-- [ ] README de ambos repos documenta cómo trabajar con submodules
+- [x] `git clone --recursive` de hwe-core trae hwe-tools
+- [~] ~~`git clone --recursive` de hwe-template trae hwe-tools~~ — no aplica:
+      DEC-007 quita el submodule de hwe-template (no consulta specs)
+- [x] Los docs son accesibles desde hwe-core (ej: `docs/estandares/codigo.md`)
+- [~] ~~GitHub Actions CI funciona con submodules~~ — superado: CI usa
+      `submodules: false` a propósito, el build no necesita `docs/` y el repo
+      es privado (ver commit 2cf9e0e de hwe-core)
+- [ ] README de hwe-core documenta cómo trabajar con submodules — **pendiente**:
+      está en CLAUDE.md pero no en README.md, y el `git clone` del README no
+      lleva `--recursive`
 
 ## Retrospectiva
 

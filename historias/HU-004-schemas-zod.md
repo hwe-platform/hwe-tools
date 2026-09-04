@@ -1,7 +1,7 @@
 ---
 id: HU-004
 titulo: Schemas Zod de todas las colecciones y globals de Payload
-estado: en-revisión
+estado: hecha
 prioridad: 1
 hito: 1
 agente: code-builder
