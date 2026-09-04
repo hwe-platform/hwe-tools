@@ -22,6 +22,16 @@ ESLint es un analizador de código. Tiene cientos de reglas que detectan problem
 
 Prettier se encarga del formato. ESLint se encarga de la calidad. Cada una hace lo suyo sin solaparse. El paquete `eslint-config-prettier` desactiva las reglas de formato de ESLint para que no choquen con Prettier.
 
+### Por qué ESLint + Prettier y no Biome
+
+Se evaluó Biome como alternativa (un solo binario que reemplaza ambas
+herramientas, 25x más rápido, un solo archivo de configuración). Se descartó
+porque el equipo no domina React, Next.js ni TypeScript, y ESLint con
+`eslint-config-next` enseña con sus reglas — cada error de lint es una lección
+sobre el framework. Biome no cubre las reglas específicas de Next.js ni los
+hooks de React completamente. Si Biome madura y el equipo gana experiencia,
+migrar es un proceso mecánico de unas horas.
+
 ---
 
 ## Configuración de Prettier
