@@ -21,6 +21,7 @@ esta tabla para saber qué es lo siguiente.
 | HU-010 | Bloques IconGrid, CardGrid y ReviewsGrid | 1 | 3 | spec-lista | — | — | HU-008 |
 | HU-011 | Bloques Gallery, Map, SpecBar y EquipmentList | 1 | 3 | spec-lista | — | — | HU-008 |
 | HU-012 | Crear site demo con contenido real y deploy en Vercel | 1 | 3 | spec-lista | — | — | HU-007, HU-009, HU-010, HU-011 |
+| HU-013 | Configurar storage adapter para media en producción | 1 | 2 | spec-lista | — | — | HU-005 |
 
 ### Orden de ejecución
 

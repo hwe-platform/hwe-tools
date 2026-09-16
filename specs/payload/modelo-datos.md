@@ -51,6 +51,11 @@ media
     └── og                  (1200x630px)
 ```
 
+**Storage:** `@payloadcms/storage-vercel-blob` en producción (ver
+[DEC-010](../../docs/decisiones/DEC-010-media-storage.md)). Filesystem en
+desarrollo local, sin adapter. Decisión provisional — pendiente revisión de
+costes con volumen real.
+
 ### accommodations
 
 Alojamientos del cliente. Alimenta tarjetas en la home, fichas completas,
