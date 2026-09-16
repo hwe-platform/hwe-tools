@@ -5,7 +5,7 @@ estado: hecha
 prioridad: 1
 hito: 1
 agente: code-builder
-rama: feat/HU-002-site-demo-monorepo
+rama: main
 dependencias: [HU-001, HU-004]
 ---
 

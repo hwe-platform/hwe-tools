@@ -5,7 +5,7 @@ estado: hecha
 prioridad: 1
 hito: 1
 agente: code-builder
-rama: feat/HU-004-schemas-zod-payload
+rama: main
 dependencias: [HU-001]
 ---
 

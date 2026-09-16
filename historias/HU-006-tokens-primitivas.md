@@ -1,11 +1,11 @@
 ---
 id: HU-006
 titulo: Sistema de tokens y primitivas base
-estado: en-revisión
+estado: hecha
 prioridad: 2
 hito: 1
 agente: code-builder
-rama: feat/HU-006-tokens-primitivas
+rama: main
 dependencias: [HU-001]
 ---
 
