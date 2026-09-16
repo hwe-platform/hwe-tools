@@ -268,9 +268,11 @@ y se versionan en Git. No se editan en Payload.
 
 ## Nota para la extracción del template (Hito 1 → Hito 5)
 
-Actualmente las tres piezas del tema (valores del cliente, mapeo Tailwind,
-y estilos base) están inline en `apps/site-demo/src/styles/globals.css`.
-Es lo correcto para el Hito 1 con un solo site.
+Los valores del cliente (pieza 1) ya viven aparte, en
+`apps/site-demo/src/styles/theme.css`. Lo que sigue inline en
+`apps/site-demo/src/styles/globals.css` son las piezas 2 y 3: el mapeo a
+Tailwind (`@theme inline`) y los estilos base (`@layer base`). Es lo
+correcto para el Hito 1 con un solo site.
 
 Cuando se extraiga `hwe-template` y haya múltiples clientes, las piezas 2
 y 3 (mapeo Tailwind y estilos base) deben moverse a core-ui como CSS
