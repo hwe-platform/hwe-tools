@@ -185,21 +185,21 @@ pages
 │   └── showBreadcrumbs     (boolean)
 │
 ├── blocks                  (blocks field — secuencia de bloques)
-│   ├── mediaText           — imagen + texto en dos columnas
-│   ├── iconGrid            — grid de iconos con labels
-│   ├── cardGrid            — grid de tarjetas con imagen
-│   ├── reviewsGrid         — tarjetas de reseñas
-│   ├── servicesGrid        — referencia entities tipo service
-│   ├── accommodationsGrid  — referencia accommodations
-│   ├── environmentGrid     — referencia entities tipo environment
-│   ├── gallery             — galería de imágenes / carrusel
-│   ├── map                 — mapa + info acceso (lee site-config)
-│   ├── instagram           — feed instagram
-│   ├── blog                — referencia articles
-│   ├── cta                 — call to action
-│   ├── faq                 — preguntas y respuestas
-│   ├── richText            — texto libre
-│   └── embed               — código HTML/iframe
+│   ├── media-text           — imagen + texto en dos columnas
+│   ├── icon-grid            — grid de iconos con labels
+│   ├── card-grid            — grid de tarjetas con imagen
+│   ├── reviews-grid         — tarjetas de reseñas
+│   ├── services-grid        — referencia entities tipo service
+│   ├── accommodations-grid  — referencia accommodations
+│   ├── environment-grid     — referencia entities tipo environment
+│   ├── gallery              — galería de imágenes / carrusel
+│   ├── map                  — mapa + info acceso (lee site-config)
+│   ├── instagram            — feed instagram
+│   ├── blog                 — referencia articles
+│   ├── cta                  — call to action
+│   ├── faq                  — preguntas y respuestas
+│   ├── rich-text            — texto libre
+│   └── embed                — código HTML/iframe
 │
 ├── seo                     (group)
 │   ├── metaTitle           (text, localized)
@@ -230,7 +230,7 @@ blog (bloque dentro de pages.blocks)
 └── showMoreUrl             (text — slug de la página de blog)
 ```
 
-Mismo patrón para `accommodationsGrid`, `servicesGrid`, `environmentGrid`:
+Mismo patrón para `accommodations-grid`, `services-grid`, `environment-grid`:
 configuran qué mostrar, el frontend consulta la colección correspondiente.
 
 ### articles
@@ -414,8 +414,8 @@ banner
 ## Relaciones entre colecciones
 
 ```
-pages.blocks —referencia→ accommodations (accommodationsGrid)
-pages.blocks —referencia→ entities (servicesGrid, environmentGrid)
+pages.blocks —referencia→ accommodations (accommodations-grid)
+pages.blocks —referencia→ entities (services-grid, environment-grid)
 pages.blocks —referencia→ articles (blog)
 accommodations → media (mainImage, gallery, floorPlan, documents)
 accommodations → categories

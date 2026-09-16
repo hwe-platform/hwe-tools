@@ -262,9 +262,12 @@ revalida la página afectada:
 ```typescript
 hooks: {
   afterChange: [
-    ({ doc }) => {
-      revalidateTag(`page-${doc.slug}`)
-      revalidateTag(`site-global`)
+    ({ doc, collection }) => {
+      // Next 16 exige un perfil de caché además del tag. 'max' es el de mayor
+      // duración: el contenido solo debe caducar cuando el editor guarda,
+      // que es justo lo que dispara este hook.
+      revalidateTag(`${collection.slug}-${doc.slug}`, 'max')
+      revalidateTag('site-global', 'max')
     }
   ],
 }

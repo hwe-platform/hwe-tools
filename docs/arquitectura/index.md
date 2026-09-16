@@ -15,6 +15,7 @@ Documentación técnica de cómo funciona HWE internamente.
 | [personalizacion.md](personalizacion.md) | Personalización por segmento | 🔲 Pendiente |
 | [contenido-ia.md](contenido-ia.md) | Pipeline de gestión de contenido | 🔲 Pendiente |
 | [paginas-routing.md](paginas-routing.md) | Páginas y routing: catch-all, resolución, multilingüe, breadcrumbs, ISR | ✅ Definido |
+| [schemas-base-extensiones.md](schemas-base-extensiones.md) | Qué campos son núcleo y cuáles extensión por tipo de web — bloquea la extracción a core-ui | ⏳ Pendiente de decidir |
 
 Las decisiones arquitectónicas (DECs) viven en [../decisiones/index.md](../decisiones/index.md), no aquí.
 
