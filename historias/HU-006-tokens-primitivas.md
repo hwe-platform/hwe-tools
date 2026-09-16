@@ -64,17 +64,17 @@ construir ningún bloque.
 
 ## Criterios de aceptación
 
-- [ ] Token contract define todas las CSS variables de la spec
-- [ ] `@theme inline` mapea correctamente CSS variables a clases Tailwind
-- [ ] Tipografía fluida funciona (h1 escala entre mobile y desktop)
-- [ ] Button renderiza todas las variantes y tamaños
-- [ ] Image obliga a pasar `alt` (error en TypeScript si falta)
-- [ ] Icon renderiza iconos del set predefinido
-- [ ] Link distingue internos de externos automáticamente
-- [ ] Todas las primitivas pasan vitest-axe sin violaciones
-- [ ] Tests de cada primitiva — cobertura >80%
-- [ ] JSDoc en castellano en todos los componentes exportados
-- [ ] Las primitivas son importables desde `@hwe-platform/core-ui`
+- [x] Token contract define todas las CSS variables de la spec
+- [x] `@theme inline` mapea correctamente CSS variables a clases Tailwind
+- [x] Tipografía fluida funciona (h1 escala entre mobile y desktop)
+- [x] Button renderiza todas las variantes y tamaños
+- [x] Image obliga a pasar `alt` (error en TypeScript si falta)
+- [x] Icon renderiza iconos del set predefinido
+- [x] Link distingue internos de externos automáticamente
+- [x] Todas las primitivas pasan vitest-axe sin violaciones
+- [x] Tests de cada primitiva — cobertura >80%
+- [x] JSDoc en castellano en todos los componentes exportados
+- [x] Las primitivas son importables desde `@hwe-platform/core-ui`
 
 ## Retrospectiva
 
