@@ -1,7 +1,7 @@
 ---
 id: HU-013
 titulo: Configurar storage adapter para media en producción
-estado: spec-lista
+estado: spec-pendiente
 prioridad: 2
 hito: 1
 agente: —
@@ -48,6 +48,10 @@ en la nube. La decisión es Vercel Blob, provisional a la espera de ver costes
 - [ ] El README explica cómo configurar Blob en un proyecto Vercel nuevo
 
 ## Notas
+
+**Aparcada.** Mientras el proyecto se trabaje y se muestre en local no hace
+falta: el filesystem de Payload sirve. Se retoma antes de HU-012, cuando haya
+que desplegar en Vercel, y no antes de que DEC-010 elija proveedor.
 
 Los criterios que hablan de producción no se pueden comprobar sin un proyecto
 Vercel desplegado. Lo natural es verificarlos en un preview deploy de la propia
