@@ -1,11 +1,11 @@
 ---
 id: HU-005
 titulo: Colecciones y globals de Payload derivadas de schemas Zod
-estado: en-revisión
+estado: hecha
 prioridad: 1
 hito: 1
 agente: code-builder
-rama: feat/HU-005-colecciones-payload
+rama: main
 dependencias: [HU-002, HU-004]
 ---
 
