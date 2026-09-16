@@ -1,11 +1,11 @@
 ---
 id: HU-005
 titulo: Colecciones y globals de Payload derivadas de schemas Zod
-estado: spec-lista
+estado: en-revisión
 prioridad: 1
 hito: 1
-agente: —
-rama: —
+agente: code-builder
+rama: feat/HU-005-colecciones-payload
 dependencias: [HU-002, HU-004]
 ---
 
@@ -57,18 +57,52 @@ Es lo que permite que el editor pueda crear contenido.
 
 ## Criterios de aceptación
 
-- [ ] Payload admin muestra todas las colecciones en el sidebar
-- [ ] Se puede crear un documento en cada colección desde el admin
-- [ ] Los campos localizados cambian de valor al cambiar idioma en el admin
-- [ ] El fallback al idioma principal funciona
-- [ ] Los slugs se auto-generan desde el título
-- [ ] Los hooks de validación Zod funcionan (rechazan datos inválidos)
-- [ ] Las migrations se ejecutan sin errores
-- [ ] Media upload funciona (subir imagen, genera los 4 tamaños)
-- [ ] Los blocks field de pages muestran los tipos de bloque disponibles
-- [ ] Access control: sin login se puede leer, con login se puede editar
-- [ ] Tests de hooks — cobertura >70%
+- [x] Payload admin muestra todas las colecciones en el sidebar
+- [x] Se puede crear un documento en cada colección desde el admin
+- [x] Los campos localizados cambian de valor al cambiar idioma en el admin
+- [x] El fallback al idioma principal funciona
+- [x] Los slugs se auto-generan desde el título
+- [x] Los hooks de validación Zod funcionan (rechazan datos inválidos)
+- [x] Las migrations se ejecutan sin errores
+- [x] Media upload funciona (subir imagen, genera los 4 tamaños)
+- [x] Los blocks field de pages muestran los tipos de bloque disponibles
+- [x] Access control: sin login se puede leer, con login se puede editar
+- [x] Tests de hooks — cobertura >70%
 
 ## Retrospectiva
 
-_(se llena después si aplica)_
+### Qué falló
+
+Los schemas Zod de HU-004 no coincidían con lo que Payload produce de verdad.
+No se vio en HU-004 porque los schemas se testearon contra objetos escritos a
+mano, no contra el CMS. Salió al ejecutar las colecciones contra Postgres:
+
+- `id: z.string()`, pero el adapter de Postgres usa columnas `serial` y
+  devuelve números.
+- Los campos opcionales vacíos llegan como `null`, y `.optional()` de Zod
+  acepta `undefined`, no `null`.
+- Los `group` sin rellenar llegan como `{}` en vez de ausentes, así que sus
+  campos fallaban aunque el grupo entero fuese opcional.
+
+Además, sacar `payloadIdSchema` a `common.schema.ts` cerró un ciclo de imports
+con `collections/media.schema.ts` que `tsc` no detecta —es un fallo de
+inicialización, no de tipos— y que solo apareció al arrancar el servidor.
+
+### Causa raíz
+
+Un schema escrito contra un modelo imaginado, no contra el sistema real. La
+forma de lectura y la de escritura de Payload no son la misma, y ninguna de las
+dos se había observado antes de darlas por buenas.
+
+### Corrección aplicada
+
+- `payloadIdSchema` acepta `string | number` y vive en su propio módulo sin
+  imports, para que no pueda cerrar ciclos.
+- `normalizeWriteData` traduce el payload de escritura a la forma que el schema
+  describe, antes de validar.
+- El test de paridad compara cada config de Payload con su schema en los dos
+  sentidos, para que config y schema no puedan volver a divergir en silencio.
+
+Pendiente de propagar: el test de paridad solo compara nombres de campo, no si
+son obligatorios. Los desajustes de `required` entre Payload y Zod
+(`description`, `schedule.periods`, `seo`) hubo que encontrarlos ejecutando.
