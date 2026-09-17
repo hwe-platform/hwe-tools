@@ -21,10 +21,27 @@ consulta colecciones de Payload en vez de contener datos propios.
 ### IconGrid
 
 1. Crear `@hwe-platform/core-ui/src/blocks/icon-grid/`:
-   - `icon-grid.schema.ts` — title, subtitle, columns (3/4/6),
-     items array (icon, title, description opcional)
+   - `icon-grid.schema.ts` — title, subtitle, items array (icon, title,
+     description opcional)
    - `IconGridBlock.tsx` — grid responsive con iconos circulares
    - Tests y exports
+
+**Ejes**, de las tres apariciones en el Figma (trío de features de la home,
+grid de 6 servicios, y los 5 valores de Le Camping):
+
+| Eje | Tipo | Dominio | Visto |
+|---|---|---|---|
+| `columns` | estilo | `number` — **no el enum `3\|4\|6`** | 3, 5 y 6 |
+| `variant` | estilo | `card` \| `bare` | con tarjeta en servicios, sin ella en el trío |
+
+El `columns: 3/4/6` que decía esta historia es justo el error que
+`bloques.md` advierte: enumera lo que se vio y deja fuera el 5 que ya usa
+Le Camping. Va como número.
+
+**Iconos propios:** el Figma trae tres SVG que no están en `lucide-react`
+(`EauChauffee`, `EspritFamilial`, `AnimationsEte`). El bloque debe aceptar
+tanto un nombre del set de la primitiva `Icon` como un componente React, o
+no se podrán pintar.
 
 ### CardGrid
 
@@ -39,6 +56,16 @@ consulta colecciones de Payload en vez de contener datos propios.
      overlay, título, tag, link
    - Tests y exports
 
+**Ejes**, de las cinco apariciones en el Figma:
+
+| Eje | Tipo | Dominio | Visto |
+|---|---|---|---|
+| `card` | **estructural** | `overlay` \| `stacked` | overlay en Hébergements y Alentours; imagen arriba en Actualités, Découvrez aussi y la otra location |
+| `columns` | estilo | `number` o reparto asimétrico | 2 asimétricas (5/7), 3 y 4 |
+
+`card` cambia la anatomía de la tarjeta —texto sobre la imagen frente a texto
+debajo—, así que son componentes separados resueltos por mapa.
+
 ### ReviewsGrid
 
 3. Crear `@hwe-platform/core-ui/src/blocks/reviews-grid/`:
@@ -49,9 +76,19 @@ consulta colecciones de Payload en vez de contener datos propios.
      autor, fecha
    - Tests y exports
 
-### Registro
+### Blog
 
-4. Registrar los tres en `blockRegistry.ts`
+4. Crear `@hwe-platform/core-ui/src/blocks/blog/`:
+   - Está en el modelo de datos y **ninguna historia lo construía**: es uno de
+     los cuatro bloques huérfanos detectados al analizar el Figma
+   - Encaja aquí porque su sección de *Actualités* usa la misma anatomía de
+     tarjeta que `card-grid` con `card: stacked` — conviene decidir si es un
+     bloque propio o una configuración de `card-grid` con `source: articles`
+
+### Registro y costura del cliente
+
+5. Registrar todos en `blockRegistry.ts` de plataforma
+6. Crear su fichero en `apps/site-demo/src/blocks/`, aunque sea un reexport
 
 ## Leer antes
 

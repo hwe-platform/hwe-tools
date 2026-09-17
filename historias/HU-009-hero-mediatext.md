@@ -35,35 +35,80 @@ hero sin pintar a propósito: para hacerlo una sola vez y aquí.
      y el test de paridad no la detecta porque solo compara el primer nivel
    - `hero.types.ts` — tipo derivado con `z.infer`
    - `HeroBlock.tsx` — resuelve variante por mapa
-   - `HeroVideo.tsx` — vídeo fullscreen con overlay oscuro,
-     logo centrado, subtítulo
-   - `HeroImage.tsx` — imagen con gradient overlay, breadcrumbs opcionales,
-     título y subtítulo
+   - `HeroVideo.tsx` — vídeo a pantalla completa con overlay oscuro
+   - `HeroImage.tsx` — imagen con gradiente, breadcrumbs opcionales
    - `HeroBlock.test.tsx` — tests de renderizado y accesibilidad
    - `index.ts` — export público
 
+**Ejes de variación**, extraídos de los tres heros del Figma (home con vídeo,
+Le Camping y la ficha de alojamiento):
+
+| Eje | Tipo | Dominio | Visto en el Figma |
+|---|---|---|---|
+| `variant` | **estructural** | `video` \| `image` | ambos |
+| `title` | **estructural** | `logo` \| `text` | la home usa el logo; las interiores, texto |
+| `align` | estilo | `center` \| `left` | home centrado, interiores a la izquierda |
+| `breadcrumbs` | datos | lista de niveles | 0 en la home, 2 en Le Camping, 3 en la ficha |
+
+**El breadcrumb vive aquí, no en el layout**: en el Figma está dentro del hero
+de cada página, no en la barra de navegación.
+
+**Decisión de accesibilidad y SEO que hay que tomar aquí:** el hero de la home
+del Figma **no tiene `<h1>` de texto** — su título es la imagen del logo. Eso
+deja la página sin encabezado principal legible. No se copia tal cual: hay que
+decidir dónde vive el `<h1>` (un `<h1>` visualmente oculto con el nombre del
+site es lo habitual) y dejarlo escrito.
+
 ### MediaText
 
+**Es el bloque de mayor impacto de todo el catálogo: cubre 7 secciones** de las
+tres páginas analizadas. Sus ejes salen de comparar esas 7, no de imaginar.
+
 2. Crear `@hwe-platform/core-ui/src/blocks/media-text/`:
-   - `media-text.schema.ts` — schema Zod con image, title, text (richText),
-     orientation (imageLeft/imageRight), features (array opcional con
-     icon+label+detail), ctas (array opcional), badge (text opcional)
+   - `media-text.schema.ts` — schema Zod: `title`, `subtitle`, `content`
+     (richText), `media`, `ctas` (array opcional)
    - `media-text.types.ts`
-   - `MediaTextBlock.tsx` — dos columnas responsivas, imagen a un lado,
-     texto al otro. Si tiene features, las muestra como cards dentro.
-     Si tiene CTAs, los muestra como botones.
+   - `MediaTextBlock.tsx` — dos columnas responsivas
    - `MediaTextBlock.test.tsx`
    - `index.ts`
 
-### Registro
+**Ejes de variación** (ver `docs/arquitectura/bloques.md`). Se diseñan por la
+dimensión que varía, no por los valores que toma La Civelle — esos son ejemplos:
 
-3. Registrar ambos bloques en `blockRegistry.ts`
-4. Verificar que el BlockRenderer los renderiza correctamente con datos
-   de Payload
+| Eje | Tipo | Dominio | Visto en el Figma |
+|---|---|---|---|
+| `media` | **estructural** | `image` \| `iframe` \| `carousel` | los tres: fotos, el mapa de Google, los carruseles de Le Camping |
+| `split` | estilo | `number` — columnas del medio sobre 12 | 5, 7 y 6 |
+| `reverse` | estilo | bool | Piscine y Services van invertidos |
+| `align` | estilo | `center` \| `start` | Restaurant centrado, Accès arriba |
+| `ctas` | datos | lista | de 0 a 2 |
+
+`media` es estructural, así que va por mapa a componentes separados
+(`MediaImage`, `MediaEmbed`, `MediaCarousel`), nunca con `if`. El resto, CVA.
+
+**Slots.** Solo se abren los que un diseño real pide:
+
+| Slot | Qué resuelve |
+|---|---|
+| `aside` | La caja que acompaña al texto: horarios del restaurante, mini-tarjetas de la piscina, barra de estadísticas de Le Camping. Son tres cosas distintas en el mismo hueco — el caso de libro para un slot, no para tres props |
+| `sobreLaImagen` | El medallón «Depuis 30 Ans» de la intro. Es de La Civelle y de nadie más: va en su repo, no en plataforma |
+
+No abrir más slots "por si acaso".
+
+### Registro y costura del cliente
+
+3. Registrar ambos bloques en `blockRegistry.ts` de plataforma
+4. Crear su fichero en `apps/site-demo/src/blocks/`, aunque solo sea un
+   reexport de tres líneas: es lo que hace descubrible la personalización
+   (ver "Tres niveles de uso por cliente" en `bloques.md`)
+5. Rellenar en el site el slot `sobreLaImagen` con el medallón «Depuis 30 Ans»
+   — es el primer uso real de un slot y sirve para comprobar que el mecanismo
+   funciona de punta a punta
+6. Verificar que el BlockRenderer los renderiza con datos reales de Payload
 
 ## Leer antes
 
-- docs/arquitectura/bloques.md
+- docs/arquitectura/bloques.md — en particular "Ejes de variación y slots"
 - docs/estandares/codigo.md
 - docs/estandares/naming.md
 - docs/estandares/testing.md
@@ -73,8 +118,14 @@ hero sin pintar a propósito: para hacerlo una sola vez y aquí.
 - [ ] HeroVideo renderiza vídeo fullscreen con overlay
 - [ ] HeroImage renderiza imagen con gradient y breadcrumbs
 - [ ] Hero resuelve variante por mapa, no if/switch
+- [ ] La página tiene un `<h1>` legible aunque el hero muestre el logo
 - [ ] MediaText renderiza en dos columnas con imagen izquierda o derecha
-- [ ] MediaText muestra features y CTAs si los tiene
+- [ ] MediaText acepta imagen, iframe y carrusel como medio
+- [ ] MediaText admite cualquier reparto de columnas, no solo los del Figma
+- [ ] El slot `aside` acepta las tres cajas distintas del Figma (horarios,
+      features y estadísticas) sin cambiar el bloque
+- [ ] El site rellena `sobreLaImagen` con el medallón, y el bloque de
+      plataforma sigue sin saber nada de él
 - [ ] MediaText es responsive (apila en mobile)
 - [ ] Ambos bloques usan primitivas de @hwe-platform/core-ui (Image, Button, Link)
 - [ ] Ambos bloques usan tokens de Tailwind, no estilos inline

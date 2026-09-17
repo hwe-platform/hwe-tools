@@ -28,18 +28,27 @@ con Zod como fuente de verdad y Payload CMS como gestor de contenido.
 └── theme/                            — token contract
 ```
 
-### En el site del cliente (overrides y bloques custom)
+### En el site del cliente
 
 ```
 hwe-client-{slug}/
 └── src/
-    ├── blocks/                       — solo bloques personalizados
+    ├── blocks/                       — un fichero por bloque que usa el site
     │   └── {name}/
-    │       ├── {Name}Block.tsx
-    │       ├── {Name}Block.test.tsx
+    │       ├── {Name}Block.tsx       — reexport, slots o JSX propio
+    │       ├── {Name}Block.test.tsx  — solo si se desvía de plataforma
     │       └── index.ts
     └── block-registry.ts            — extiende el registry de plataforma
 ```
+
+**Hay fichero incluso cuando no se personaliza nada** — un reexport de tres
+líneas. Es lo que hace descubrible la personalización: quien abre el repo ve
+qué bloques usa el site y dónde tocarlos, sin tener que conocer el registry ni
+leer el código del paquete.
+
+El coste es el reverso: si plataforma añade un bloque nuevo, el cliente no lo
+tiene hasta que alguien cree su fichero. Es trabajo del scaffold de un site
+nuevo y de la historia que añada el bloque, no algo que ocurra solo.
 
 ---
 
@@ -167,6 +176,87 @@ const buttonVariants = cva('inline-flex items-center font-bold rounded-2xl', {
 
 ---
 
+## Ejes de variación y slots
+
+Un bloque sirve para muchos clientes por dos mecanismos distintos, y confundirlos
+es lo que hace que un bloque acabe siendo inservible o inmantenible.
+
+| | Para qué sirve | Cómo se expresa |
+|---|---|---|
+| **Eje de variación** | Lo que varía de forma **previsible y acotada** | Un prop |
+| **Slot** | Lo que varía de forma **impredecible** | Una función que devuelve JSX |
+
+Un eje se define porque **sabes** qué valores va a tomar. Un slot se define
+porque sabes que **no** lo sabes.
+
+### Ejes de variación
+
+Un eje sale de mirar diseños reales, no de imaginar. Del análisis del Figma de
+un cliente se extrae qué cambia de una sección a otra, y eso —y solo eso— se
+convierte en prop.
+
+**Se diseña por la dimensión que varía, no por los valores que toma el primer
+cliente.** Un `split: '5/7' | '7/5' | '50/50'` cubre a quien lo inspiró y se
+rompe con el siguiente que quiera 6/6, obligando a tocar `core-ui` o a hacer
+override. Un `split: number` cuesta lo mismo y absorbe diseños aún no vistos.
+Los valores observados son **ejemplos documentados, no el conjunto de lo
+posible**.
+
+Cada eje se implementa según la regla de "Variantes": si cambia la estructura
+del HTML, componentes separados resueltos por mapa; si solo cambia el aspecto,
+CVA.
+
+### Slots
+
+Un slot es un hueco que el bloque deja para que el cliente meta su propio JSX,
+quedándose con todo lo demás compartido.
+
+El caso que lo motiva: la home de un camping tiene un medallón circular con
+«Depuis 30 Ans» superpuesto a la imagen de una sección de dos columnas. Eso lo
+tiene ese cliente y nadie más. Sin slots hay dos malas salidas: añadir un prop
+`medallon` al bloque de plataforma —y mañana otro querrá una cinta, y otro un
+sello— o que el cliente reescriba el bloque entero, duplicando la retícula, el
+responsive y los tests para añadir un círculo.
+
+El bloque de plataforma deja el hueco:
+
+```tsx
+type MediaTextSlots = {
+  /** Se pinta encima de la imagen. Si nadie lo rellena, no hay nada. */
+  sobreLaImagen?: () => ReactNode
+}
+
+export function MediaTextBlock({ data, slots }: MediaTextProps) {
+  return (
+    <section className="grid gap-24 lg:grid-cols-12">
+      <div className="relative lg:col-span-5">
+        <Image src={data.image} alt={data.alt} aspectRatio="4/3" />
+        {slots?.sobreLaImagen?.()}
+      </div>
+      <div className="lg:col-span-7">{/* ... */}</div>
+    </section>
+  )
+}
+```
+
+Y el cliente lo rellena en su repo, sin tocar plataforma:
+
+```tsx
+export function MediaTextBlock(props: MediaTextProps) {
+  return <BaseMediaText {...props} slots={{ sobreLaImagen: Medallon }} />
+}
+```
+
+El cliente conserva las dos columnas, el responsive, la accesibilidad y los
+tests de plataforma; si mañana se corrige un fallo ahí, lo recibe.
+
+**Un slot se abre cuando un diseño real lo pide, nunca "por si acaso".** Poner
+slots en todas partes es tan malo como no ponerlos: multiplica la superficie del
+bloque sin que nadie los use. En la primera versión del proyecto se anunciaron
+slots en los comentarios de todos los bloques y solo dos los tenían de verdad.
+
+---
+
 ## Registry de dos niveles
 
 ### Registry de plataforma (`@hwe-platform/core-ui`)
@@ -219,28 +309,73 @@ Si no existe en ninguno, warning y no renderiza.
 
 ## Tres niveles de uso por cliente
 
-### Re-export directo (~80%)
+**La costura existe desde el primer día.** Cada bloque que el site usa tiene su
+propio fichero en el repo del cliente, aunque solo sea un reexport. Así nadie
+tiene que averiguar *cómo* se sobrescribe: abre el fichero y ahí está.
 
-El cliente usa el bloque de plataforma tal cual. La personalización
-visual viene de los tokens (colores, tipografía, radios). No toca código.
+```
+apps/site-demo/src/blocks/media-text/MediaTextBlock.tsx
+```
 
-### Override parcial (~15%)
+### Nivel 1 — Reexport directo (~80%)
 
-El cliente registra su propia versión del bloque. Puede importar
-piezas del bloque de plataforma (primitivas, schemas) y cambiar
-solo lo que necesita.
+El cliente usa el bloque de plataforma tal cual. La personalización visual viene
+de los tokens (colores, tipografía, radios). El fichero son tres líneas:
 
-Si la variante es reutilizable por otros clientes, se promueve
-a `@hwe-platform/core-ui` como variante nueva en vez de dejarla en el cliente.
+```tsx
+// Nivel 1 — reexport. Para desviarse: slots (nivel 2) o JSX propio (nivel 3).
+export { MediaTextBlock } from '@hwe-platform/core-ui'
+```
 
-### Full custom (~5%)
+### Nivel 2 — Slots (~15%)
 
-El cliente crea un bloque nuevo que no existe en la plataforma.
-Define su schema Zod, su componente, sus tests, y lo registra
-en su registry. No toca `@hwe-platform/core-ui`.
+El cliente conserva el bloque de plataforma y sustituye **una pieza concreta**:
 
-Si con el tiempo otros clientes lo necesitan, se promueve
-a la plataforma.
+```tsx
+import { MediaTextBlock as Base } from '@hwe-platform/core-ui'
+
+export function MediaTextBlock(props: MediaTextProps) {
+  return <Base {...props} slots={{ sobreLaImagen: Medallon }} />
+}
+```
+
+Es el nivel que evita el salto de "uso el de plataforma" a "lo reescribo
+entero". Conserva retícula, responsive, accesibilidad y tests compartidos.
+
+### Nivel 3 — Full custom (~5%)
+
+El cliente escribe su propio componente, usando solo el schema Zod de
+plataforma para que el editor siga viendo los mismos campos. Lo registra en su
+registry, que manda sobre el de plataforma. No toca `@hwe-platform/core-ui`.
+
+### Cuándo se promueve a plataforma
+
+Un override puede significar dos cosas opuestas, y conviene distinguirlas:
+
+- **Carencia de plataforma** — al bloque le falta un eje o un slot que debería
+  tener. Se promueve: se arregla `core-ui`.
+- **Singularidad del cliente** — ese diseño es suyo y de nadie más. El override
+  es correcto y se queda donde está.
+
+**Disparador:** el primer override es normal, el segundo igual avisa, **al
+tercero se promueve**. Un umbral concreto en lugar de "si es reutilizable", que
+no se dispara nunca porque quien hace el cliente siguiente va con fecha y su
+override ya funciona.
+
+**Regla de seguridad: la promoción añade una variante nueva, nunca cambia el
+comportamiento por defecto.** Así no puede romper la web de un cliente ya en
+producción — y si promover es barato y seguro, se hace.
+
+El ratio 80/15/5 es el termómetro: si los overrides pasan del 15%, `core-ui` no
+está cumpliendo y hay que mirar qué ejes o slots faltan. Con el primer cliente
+el ratio no dice nada, porque se está construyendo el catálogo; empieza a medir
+del segundo o tercero.
+
+> Esto es una **regla, no un sistema**. No hay que construir maquinaria para
+> contarlo: en la primera versión del proyecto se montó un validador de
+> composición completo, con su schema y sus tests, y su tabla de reglas se quedó
+> vacía para siempre. Un mecanismo que nadie alimenta es peor que una regla
+> escrita.
 
 ---
 

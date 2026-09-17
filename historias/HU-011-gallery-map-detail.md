@@ -63,7 +63,21 @@ para decidir reservar.
      bloques custom (si tiene) + ComparisonCard (si tiene)
    - Recibe un accommodation de Payload como prop
 
-6. Registrar Gallery y Map en `blockRegistry.ts`
+### Instagram
+
+6. Crear `@hwe-platform/core-ui/src/blocks/instagram/`:
+   - Está en el modelo de datos y **ninguna historia lo construía**: es el
+     cuarto bloque huérfano detectado al analizar el Figma
+   - En el Figma es una retícula de 6 cuadrados con cabecera y un CTA alineado
+     a la derecha, en la misma fila que el título — es la única cabecera del
+     site con esa disposición
+   - Decidir si es un bloque propio o `gallery` con `ratio: square` y las
+     fotos traídas de Instagram
+
+### Registro y costura del cliente
+
+7. Registrar todos en `blockRegistry.ts` de plataforma
+8. Crear su fichero en `apps/site-demo/src/blocks/`, aunque sea un reexport
 
 ## Leer antes
 
