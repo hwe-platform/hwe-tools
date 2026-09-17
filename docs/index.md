@@ -8,6 +8,9 @@ Mapa general. Busca lo que necesitas y ve directamente al documento.
 
 | Necesito... | Ve a |
 |-------------|------|
+| **Empezar de cero** | [docs/guias/primer-dia.md](guias/primer-dia.md) |
+| **Levantar el entorno, sembrar contenido, analizar un Figma** | [docs/guias/entorno-local.md](guias/entorno-local.md) |
+| **Saber cómo se trabaja una historia** | [docs/guias/flujo-diario.md](guias/flujo-diario.md) |
 | Entender el proyecto | [docs/proyecto.md](proyecto.md) |
 | Ver las decisiones técnicas | [docs/decisiones/](decisiones/index.md) |
 | Saber las reglas de código | [docs/estandares/](estandares/index.md) |
@@ -21,8 +24,8 @@ Mapa general. Busca lo que necesitas y ve directamente al documento.
 | Ver las historias y prioridades | [historias/](../historias/index.md) |
 | Saber qué agentes existen | [.claude/agentes/definiciones.md](../.claude/agentes/definiciones.md) |
 | Consultar checklists de auditoría | [referencia/](../referencia/index.md) |
-| Onboarding (primer día) | [docs/guias/](guias/index.md) |
-| Ver los comandos disponibles | [.claude/commands/](../.claude/commands/index.md) |
+| Analizar un export de Figma | [specs/figma/analisis.md](../specs/figma/analisis.md) |
+| Ver los comandos y skills disponibles | [.claude/commands/](../.claude/commands/index.md) |
 
 ---
 
@@ -35,12 +38,14 @@ hwe-tools/
 │   ├── arquitectura/            — cómo está construido el sistema
 │   ├── decisiones/              — DECs individuales
 │   ├── estandares/              — reglas de código, naming, git, testing
-│   └── guias/                   — onboarding, glosario
+│   └── guias/                   — onboarding, entorno local, flujo diario
 ├── specs/                       — specs técnicas por dominio
 ├── historias/                   — historias de usuario (HU-XXX)
 ├── referencia/                  — checklists de auditoría
 └── .claude/
-    └── agentes/                 — definiciones y archivos operativos
+    ├── agentes/                 — definiciones y archivos operativos
+    ├── commands/                — comandos de Claude Code
+    └── skills/                  — skills, con sus extractores
 ```
 
 ---

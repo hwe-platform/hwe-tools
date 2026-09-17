@@ -29,6 +29,7 @@ primera que despliega de verdad:
 | **Storage de media** | Elegir proveedor y montar el adapter. En local vale el filesystem; en Vercel las subidas del editor se evaporan en cada deploy | DEC-010, HU-013 |
 | **ISR** | La ruta renderiza en cada petición. Montar el cacheado exige `'use cache'` de Next 16 y una bandera experimental que afecta al admin de Payload | `docs/arquitectura/paginas-routing.md`, sección "Pendiente" |
 | **Carpetas de media** | Payload las marca como experimentales; hay que comprobar que siguen funcionando en la versión que se despliegue | `specs/payload/modelo-datos.md`, sección `media` |
+| **Migraciones sin aplicar** | `20260917_103556_carpetas_media` está pendiente. En local no se nota —el adapter sincroniza el esquema solo en desarrollo—, pero en producción no hay esa red | `docs/guias/entorno-local.md`, "Migraciones" |
 
 Conviene resolverlas **antes** de cargar el contenido real, no después: las tres
 afectan a cómo se comporta el site desplegado, y descubrirlas con contenido
