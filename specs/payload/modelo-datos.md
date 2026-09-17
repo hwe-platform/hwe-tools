@@ -56,6 +56,22 @@ media
 desarrollo local, sin adapter. Decisión provisional — pendiente revisión de
 costes con volumen real.
 
+**Carpetas:** la colección lleva `folders: true`, que da al editor un árbol de
+carpetas en el panel para colocar y encontrar cada archivo.
+
+Es organización **del panel, no del disco**: Payload lo resuelve con una
+relación a una colección de carpetas, así que los ficheros siguen todos juntos
+en la carpeta de subidas. Organizar también el almacenamiento —rutas del tipo
+`alojamientos/mobilhome-delux/`— es otra cosa, y corresponde al `prefix` del
+adapter de nube cuando se decida DEC-010.
+
+> ⚠️ **Dependencia experimental.** Payload marca `folders` como *experimental*:
+> «puede cambiar en versiones menores hasta que sea estable» (`Config.folders`,
+> payload 3.88). Una actualización menor podría romperla o cambiar cómo se
+> guardan las carpetas. Hay que revisarla al actualizar Payload y no construir
+> encima nada que no se pueda rehacer — en particular, **no derivar de ella la
+> ruta física de los ficheros**.
+
 ### accommodations
 
 Alojamientos del cliente. Alimenta tarjetas en la home, fichas completas,
