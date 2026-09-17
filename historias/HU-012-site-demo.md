@@ -18,6 +18,22 @@ desde HU-002; esta historia carga contenido realista, lo verifica de
 punta a punta y, si todo funciona, extrae el código como `hwe-template`.
 Si funciona aquí, funciona para cualquier cliente.
 
+### Tres asuntos aplazados que vencen aquí
+
+Durante el Hito 1 se aplazaron tres decisiones a propósito, porque ninguna
+bloquea el desarrollo en local. Las tres se cobran en esta historia, que es la
+primera que despliega de verdad:
+
+| Asunto | Qué falta | Dónde está el análisis |
+|---|---|---|
+| **Storage de media** | Elegir proveedor y montar el adapter. En local vale el filesystem; en Vercel las subidas del editor se evaporan en cada deploy | DEC-010, HU-013 |
+| **ISR** | La ruta renderiza en cada petición. Montar el cacheado exige `'use cache'` de Next 16 y una bandera experimental que afecta al admin de Payload | `docs/arquitectura/paginas-routing.md`, sección "Pendiente" |
+| **Carpetas de media** | Payload las marca como experimentales; hay que comprobar que siguen funcionando en la versión que se despliegue | `specs/payload/modelo-datos.md`, sección `media` |
+
+Conviene resolverlas **antes** de cargar el contenido real, no después: las tres
+afectan a cómo se comporta el site desplegado, y descubrirlas con contenido
+dentro sale más caro.
+
 ## Qué hacer
 
 ### Desplegar el site

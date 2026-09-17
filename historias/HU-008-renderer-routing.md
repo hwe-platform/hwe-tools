@@ -77,10 +77,16 @@ no hay site.
    - **Propio, no `next-intl`**: para tres idiomas con estrategia `prefix` son ~30 líneas, y
      aún no hay textos de UI que traducir que justifiquen la dependencia (`codigo.md`)
 
-6. Exportar `generateStaticParams` **desde el propio `page.tsx`**:
-   - Genera las rutas estáticas desde todas las colecciones
-   - Para ISR con revalidación
-   - No puede ser un fichero aparte: Next lo exige exportado desde la página
+6. ~~Exportar `generateStaticParams` desde el propio `page.tsx`~~ — **aplazado**
+   - La ruta queda como `dynamic = 'force-dynamic'`: cada petición consulta Payload
+   - No es una omisión, es una limitación: la página lee por la **Local API de
+     Payload**, que no es un `fetch`, así que Next no puede etiquetar el resultado
+     y lo que cachea sin tags no lo suelta nunca. Durante esta historia se cacheó
+     un 404 de la home y siguió sirviéndose después de crear la página
+   - Montarlo bien exige `'use cache'` + `cacheTag()` de Next 16, que requiere una
+     bandera experimental que afecta también al admin de Payload. Es una decisión
+     propia y se toma cuando el rendimiento se pueda medir: HU-012
+   - Detalle en `docs/arquitectura/paginas-routing.md`, sección "Pendiente"
 
 7. Tests:
    - BlockRenderer renderiza bloques conocidos
@@ -106,7 +112,8 @@ no hay site.
 - [ ] URL inexistente devuelve 404
 - [ ] Home (`/`) resuelve la page con type `home`
 - [ ] Middleware de idioma detecta locale desde prefijo URL
-- [ ] `generateStaticParams` genera rutas para todas las colecciones
+- [ ] ~~`generateStaticParams` genera rutas para todas las colecciones~~ —
+      **aplazado a HU-012**, ver el paso 6 y `paginas-routing.md`
 - [ ] Tests del BlockRenderer — cobertura >80%
 - [ ] Tests de la resolución de slug — cobertura >60%
 - [ ] Una página montada en el panel con `rich-text` y `cta` se ve en el navegador, con los

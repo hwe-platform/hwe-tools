@@ -276,6 +276,31 @@ hooks: {
 El visitante siempre ve la versión cacheada excepto los segundos
 que tarda en regenerarse tras un cambio.
 
+### Pendiente: el ISR no está montado todavía
+
+Lo de arriba es el destino, no lo que hay. En HU-008 la ruta quedó como
+`dynamic = 'force-dynamic'`: cada petición consulta Payload.
+
+**El motivo es una limitación real, no una omisión.** La página lee por la
+**Local API de Payload**, que es acceso directo a la base de datos y no un
+`fetch`. Next solo sabe etiquetar automáticamente lo que pasa por `fetch`, así
+que no puede asociar el resultado a ningún tag. Y lo que cachea sin tags no lo
+suelta nunca: durante el desarrollo de HU-008 se cacheó un 404 de la home y
+siguió sirviéndose **después** de crear la página.
+
+Montarlo bien exige `'use cache'` + `cacheTag()` de Next 16, que requiere
+activar una bandera experimental que afecta a toda la app, **incluido el admin
+de Payload**. Es una decisión con alcance propio y conviene tomarla cuando el
+rendimiento se pueda medir — es decir, en el deploy (HU-012).
+
+Renderizar en cada petición es correcto, solo más lento. Y la mitad difícil ya
+está hecha desde HU-005: `revalidationTags()` calcula los tags y los hooks
+`afterChange` los disparan; falta únicamente que la lectura los declare.
+
+> Este es uno de los tres asuntos que convergen en HU-012, junto con el storage
+> de media (DEC-010) y las carpetas experimentales de Payload
+> (`specs/payload/modelo-datos.md`). Ninguno bloquea el desarrollo local.
+
 ---
 
 ## Resumen de decisiones
