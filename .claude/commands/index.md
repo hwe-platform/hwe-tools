@@ -1,14 +1,24 @@
-# Comandos disponibles
+# Comandos y skills disponibles
 
-Comandos de Claude Code para automatizar tareas del proyecto HWE.
-Cada comando tiene su archivo `.md` en esta carpeta.
+Automatizaciones de Claude Code para el proyecto HWE. Cada comando tiene su
+`.md` en esta carpeta; los skills viven en `../skills/`.
 
-## Lista de comandos
+## Comandos
 
-| Comando | Qué hace | Agente |
-|---------|----------|--------|
-| `/import-figma` | Clona un repo Figma Make, extrae tokens y bloques, genera documentos de análisis | Code Builder |
+| Comando           | Qué hace                                                                     | Agente       |
+| ----------------- | ---------------------------------------------------------------------------- | ------------ |
+| `/import-figma`   | Clona y sella un repo Figma Make, y lanza su análisis                        | Code Builder |
 | `/scaffold-block` | Crea la estructura de carpetas de un nuevo bloque en `@hwe-platform/core-ui` | Code Builder |
+
+## Skills
+
+| Skill            | Qué hace                                                                                                                                       |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `analisis-figma` | Genera `analisis-figma.md` y `lenguaje-visual.md` de un cliente a partir de su export, con extractores deterministas que citan fichero y línea |
+
+La diferencia: un comando es un procedimiento que se invoca; un skill se carga
+cuando la tarea lo pide. `/import-figma` resuelve el repositorio y delega el
+análisis en el skill, que también se usa por su cuenta al revisar un diseño.
 
 ## Uso
 
