@@ -379,6 +379,53 @@ del segundo o tercero.
 
 ---
 
+## El layout no usa registry
+
+Los componentes de `layout/` —barra superior, navegación, menú móvil, pie,
+banner, widget de reservas, botones flotantes— siguen los mismos tres niveles
+de personalización que los bloques: **contenido** desde los globals de Payload,
+**aspecto** desde los tokens, y **estructura** reescribiéndolos en el site.
+
+Pero **no hay un registry de layout**, y es deliberado.
+
+El registry existe en los bloques porque **el editor los inserta dinámicamente**:
+el código no sabe qué bloques traerá una página, así que necesita resolverlos
+por nombre en tiempo de ejecución. El layout es lo contrario: se monta una vez
+por site y el código sabe exactamente qué lleva.
+
+Por eso `SiteLayout` es **una conveniencia, no una obligación**:
+
+```tsx
+// La mayoría de sites: usan el compositor tal cual
+<SiteLayout globals={globals} locale={locale}>{children}</SiteLayout>
+```
+
+```tsx
+// Un site con otro marco: importa las piezas que le sirven y escribe el resto
+import { TopBar, Footer } from '@hwe-platform/core-ui'
+import { MiNavegacion } from './layout/MiNavegacion'
+
+export function MiLayout({ globals, children }) {
+  return (
+    <>
+      <TopBar data={globals.header} />
+      <MiNavegacion data={globals.header} />
+      <main>{children}</main>
+      <Footer data={globals.footer} config={globals.siteConfig} />
+    </>
+  )
+}
+```
+
+Cada pieza se exporta por separado precisamente para esto. Añadir props de
+sustitución a `SiteLayout` sería maquinaria para un caso que se resuelve con un
+fichero.
+
+**`SiteLayout` es el dueño del `<main>`.** Una página que lo use no debe añadir
+el suyo, o quedarían dos anidados.
+
+---
+
 ## Dos tipos de bloques
 
 ### Bloques de contenido propio

@@ -1,11 +1,11 @@
 ---
 id: HU-007
 titulo: Layout components (TopBar, SecondaryNav, Footer, MobileMenu, Banner)
-estado: spec-lista
+estado: en-revisión
 prioridad: 2
 hito: 1
-agente: —
-rama: —
+agente: code-builder
+rama: feat/HU-007-layout
 dependencias: [HU-005, HU-006]
 ---
 
@@ -90,20 +90,21 @@ site-config) para funcionar.
 
 ## Criterios de aceptación
 
-- [ ] TopBar renderiza links, idioma y botón reservar desde datos de Payload
-- [ ] SecondaryNav renderiza navegación con dropdowns desde datos de Payload
-- [ ] SecondaryNav es sticky al hacer scroll
-- [ ] MobileMenu se abre/cierra correctamente
-- [ ] Footer renderiza columnas, partners, redes, pagos, legal
-- [ ] Footer muestra newsletter si hay columna tipo newsletter
-- [ ] Banner se muestra/oculta según enabled
-- [ ] Banner se puede cerrar si dismissible
-- [ ] BottomBookingWidget se despliega y repliega, y queda fijo al fondo
-- [ ] El botón de volver arriba aparece solo tras hacer scroll
-- [ ] SiteLayout compone todos los layout components
-- [ ] Todos los componentes pasan vitest-axe
-- [ ] Tests — cobertura >70%
-- [ ] Responsive: los componentes se adaptan a mobile
+- [x] TopBar renderiza links, idioma y botón reservar desde datos de Payload
+- [x] SecondaryNav renderiza navegación con dropdowns desde datos de Payload
+- [x] SecondaryNav es sticky al hacer scroll
+- [x] MobileMenu se abre/cierra correctamente
+- [x] Footer renderiza columnas, partners, redes, pagos, legal
+- [x] Footer muestra newsletter si hay columna tipo newsletter
+- [x] Banner se muestra/oculta según enabled
+- [x] Banner se puede cerrar si dismissible
+- [x] BottomBookingWidget se despliega y repliega, y queda fijo al fondo
+- [x] El botón de volver arriba aparece solo tras hacer scroll
+- [x] SiteLayout compone todos los layout components
+- [x] Todos los componentes pasan vitest-axe
+- [x] Tests — cobertura >70%
+- [ ] Responsive: los componentes se adaptan a mobile — **sin verificar**: las clases
+      responsive están puestas, pero no hay tests de viewport ni comprobación visual
 
 ## Retrospectiva
 

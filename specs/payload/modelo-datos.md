@@ -39,6 +39,7 @@ de tamaños automáticamente.
 ```
 media
 ├── filename                (auto)
+├── url                     (auto — la construye Payload desde el adapter)
 ├── alt                     (text, localized, obligatorio)
 ├── caption                 (text, localized, opcional)
 ├── mimeType                (auto)
@@ -50,6 +51,15 @@ media
     ├── hero                (1920px)
     └── og                  (1200x630px)
 ```
+
+**Sobre `url`:** no se guarda en la base de datos, la construye Payload al leer
+a partir del adapter de almacenamiento. Por eso cambiar de proveedor no obliga
+a migrar datos (DEC-010) — y por eso una consulta con `depth: 0` no la trae.
+
+Para resolverla desde un componente está `mediaUrl()` en core-ui, que además
+cae al archivo original si Payload no generó la variante pedida: los tamaños
+solo existen cuando la imagen es mayor que el destino, así que una foto pequeña
+no tiene `hero`.
 
 **Storage:** `@payloadcms/storage-vercel-blob` en producción (ver
 [DEC-010](../../docs/decisiones/DEC-010-media-storage.md)). Filesystem en
