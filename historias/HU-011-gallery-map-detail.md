@@ -81,10 +81,25 @@ para decidir reservar.
 
 ## Leer antes
 
+- `docs/lenguaje-visual.md` del repo del cliente — **antes de escribir JSX**
 - docs/arquitectura/bloques.md
 - specs/payload/modelo-datos.md (sección accommodations)
 - docs/estandares/codigo.md
 - docs/estandares/testing.md
+
+## Verificar contra el diseño
+
+Antes de marcar cualquier criterio, **comparar lo construido con la sección
+correspondiente del export de Figma**, no de memoria. Los tests comprueban que
+el dato sale; ninguno comprueba que salga como el diseño manda.
+
+- Cada elemento usa el token que le asigna `docs/lenguaje-visual.md` del
+  cliente — en particular las **etiquetas**, que van en color de acento y
+  tipografía de cuerpo, no como encabezados
+- Se respetan el ritmo vertical y el contenedor
+- Las diferencias con el diseño están **listadas y justificadas**
+
+Ver `specs/figma/analisis.md`, sección "Verificar contra el diseño".
 
 ## Criterios de aceptación
 

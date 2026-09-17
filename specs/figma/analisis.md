@@ -65,6 +65,43 @@ Colores, tipografías, radios y pesos. Van a `theme.css` del cliente por el
 pipeline de `docs/arquitectura/tokens.md`. Suelen venir ya en un fichero de
 tema del export.
 
+### 4b. Lenguaje visual — **el paso que más se olvida**
+
+Los tokens dicen *qué colores hay*. El lenguaje visual dice **qué papel juega
+cada uno**, y sin él cualquiera —persona o skill— rellena los huecos a su
+gusto y el resultado se parece al diseño solo por casualidad.
+
+Es uno de los tres artefactos que DEC-002 exige extraer de cada Figma, junto a
+los tokens y el análisis, y es el que se salta con más facilidad porque no
+salta a la vista: el contenido aparece, la estructura es correcta, y aun así
+"no se coloca bien".
+
+Hay que registrar:
+
+| Qué | Cómo se detecta |
+|---|---|
+| **Átomos repetidos** | Contar las clases exactas que más se repiten. El que aparece diez veces idéntico es un componente, no una casualidad |
+| **Papel de cada token** | Qué token usa cada tipo de elemento: etiquetas, enlaces sobre fondo oscuro, botones, bordes |
+| **Ritmo vertical** | El espaciado entre secciones, que suele ser el mismo en todas |
+| **Contenedor** | Ancho máximo y márgenes laterales |
+| **Jerarquía tipográfica** | Qué tipografía y tamaño lleva cada nivel, y con qué espaciado entre letras |
+
+Un comando que lo saca en segundos:
+
+```bash
+grep -oE 'className="[^"]*"' App.tsx | sort | uniq -c | sort -rn | head -20
+```
+
+Lo que salga arriba con cuenta alta **es el sistema de diseño**. Si un patrón
+aparece más de tres veces, va al lenguaje visual y probablemente merece ser una
+primitiva.
+
+**Caso real:** en el primer análisis de La Civelle se catalogaron las 24
+secciones pero no los átomos. Se pasó por alto que una misma clase —etiqueta en
+mayúsculas, color de acento, muy espaciada— aparecía **catorce veces**, y el
+pie se construyó con encabezados blancos en lugar de esas etiquetas. El
+contenido era correcto y el resultado no se parecía al diseño.
+
 ### 5. Assets
 
 Imágenes, vídeos e iconos propios. **Los nombres de fichero de un export suelen
@@ -113,7 +150,9 @@ como decisiones conscientes:
 
 ## Formato del resultado
 
-Un documento por cliente en su repo, con:
+**Dos documentos** por cliente, en su repo:
+
+`docs/analisis-figma.md` — el inventario:
 
 1. Una tabla de patrones ordenada por número de usos
 2. El inventario por página: secciones en orden, contenido literal, patrón
@@ -121,8 +160,32 @@ Un documento por cliente en su repo, con:
 4. El mapeo sección → bloque + props, incluyendo las secciones sin bloque
 5. Las decisiones de "qué no se copia" y por qué
 
-Ese documento es lo que lee el importador y lo que consulta quien construye
-cada bloque.
+`docs/lenguaje-visual.md` — las reglas transversales (punto 4b): átomos
+repetidos, papel de cada token, ritmo, contenedor y jerarquía tipográfica.
+
+El primero lo lee el importador. **El segundo lo lee quien construye cualquier
+componente**, y es de consulta obligatoria: construir mirando solo la historia
+de usuario produce código que cumple los criterios y no se parece al diseño.
+
+---
+
+## Verificar contra el diseño
+
+Los tests comprueban que el dato sale. **Ninguno comprueba que salga como el
+diseño manda**, así que una historia puede tener todos sus criterios marcados y
+un resultado que no se parece.
+
+Antes de dar por hecho un componente o un bloque:
+
+1. Abrir la sección correspondiente del export y **compararla con lo
+   construido**, no de memoria
+2. Comprobar que cada elemento usa el token que le asigna el lenguaje visual
+3. Comprobar que se respeta el ritmo vertical y el contenedor
+4. Listar lo que se aparta del diseño y **por qué** — las diferencias
+   deliberadas son legítimas, las no detectadas no
+
+Es un paso manual, y por eso conviene que esté escrito: lo que no está en la
+lista de comprobación no se comprueba.
 
 ---
 
