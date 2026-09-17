@@ -102,6 +102,53 @@ mayúsculas, color de acento, muy espaciada— aparecía **catorce veces**, y el
 pie se construyó con encabezados blancos en lugar de esas etiquetas. El
 contenido era correcto y el resultado no se parecía al diseño.
 
+### 4c. El chrome tiene su propia escala
+
+El punto 4b saca los átomos del **contenido**. El marco —barra superior,
+navegación, pie— es un sistema aparte, más pequeño, y **no se deduce del
+contenido**: hay que extraer sus clases exactas una por una.
+
+Es el error más caro porque se ve en todas las páginas a la vez, y el más fácil
+de cometer porque el chrome "se sabe": todo el mundo cree conocer el aspecto de
+una barra de navegación.
+
+Hay que anotar, leyendo el export y no de memoria:
+
+| Qué | Por qué se escapa |
+|---|---|
+| **Fondo de cada barra** | Se asume el color de marca. Muchas veces es el de página |
+| **Altura de cada barra**, y a qué altura se queda fija la segunda | Determina el hueco que hay que reservar |
+| **Escala tipográfica del chrome** | Suele ir por debajo del `sm` del sistema: 10–12px con versalitas y espaciado entre letras propio |
+| **Cómo se marca lo activo** | Subrayado, fondo, color. Si no se replica, el menú "funciona" y no orienta |
+| **Forma del desplegable** | Radio, sombra, a partir de cuántos hijos pasa a dos columnas, a partir de qué entrada se alinea a la derecha |
+
+**Caso real:** en La Civelle se construyó la barra superior en verde con texto
+blanco. El diseño la quiere crema con texto gris de 11px: es una barra de
+servicio y su peso tiene que quedar por debajo del de la navegación. El fallo
+venía del propio `lenguaje-visual.md`, que decía "barra superior: `--primary`"
+porque se escribió de memoria. De ahí la regla de la trazabilidad, más abajo.
+
+### 4d. Un token declarado puede no usarse nunca
+
+El fichero de tema del export **no es la verdad**: es lo que el generador dejó
+escrito. Los exports arrastran la paleta por defecto de la librería de origen,
+con pares de color que el diseño no usa en ningún sitio.
+
+Por cada par `--x` / `--x-foreground`, contar sus usos reales antes de darlo por
+bueno:
+
+```bash
+grep -rn 'bg-secondary' src/ | grep -oE 'text-[a-z-]+foreground' | sort | uniq -c
+```
+
+Si el diseño empareja el fondo con otro texto del que declara el tema, **manda
+el uso**. Se corrige el token en el `theme.css` del cliente y se anota como
+desviación deliberada, en lugar de meter casos especiales en cada componente.
+
+**Caso real:** La Civelle declara `--secondary-foreground` en verde oscuro y
+luego pone `text-primary-foreground` sobre el dorado en cinco de siete botones.
+Copiar la declaración dejó todos los botones de acento con texto verde.
+
 ### 5. Assets
 
 Imágenes, vídeos e iconos propios. **Los nombres de fichero de un export suelen
@@ -110,6 +157,18 @@ dónde se usa cada imagen en el código, no del nombre.
 
 Conviene anotar qué iconos **no** están en el set de la primitiva `Icon`: son
 trabajo extra que de otro modo aparece a mitad de la implementación.
+
+**Los assets vienen en una sola polaridad.** Un logo suele exportarse solo en
+blanco, y el diseño le aplica un filtro CSS cada vez que lo pone sobre fondo
+claro. Hay que buscar esos filtros y anotar cuántas versiones hacen falta:
+
+```bash
+grep -rnE 'className="[^"]*(invert|brightness|grayscale)' src/
+```
+
+Las versiones se generan al importar y se suben **las dos al CMS**. El filtro no
+se deja en el componente: el color del logo es un dato del cliente, y
+`core-ui` no puede saber de qué color viene el de cada uno.
 
 ---
 
@@ -167,6 +226,50 @@ El primero lo lee el importador. **El segundo lo lee quien construye cualquier
 componente**, y es de consulta obligatoria: construir mirando solo la historia
 de usuario produce código que cumple los criterios y no se parece al diseño.
 
+### Cada afirmación cita de dónde sale
+
+Los dos documentos se escriben **leyendo el export**, nunca de memoria ni del
+recuerdo de haberlo leído. Para que eso sea comprobable y no un propósito, cada
+afirmación sobre un color, un tamaño o un espaciado lleva al lado el fichero y
+la línea del export de donde se sacó:
+
+```markdown
+| Barra superior | `--background` con borde `--border` | App.tsx:100 |
+```
+
+No es burocracia: es lo único que distingue un dato verificado de uno recordado,
+y son indistinguibles una vez escritos. **Un artefacto con un dato mal es peor
+que no tenerlo**, porque quien lo lee deja de mirar el diseño.
+
+De ahí se sigue el criterio para revisarlo: no se lee el documento buscando
+errores —ya parece correcto—, se coge cada fila y se abre la línea que cita.
+
+### El inventario es literal y completo
+
+El análisis recoge **todos** los elementos de cada lista, no una muestra: las
+ocho entradas del menú, las cinco columnas del pie, los seis enlaces legales.
+Es lo que el importador escribe en el CMS, así que una lista incompleta aquí es
+contenido que falta en la web.
+
+---
+
+## Cuando el resultado no se parece: contenido antes que código
+
+Al comparar la web con el diseño, la primera pregunta **no** es qué componente
+está mal, sino **si el dato está puesto**. Un pie con dos columnas de cinco y
+un menú con seis entradas de ocho se ven exactamente igual que una maquetación
+rota, y llevan a reescribir componentes que estaban bien.
+
+El orden barato:
+
+1. Consultar el dato guardado en el CMS y contrastarlo con el inventario del
+   análisis — ¿están las cinco columnas?, ¿el logo es el real o un marcador?
+2. Solo si el dato está completo, comparar el componente con el export
+
+**Caso real:** de las cinco quejas sobre la primera versión de La Civelle
+—colores, columnas, iconos, cabecera y logo—, dos eran código y tres eran el
+seed a medias, con un logo de 7×5 píxeles. Comprobarlo cuesta una consulta.
+
 ---
 
 ## Verificar contra el diseño
@@ -177,11 +280,19 @@ un resultado que no se parece.
 
 Antes de dar por hecho un componente o un bloque:
 
-1. Abrir la sección correspondiente del export y **compararla con lo
+1. Comprobar primero que **el contenido está completo** (sección anterior).
+   Media comparación se resuelve aquí
+2. Abrir la sección correspondiente del export y **compararla con lo
    construido**, no de memoria
-2. Comprobar que cada elemento usa el token que le asigna el lenguaje visual
-3. Comprobar que se respeta el ritmo vertical y el contenedor
-4. Listar lo que se aparta del diseño y **por qué** — las diferencias
+3. Comprobar que cada elemento usa el token que le asigna el lenguaje visual, y
+   que ese token **se usa así en el export**, no solo que esté declarado (4d)
+4. Comprobar que se respeta el ritmo vertical y el contenedor
+5. En el marco, comprobar además fondo, altura, escala tipográfica y marca de
+   activo (4c) — no se heredan de la escala del contenido
+6. Comprobar que los **rótulos fijos de la interfaz** están en el idioma del
+   cliente. Se escriben en el idioma de la conversación sin querer, y a nadie
+   le chirría hasta que lo ve el cliente
+7. Listar lo que se aparta del diseño y **por qué** — las diferencias
    deliberadas son legítimas, las no detectadas no
 
 Es un paso manual, y por eso conviene que esté escrito: lo que no está en la

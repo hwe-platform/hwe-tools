@@ -123,4 +123,38 @@ Ver `specs/figma/analisis.md`, sección "Verificar contra el diseño".
 
 ## Retrospectiva
 
-_(se llena después si aplica)_
+El marco quedó funcionalmente correcto y **visualmente distinto del diseño**.
+Todos los criterios se podían marcar y la web no se parecía. Lo que falló y lo
+que se ha cambiado para que no se repita:
+
+**1. Se construyó desde el texto de la historia, no desde el export.** La barra
+superior salió verde con texto blanco; el diseño la quiere crema con texto gris
+de 11px. La navegación usó `--card` en vez de `--background`, perdió la escala
+del chrome (11px, `tracking-[1.16px]`) y el subrayado dorado, que es lo único
+que marca la sección activa.
+
+**2. El artefacto que debía evitarlo tenía el dato mal.** `lenguaje-visual.md`
+decía *"barra superior: `--primary` con texto `--primary-foreground`"*, escrito
+de memoria. Un documento equivocado es peor que ninguno: quien lo lee deja de
+mirar el diseño. De ahí la regla de trazabilidad —cada afirmación cita
+fichero y línea del export— en `specs/figma/analisis.md`.
+
+**3. Se copió un token que el diseño no usa.** El export declara
+`--secondary-foreground` en verde oscuro y nunca lo pone sobre el dorado: usa
+`text-primary-foreground` en cinco de siete botones. Copiar la declaración dejó
+todos los botones de acento con texto verde. Ahora el método manda contar usos
+reales (sección 4d).
+
+**4. Tres de las cinco quejas eran contenido, no código.** El pie tenía dos
+columnas de cinco, el menú seis entradas de ocho y el logo era un marcador de
+7×5 píxeles. Se estuvo a punto de revisar componentes que estaban bien. Nueva
+regla: comprobar el dato guardado **antes** de tocar código.
+
+**5. Los rótulos fijos del pie quedaron en castellano** dentro de un site en
+francés, escritos en el idioma de la conversación. Ahora son props con
+valores por defecto en el idioma del cliente.
+
+**Añadido al método** (`specs/figma/analisis.md`): secciones 4c (el chrome
+tiene su propia escala), 4d (un token declarado puede no usarse), polaridad de
+los assets, trazabilidad, inventario literal y completo, y "contenido antes que
+código".
