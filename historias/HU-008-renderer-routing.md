@@ -30,7 +30,8 @@ no hay site.
 
 2. Crear `@hwe-platform/core-ui/src/renderer/blockRegistry.ts`:
    - Objeto que mapea `blockType → React.ComponentType`
-   - Vacío inicialmente, se llena conforme se crean bloques
+   - Claves en **kebab-case**, como las guarda Payload (`media-text`, no `mediaText`)
+   - Arranca con `rich-text` y `cta` (ver paso 3b); el resto se añaden conforme se crean
    - Exporta tipo `BlockRegistry` para que el cliente pueda extenderlo
 
 3. Crear `@hwe-platform/core-ui/src/renderer/types.ts`:
@@ -38,35 +39,55 @@ no hay site.
    - `BlockRegistry`: `Record<string, React.ComponentType<{ data: unknown }>>`
    - `BlockRendererProps`: `{ blocks: BlockInstance[]; customRegistry?: BlockRegistry }`
 
+### Bloques huérfanos
+
+3b. Crear `@hwe-platform/core-ui/src/blocks/rich-text/` y `blocks/cta/`:
+   - Son los dos únicos bloques del modelo de datos que **ninguna otra historia construye**
+     (`blog` va en HU-010 e `instagram` en HU-011)
+   - Se hacen aquí porque **no dependen del Figma**: `rich-text` solo pinta el contenido del
+     editor y `cta` es título + botones, que salen de la primitiva `Button` de HU-006
+   - Sus schemas Zod **ya existen** en `pages.schema.ts` — no redefinirlos
+   - Con ellos, al terminar esta historia ya se ve una página real en el navegador
+
 ### Catch-all routing
 
-4. Crear `apps/site-demo/src/app/[...slug]/page.tsx`:
+4. Crear `apps/site-demo/src/app/(frontend)/[[...slug]]/page.tsx`:
+   - **Dentro del route group `(frontend)`**, no en `src/app/` — si no, choca con `(payload)`
+   - **Doble corchete**: `[...slug]` no captura `/`, así que la home necesita `[[...slug]]`.
+     Sustituye al placeholder que dejó HU-002
    - Server Component que recibe el slug
-   - Busca en Payload en orden: pages → accommodations → entities → articles
-   - Si encuentra page → renderiza hero (si tiene) + BlockRenderer con sus blocks
+   - Sin slug → busca la page con `type='home'`
+   - Con slug → busca en Payload en orden: pages → accommodations → entities → articles
+   - Si encuentra page → renderiza BlockRenderer con sus blocks
    - Si encuentra accommodation → renderiza template de ficha (placeholder por ahora)
    - Si encuentra entity → renderiza template de entidad (placeholder por ahora)
    - Si encuentra article → renderiza template de artículo (placeholder por ahora)
    - Si no encuentra nada → `notFound()`
+   - **El hero no se renderiza aquí** — lo hace HU-009 una sola vez, junto con su schema.
+     Hasta entonces, una página con hero configurado simplemente no lo pinta
+   - La **resolución de slug va como función pura en core-ui**, testeada allí; el Server
+     Component queda como capa fina. Mismo patrón que los hooks de HU-005
+   - Usar `revalidationTags()` de `core-ui/src/payload/revalidation.ts` en los tags de caché
+     del fetch, para que la revalidación de HU-005 sirva de algo
 
-5. Crear `apps/site-demo/src/app/page.tsx`:
-   - Home page: busca la page con type='home' en Payload
-   - Renderiza hero + BlockRenderer
-
-6. Crear middleware de idioma `apps/site-demo/src/middleware.ts`:
+5. Crear middleware de idioma `apps/site-demo/src/middleware.ts`:
    - Detecta locale desde el prefijo de URL
    - Si no hay prefijo, usa el default de site-config
    - Pasa el locale al contexto de Next.js
+   - **Propio, no `next-intl`**: para tres idiomas con estrategia `prefix` son ~30 líneas, y
+     aún no hay textos de UI que traducir que justifiquen la dependencia (`codigo.md`)
 
-7. Crear `apps/site-demo/src/app/[...slug]/generateStaticParams.ts`:
+6. Exportar `generateStaticParams` **desde el propio `page.tsx`**:
    - Genera las rutas estáticas desde todas las colecciones
    - Para ISR con revalidación
+   - No puede ser un fichero aparte: Next lo exige exportado desde la página
 
-8. Tests:
+7. Tests:
    - BlockRenderer renderiza bloques conocidos
    - BlockRenderer ignora bloques desconocidos con warning
    - Registry del cliente overridea el de plataforma
-   - Catch-all resuelve páginas correctamente (con mocks de Payload)
+   - Resolución de slug (función pura en core-ui) cubre los cuatro órdenes y el 404
+   - `rich-text` y `cta` renderizan y pasan vitest-axe
 
 ## Leer antes
 
@@ -87,7 +108,9 @@ no hay site.
 - [ ] Middleware de idioma detecta locale desde prefijo URL
 - [ ] `generateStaticParams` genera rutas para todas las colecciones
 - [ ] Tests del BlockRenderer — cobertura >80%
-- [ ] Tests del catch-all con mocks — cobertura >60%
+- [ ] Tests de la resolución de slug — cobertura >60%
+- [ ] Una página montada en el panel con `rich-text` y `cta` se ve en el navegador, con los
+      colores y la tipografía del cliente
 
 ## Retrospectiva
 

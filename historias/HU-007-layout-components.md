@@ -54,17 +54,31 @@ site-config) para funcionar.
    - Link opcional
    - Oculto si enabled=false
 
-6. Crear `@hwe-platform/core-ui/src/layout/SiteLayout.tsx`:
-   - Componente wrapper que compone: Banner + TopBar + SecondaryNav +
-     {children} + Footer
-   - Recibe los globals de Payload como props
+6. Crear `@hwe-platform/core-ui/src/layout/BottomBookingWidget.tsx`:
+   - Panel fijo al fondo de la ventana, compartido por todas las páginas
+   - Pestaña que lo despliega y repliega (`Réserver votre séjour` / `Fermer la recherche`)
+   - Dentro: fechas del viaje, participantes y botón de buscar
+   - **No confundir con el `BookingWidget` de la ficha de alojamiento** (la tabla de precios y
+     disponibilidad), que es un bloque de contenido y va en HU-011
 
-7. Tests de cada componente:
+7. Crear `@hwe-platform/core-ui/src/layout/FloatingActions.tsx`:
+   - Botón de chat fijo abajo a la derecha
+   - Botón de volver arriba, que aparece al pasar cierto scroll
+   - Ambos por encima del resto del contenido
+
+8. Crear `@hwe-platform/core-ui/src/layout/SiteLayout.tsx`:
+   - Componente wrapper que compone: Banner + TopBar + SecondaryNav +
+     {children} + Footer + BottomBookingWidget + FloatingActions
+   - Recibe los globals de Payload como props
+   - **El breadcrumb no va aquí**: en el Figma vive dentro del hero de cada página, así que es
+     responsabilidad del bloque hero (HU-009), no del layout
+
+9. Tests de cada componente:
    - Renderizado con datos reales del Figma de La Civelle
    - Accesibilidad (vitest-axe)
    - Responsive (viewport tests si aplica)
 
-8. Exportar todo desde `@hwe-platform/core-ui`
+10. Exportar todo desde `@hwe-platform/core-ui`
 
 ## Leer antes
 
@@ -84,6 +98,8 @@ site-config) para funcionar.
 - [ ] Footer muestra newsletter si hay columna tipo newsletter
 - [ ] Banner se muestra/oculta según enabled
 - [ ] Banner se puede cerrar si dismissible
+- [ ] BottomBookingWidget se despliega y repliega, y queda fijo al fondo
+- [ ] El botón de volver arriba aparece solo tras hacer scroll
 - [ ] SiteLayout compone todos los layout components
 - [ ] Todos los componentes pasan vitest-axe
 - [ ] Tests — cobertura >70%

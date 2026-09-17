@@ -178,10 +178,10 @@ import { MediaTextBlock } from '../blocks/media-text'
 import { IconGridBlock } from '../blocks/icon-grid'
 // ...
 
-export const blockRegistry: Record<string, React.ComponentType<any>> = {
+export const blockRegistry: Record<string, React.ComponentType<{ data: unknown }>> = {
   hero: HeroBlock,
-  mediaText: MediaTextBlock,
-  iconGrid: IconGridBlock,
+  'media-text': MediaTextBlock,
+  'icon-grid': IconGridBlock,
   // ...
 }
 ```
@@ -295,7 +295,7 @@ interface BlockInstance {
 
 interface BlockRendererProps {
   blocks: BlockInstance[]
-  customRegistry?: Record<string, React.ComponentType<any>>
+  customRegistry?: Record<string, React.ComponentType<{ data: unknown }>>
 }
 
 export function BlockRenderer({ blocks, customRegistry }: BlockRendererProps) {
@@ -307,6 +307,9 @@ export function BlockRenderer({ blocks, customRegistry }: BlockRendererProps) {
 
         if (!Component) {
           if (process.env.NODE_ENV === 'development') {
+            // El guard de NODE_ENV no lo evalúa ESLint: sin la excepción,
+            // `no-console` falla en CI (ver docs/estandares/codigo.md).
+            // eslint-disable-next-line no-console
             console.warn(`Bloque desconocido: ${block.blockType}`)
           }
           return null

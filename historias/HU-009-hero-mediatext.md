@@ -12,17 +12,27 @@ dependencias: [HU-008]
 ## Contexto
 
 Hero y MediaText son los primeros bloques reales. Hero es lo primero
-que ve el visitante. MediaText es el bloque más reutilizado en el Figma
-de La Civelle (aparece 4+ veces en la home). Juntos cubren la mayoría
-del contenido visual del site.
+que ve el visitante. MediaText es el patrón más reutilizado del Figma de
+La Civelle: **aparece 7 veces** entre las tres páginas —cuatro en la home
+(Intro, Restaurant, Piscine, Accès), dos en Le Camping y una en la ficha
+de alojamiento—, así que es el bloque que más secciones desbloquea de
+todo el catálogo.
+
+**Ojo con el nombre "Hero":** no es un bloque del array `blocks`. En el
+modelo de datos `hero` es un **grupo de campos de `pages`** (variant,
+media, title, subtitle, showBreadcrumbs) y no está entre los 15 bloques.
+Lo que se construye aquí es su renderizador, y por eso HU-008 deja el
+hero sin pintar a propósito: para hacerlo una sola vez y aquí.
 
 ## Qué hacer
 
 ### Hero
 
 1. Crear `@hwe-platform/core-ui/src/blocks/hero/`:
-   - `hero.schema.ts` — schema Zod con variant (video/image/minimal/none),
-     media, title, subtitle, showBreadcrumbs
+   - `hero.schema.ts` — **extraer** el schema del grupo `hero` que ya existe dentro de
+     `schemas/collections/pages.schema.ts` y reutilizarlo desde ahí. **No escribirlo de nuevo**:
+     duplicar esos campos reproduce la divergencia entre Zod y Payload que costó cara en HU-005,
+     y el test de paridad no la detecta porque solo compara el primer nivel
    - `hero.types.ts` — tipo derivado con `z.infer`
    - `HeroBlock.tsx` — resuelve variante por mapa
    - `HeroVideo.tsx` — vídeo fullscreen con overlay oscuro,
