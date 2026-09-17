@@ -14,6 +14,14 @@ Cada spec define cómo funciona una parte del sistema.
 | [modelo-datos.md](payload/modelo-datos.md) | Colecciones, globals, relaciones | ✅ Definido |
 | [localizacion.md](payload/localizacion.md) | Multilingüe por campo, fallback, next-intl | ✅ Definido |
 
+### figma/
+
+| Archivo | Contenido | Estado |
+|---------|-----------|--------|
+| [analisis.md](figma/analisis.md) | Cómo se lee un export de Figma Make: qué extraer, cómo reducir a patrones, mapeo sección → bloque | ✅ Definido |
+
+El resultado de aplicarlo a un cliente vive en el repo de ese site, no aquí (DEC-002).
+
 ### alojamientos/
 
 | Archivo | Contenido | Estado |
