@@ -15,6 +15,26 @@ No hay JSON intermedio, no hay build step, no hay presets de JavaScript.
 Tailwind v4 usa CSS nativo con `@theme inline` — las variables se declaran
 en `:root` y Tailwind las consume directamente.
 
+### El `globals.css` debe declarar core-ui como fuente
+
+Tailwind v4 detecta las clases del proyecto que compila e **ignora
+`node_modules`**. Como los componentes de `@hwe-platform/core-ui` viven ahí,
+sus clases no se generan y el site sale **sin estilos**: aparecen en el HTML
+pero la hoja no las contiene.
+
+Todo site que consuma core-ui necesita esta línea:
+
+```css
+@import 'tailwindcss';
+@import './theme.css';
+@source '../../node_modules/@hwe-platform/core-ui/dist';
+```
+
+El síntoma es fácil de confundir con otra cosa: el contenido carga bien, la
+estructura es correcta, y todo se ve apilado en negro sobre blanco. Si pasa,
+lo primero es mirar el tamaño de la hoja servida — sin esta línea se queda en
+una fracción de lo que debería.
+
 ---
 
 ## Tres capas de theming
