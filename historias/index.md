@@ -23,7 +23,7 @@ esta tabla para saber qué es lo siguiente.
 | HU-012 | Crear site demo con contenido real y deploy en Vercel | 1 | 3 | spec-lista | — | — | HU-007, HU-009, HU-010, HU-011 |
 | HU-013 | Configurar storage adapter para media en producción | 1 | 2 | spec-pendiente | — | — | HU-005 |
 | HU-014 | Biblioteca de medios — duplicados, listado visual y metadatos | 1 | 2 | spec-lista | — | — | HU-005 |
-| HU-015 | Corregir /scaffold-block — destino explícito, ejes por dominio y plantillas que compilan | 1 | 3 | spec-lista | — | — | HU-009, HU-010, HU-011 |
+| HU-015 | /scaffold-block como herramienta permanente — destino explícito, ejes por dominio y evitar duplicados | 1 | 3 | spec-lista | — | — | HU-009, HU-010, HU-011 |
 
 ### Orden de ejecución
 

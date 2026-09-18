@@ -1,6 +1,6 @@
 ---
 id: HU-015
-titulo: Corregir /scaffold-block — destino explícito, ejes por dominio y plantillas que compilan
+titulo: /scaffold-block como herramienta permanente — destino explícito, ejes por dominio y evitar duplicados
 estado: spec-lista
 prioridad: 3
 hito: 1
@@ -30,6 +30,13 @@ necesita un comando — el desarrollador crea manualmente"*. Dos consecuencias:
    bloques que son de un cliente. Justo lo contrario de lo que se busca.
 
 Además arrastra dos errores que muerden antes, en el primer bloque que se genere.
+
+**Esto no es andamiaje de una fase.** El comando es herramienta permanente: se
+seguirán añadiendo bloques a `core-ui` mientras el proyecto viva, y el propio
+mecanismo de promoción lo garantiza —un override que se repite tres veces acaba
+siendo un bloque de plataforma nuevo—. Los dos destinos son legítimos para
+siempre, no uno ahora y otro después. Se arregla cuando haya catálogo del que
+aprender, pero se arregla para quedarse.
 
 ## Qué hacer
 
@@ -81,6 +88,18 @@ Además arrastra dos errores que muerden antes, en el primer bloque que se gener
 13. Mencionar los slots, que son la salida prevista para el adorno de un solo
     uso y evitan que un bloque se vuelva específico de un cliente.
 
+### E. Ayudar a **no** crear un bloque — *cuando el catálogo pase de ~10*
+
+14. El riesgo que crece con el proyecto no es andamiar mal: es **reconstruir lo
+    que ya existe**. Quien entre en el cliente cinco no se sabe el catálogo, y un
+    comando que crea sin preguntar es un comando que invita a duplicar.
+15. Antes de generar, listar los bloques del catálogo cuyo nombre o ejes se
+    parezcan a lo pedido, y preguntar si alguno sirve con otras variantes. Un
+    bloque nuevo debería costar una confirmación más que reutilizar uno.
+16. Es el mismo razonamiento que sostiene el 80/15/5: si el camino fácil es
+    crear, el ratio se invierte solo, y `core-ui` acaba siendo un almacén de
+    bloques parecidos en vez de un catálogo.
+
 ## Leer antes
 
 - docs/arquitectura/bloques.md — reparto 80/15/5, ejes de variación, slots y el
@@ -105,6 +124,7 @@ Además arrastra dos errores que muerden antes, en el primer bloque que se gener
 - [ ] `--target platform` sigue sin tocar el registry automáticamente
 - [ ] El comando remite al lenguaje visual del cliente, al test de paridad y a
       los slots
+- [ ] Pedir un bloque parecido a uno existente avisa y ofrece el que ya hay
 - [ ] La versión de `hwe-core/.claude/` queda espejada desde `hwe-tools`
 
 ## Notas
@@ -127,9 +147,17 @@ el mismo arreglo manual tres veces y no anotarlo. Cada historia de bloques que
 tropiece con una plantilla deja constancia aquí, y esta historia se escribe con
 esos tres tropiezos delante en vez de con una suposición.
 
-**La parte C tiene su propio disparador**, que no son los bloques sino el
-segundo cliente o el mapeador —lo que llegue antes—, porque es quien empieza a
-producir overrides.
+**Cada parte tiene su propio disparador**, porque no dependen de lo mismo:
+
+| Parte | Cuándo |
+|---|---|
+| A — plantillas que compilan | Con los bloques hechos, para generalizar de once y no de dos |
+| B — ejes por dominio | Igual |
+| C — destino explícito | El segundo cliente o el mapeador, lo que llegue antes: es quien empieza a producir overrides |
+| E — evitar duplicados | Cuando el catálogo pase de una decena y ya no quepa en la cabeza |
+
+Ninguna caduca. El comando no es andamiaje de esta fase: es la puerta por la que
+entrará cada bloque del proyecto, y lo que decida ahí se paga en cada cliente.
 
 ## Retrospectiva
 
