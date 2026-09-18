@@ -118,8 +118,21 @@ Ver `specs/figma/analisis.md`, sección "Verificar contra el diseño".
 - [x] SiteLayout compone todos los layout components
 - [x] Todos los componentes pasan vitest-axe
 - [x] Tests — cobertura >70%
-- [ ] Responsive: los componentes se adaptan a mobile — **sin verificar**: las clases
-      responsive están puestas, pero no hay tests de viewport ni comprobación visual
+- [x] Responsive: los componentes se adaptan a mobile — comprobado visualmente por
+      la usuaria. **No hay tests de viewport**: la comprobación fue manual y no
+      queda cubierta frente a regresiones (ver Notas)
+
+## Notas
+
+**El responsive no tiene red.** Se comprobó a ojo y está bien, pero no hay
+tests de viewport, así que nada avisa si una clase responsive se rompe al tocar
+otra cosa. El hueco lo cierra HU-012, que monta Playwright con pruebas de
+mobile, tablet y escritorio; hasta entonces, cualquier cambio en el marco hay
+que volver a mirarlo a mano.
+
+Se deja dicho en vez de marcado y olvidado: un criterio verde por comprobación
+manual y uno verde por test cubierto no valen lo mismo, y la diferencia se
+pierde en cuanto pasan dos semanas.
 
 ## Retrospectiva
 
