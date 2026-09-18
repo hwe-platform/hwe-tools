@@ -6,7 +6,7 @@ prioridad: 2
 hito: 1
 agente: —
 rama: —
-dependencias: [HU-008]
+dependencias: [HU-008, HU-015]
 ---
 
 ## Contexto
@@ -23,6 +23,12 @@ modelo de datos `hero` es un **grupo de campos de `pages`** (variant,
 media, title, subtitle, showBreadcrumbs) y no está entre los 15 bloques.
 Lo que se construye aquí es su renderizador, y por eso HU-008 deja el
 hero sin pintar a propósito: para hacerlo una sola vez y aquí.
+
+**Depende de HU-015** porque es la primera historia que usa `/scaffold-block`,
+y el comando tiene dos fallos que muerden justo aquí: genera código que no pasa
+el lint, y solo sabe crear ejes como enumeraciones. El `split` de MediaText es
+un **número**, no la lista de repartos que usa La Civelle; nacer como enum lo
+rompería con el cliente siguiente.
 
 ## Qué hacer
 

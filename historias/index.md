@@ -17,12 +17,13 @@ esta tabla para saber qué es lo siguiente.
 | HU-006 | Sistema de tokens y primitivas base | 1 | 2 | hecha | code-builder | main | HU-001 |
 | HU-007 | Layout components (TopBar, SecondaryNav, Footer, MobileMenu, Banner) | 1 | 2 | en-revisión | code-builder | feat/HU-007-layout | HU-005, HU-006 |
 | HU-008 | BlockRenderer, registry de bloques y catch-all routing | 1 | 1 | spec-lista | — | — | HU-005, HU-006 |
-| HU-009 | Bloques Hero y MediaText | 1 | 2 | spec-lista | — | — | HU-008 |
+| HU-009 | Bloques Hero y MediaText | 1 | 2 | spec-lista | — | — | HU-008, HU-015 |
 | HU-010 | Bloques IconGrid, CardGrid y ReviewsGrid | 1 | 3 | spec-lista | — | — | HU-008 |
 | HU-011 | Bloques Gallery, Map, SpecBar y EquipmentList | 1 | 3 | spec-lista | — | — | HU-008 |
 | HU-012 | Crear site demo con contenido real y deploy en Vercel | 1 | 3 | spec-lista | — | — | HU-007, HU-009, HU-010, HU-011 |
 | HU-013 | Configurar storage adapter para media en producción | 1 | 2 | spec-pendiente | — | — | HU-005 |
 | HU-014 | Biblioteca de medios — duplicados, listado visual y metadatos | 1 | 2 | spec-lista | — | — | HU-005 |
+| HU-015 | Corregir /scaffold-block — destino explícito, ejes por dominio y plantillas que compilan | 1 | 2 | spec-lista | — | — | — |
 
 ### Orden de ejecución
 
@@ -33,9 +34,10 @@ esta tabla para saber qué es lo siguiente.
 5. **Prioridad 1 (tras HU-005 + HU-006):** HU-008 (renderer + routing)
 6. **Prioridad 2 (tras HU-001):** HU-006 (tokens + primitivas) — HU-003 (submodule) ya está hecha
 7. **Prioridad 2 (tras HU-005 + HU-006):** HU-007 (layout)
-8. **Prioridad 2 (tras HU-008):** HU-009 (hero + mediatext)
-9. **Prioridad 3 (tras HU-008):** HU-010 (grids) + HU-011 (gallery + map + detail)
-10. **Prioridad 3 (tras todo):** HU-012 (site demo con contenido real + extracción de hwe-template)
+8. **Prioridad 2 (antes de HU-009):** HU-015 (corregir /scaffold-block) — es el comando con el que nacen los bloques
+9. **Prioridad 2 (tras HU-008 + HU-015):** HU-009 (hero + mediatext)
+10. **Prioridad 3 (tras HU-008):** HU-010 (grids) + HU-011 (gallery + map + detail)
+11. **Prioridad 3 (tras todo):** HU-012 (site demo con contenido real + extracción de hwe-template)
 
 ---
 

@@ -5,6 +5,15 @@ argument-hint: <BlockName> [--variants <a,b,...>]
 
 # Scaffold Block
 
+> **Pendiente de corregir — HU-015.** Este comando genera siempre en
+> `packages/core-ui`, que es lo correcto **mientras se construye el catálogo**
+> y deja de serlo en cuanto haya clientes: lo que hace un proyecto de cliente es
+> un _override_ en su propio repo (~15%, ver `bloques.md`), no tocar plataforma.
+> Arrastra además dos fallos que muerden antes: sus plantillas generan código que
+> no pasa el lint, y solo sabe crear ejes como enumeraciones, cuando los de
+> estilo van por dominio (`split: number`, no la lista de repartos vistos).
+> Ver `historias/HU-015-scaffold-block.md`.
+
 Scaffoldas un nuevo bloque en `@hwe-platform/core-ui`. Creas la carpeta con la
 estructura obligatoria para que el Code Builder solo tenga que implementar
 el render visual — la arquitectura ya está puesta.
@@ -38,6 +47,7 @@ Ejemplos inválidos: `Hero`, `hero-block`, `heroBlock`, `HeroComponent`.
 Si no es válido, parar y sugerir la corrección.
 
 Derivar:
+
 - `Name` = nombre tal cual (ej: `HeroBlock`)
 - `name` = kebab-case sin `Block` (ej: `hero`)
 - `NameWithoutBlock` = PascalCase sin `Block` (ej: `Hero`)
