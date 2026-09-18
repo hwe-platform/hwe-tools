@@ -2,11 +2,11 @@
 id: HU-015
 titulo: Corregir /scaffold-block — destino explícito, ejes por dominio y plantillas que compilan
 estado: spec-lista
-prioridad: 2
+prioridad: 3
 hito: 1
 agente: —
 rama: —
-dependencias: []
+dependencias: [HU-009, HU-010, HU-011]
 ---
 
 ## Contexto
@@ -33,7 +33,7 @@ Además arrastra dos errores que muerden antes, en el primer bloque que se gener
 
 ## Qué hacer
 
-### A. Plantillas que compilan y pasan el lint — *antes de HU-009*
+### A. Plantillas que compilan y pasan el lint
 
 1. La plantilla sin variantes importa `{Name}Data` y **no lo usa**:
    `@typescript-eslint/no-unused-vars` está en `error`. Quitar el import.
@@ -45,7 +45,7 @@ Además arrastra dos errores que muerden antes, en el primer bloque que se gener
 3. Generar el bloque y comprobar que `pnpm lint` y `pnpm test` pasan **sin tocar
    nada a mano**. Un andamio que nace en rojo enseña a ignorar el rojo.
 
-### B. Ejes por dominio, no solo enums — *antes de HU-009*
+### B. Ejes por dominio, no solo enums
 
 4. Hoy `--variants a,b` siempre produce `z.enum([...])`. Eso solo vale para los
    ejes **estructurales**, los que cambian la anatomía del HTML y se resuelven
@@ -58,7 +58,7 @@ Además arrastra dos errores que muerden antes, en el primer bloque que se gener
    estructurales generan ficheros y mapa; los ejes de estilo, campos del schema
    y variantes de clase. Que el resumen final diga cuál es cuál.
 
-### C. Destino explícito — *antes del mapeador de bloques*
+### C. Destino explícito — *lo que no puede esperar al cliente 2*
 
 7. Añadir `--target platform|client`.
 8. **`client` por defecto** en cuanto exista catálogo: es el caso mayoritario.
@@ -109,15 +109,27 @@ Además arrastra dos errores que muerden antes, en el primer bloque que se gener
 
 ## Notas
 
-**Orden.** A y B bloquean HU-009: es la primera historia que usa el comando, y
-`media-text` lleva justo un eje de estilo numérico (`split`). C puede esperar
-hasta que exista un segundo cliente o hasta el mapeador de bloques, que produce
-overrides y por tanto lo necesita.
+**Por qué va después de los bloques y no antes.** La tentación es corregir el
+andamio antes de usarlo. No compensa, por dos razones:
 
-**Por qué no se arregló al detectarlo.** Se detectó mientras se construía el
-catálogo, donde `platform` es el destino correcto y el comando funciona. Dejarlo
-escrito en vez de arreglarlo sobre la marcha es deliberado: la corrección cambia
-cómo nacen todos los bloques siguientes y merece su propia revisión.
+1. **El andamio no decide cómo nace un bloque; lo decide su historia.** HU-009
+   ya especifica sus ejes con precisión —`split` es un número sobre 12, `media`
+   es estructural y va por mapa, y los slots están enumerados—. Lo que genere el
+   comando se reescribe en cinco minutos.
+2. **Hoy se diseñaría a ciegas.** El catálogo tiene dos bloques. Con HU-009, 010
+   y 011 serán once, y entonces se sabrá de verdad qué comparten, si la
+   estructura de ficheros aguanta, y cómo se andamia un slot. Corregirlo antes
+   es diseñar desde la suposición, que es el error que este proyecto ya ha
+   pagado una vez.
+
+Lo que sí hay que evitar es lo contrario: usar el comando tres veces, tragarse
+el mismo arreglo manual tres veces y no anotarlo. Cada historia de bloques que
+tropiece con una plantilla deja constancia aquí, y esta historia se escribe con
+esos tres tropiezos delante en vez de con una suposición.
+
+**La parte C tiene su propio disparador**, que no son los bloques sino el
+segundo cliente o el mapeador —lo que llegue antes—, porque es quien empieza a
+producir overrides.
 
 ## Retrospectiva
 

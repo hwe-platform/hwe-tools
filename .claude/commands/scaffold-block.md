@@ -9,10 +9,14 @@ argument-hint: <BlockName> [--variants <a,b,...>]
 > `packages/core-ui`, que es lo correcto **mientras se construye el catálogo**
 > y deja de serlo en cuanto haya clientes: lo que hace un proyecto de cliente es
 > un _override_ en su propio repo (~15%, ver `bloques.md`), no tocar plataforma.
-> Arrastra además dos fallos que muerden antes: sus plantillas generan código que
-> no pasa el lint, y solo sabe crear ejes como enumeraciones, cuando los de
-> estilo van por dominio (`split: number`, no la lista de repartos vistos).
-> Ver `historias/HU-015-scaffold-block.md`.
+> Arrastra además dos molestias: sus plantillas generan código que no pasa el
+> lint, y solo sabe crear ejes como enumeraciones, cuando los de estilo van por
+> dominio (`split: number`, no la lista de repartos vistos).
+>
+> **Se corrige después de los bloques, no antes**, para diseñarlo con el catálogo
+> delante en vez de con dos bloques y una suposición. Mientras tanto: lo que
+> manda son los ejes que especifica cada historia, no lo que genere el andamio.
+> Si tropiezas con una plantilla, anótalo en `historias/HU-015-scaffold-block.md`.
 
 Scaffoldas un nuevo bloque en `@hwe-platform/core-ui`. Creas la carpeta con la
 estructura obligatoria para que el Code Builder solo tenga que implementar
