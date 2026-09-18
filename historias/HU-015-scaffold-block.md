@@ -78,15 +78,11 @@ aprender, pero se arregla para quedarse.
     categorías de `bloques.md`, y anotarla en el inventario de overrides que ese
     documento sitúa en `hwe-tools`, no enterrado en el repo del cliente.
 
-### D. Lo que el comando no dice y debería
+### D. ~~Lo que el comando no dice y debería~~ — **hecha**
 
-11. Recordar que antes de escribir JSX se lee el `docs/lenguaje-visual.md` del
-    cliente, y que al terminar se compara contra el export
-    (`specs/figma/analisis.md`, "Verificar contra el diseño").
-12. Recordar el test de paridad: si el bloque añade campos a Payload, el schema
-    Zod tiene que seguirlos.
-13. Mencionar los slots, que son la salida prevista para el adorno de un solo
-    uso y evitan que un bloque se vuelva específico de un cliente.
+El comando ya remite al lenguaje visual del cliente, al test de paridad, a los
+slots y al mecanismo de promoción, y explica cómo se decide un eje. Era
+documentación pura: no dependía de tener catálogo, así que se adelantó.
 
 ### E. Ayudar a **no** crear un bloque — *cuando el catálogo pase de ~10*
 
@@ -122,7 +118,7 @@ aprender, pero se arregla para quedarse.
 - [ ] `--target client` recoge la causa del override y la deja anotada en el
       inventario de `hwe-tools`
 - [ ] `--target platform` sigue sin tocar el registry automáticamente
-- [ ] El comando remite al lenguaje visual del cliente, al test de paridad y a
+- [x] El comando remite al lenguaje visual del cliente, al test de paridad y a
       los slots
 - [ ] Pedir un bloque parecido a uno existente avisa y ofrece el que ya hay
 - [ ] La versión de `hwe-core/.claude/` queda espejada desde `hwe-tools`

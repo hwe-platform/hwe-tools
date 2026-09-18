@@ -22,6 +22,55 @@ Scaffoldas un nuevo bloque en `@hwe-platform/core-ui`. Creas la carpeta con la
 estructura obligatoria para que el Code Builder solo tenga que implementar
 el render visual — la arquitectura ya está puesta.
 
+## Antes de crear nada: ¿hace falta un bloque?
+
+Un bloque nuevo es la respuesta **menos** frecuente. Según el reparto 80/15/5 de
+`bloques.md`, lo habitual es que un bloque de plataforma ya sirva con otras
+variantes:
+
+| ¿Qué pasa?                                                | Qué hacer                                        |
+| --------------------------------------------------------- | ------------------------------------------------ |
+| El diseño encaja en un bloque existente con otros valores | **Nada de código.** Solo datos en Payload (~80%) |
+| Encaja salvo un adorno propio del cliente                 | El bloque de plataforma con un **slot**          |
+| El bloque de plataforma no llega                          | **Override** en el repo del cliente (~15%)       |
+| No hay nada de lo que partir                              | Un bloque nuevo (~5%)                            |
+
+Antes de ejecutar este comando, mirar el catálogo
+(`packages/core-ui/src/blocks/`) y preguntarse si alguno cubre el caso
+variando un eje. Duplicar un bloque parecido es lo que hace que `core-ui` deje
+de tener sentido y acabe habiendo N copias divergentes.
+
+## Leer antes
+
+- `docs/arquitectura/bloques.md` — el reparto 80/15/5, los ejes de variación,
+  los slots y el mecanismo de promoción
+- **`docs/lenguaje-visual.md` del repo del cliente** — de consulta obligatoria
+  antes de escribir JSX. Construir mirando solo la historia produce código que
+  cumple todos los criterios y no se parece al diseño
+- `docs/estandares/codigo.md` y `docs/estandares/testing.md`
+- La historia del bloque, que trae **sus ejes ya decididos**: cuáles son
+  estructurales y cuáles de estilo, y con qué dominio
+
+## Cómo se decide un eje
+
+Lo que este comando genera es un punto de partida; **quien manda es la
+historia**. Dos reglas que conviene tener delante al rellenarlo:
+
+**Estructural o de estilo.** Si cambia la anatomía del HTML —texto sobre la
+imagen frente a texto debajo— son componentes separados resueltos **por mapa,
+nunca con `if` ni `switch`. Si solo cambia el aspecto, va con CVA o clases.
+
+**Por dominio, no por lo visto.** Un eje se diseña por la dimensión que varía,
+no por los valores que toma el primer cliente. `split: number` cuesta lo mismo
+que `split: '5/7' | '7/5'` y absorbe diseños que aún no se han visto; el enum
+se rompe con el cliente que quiera 6/6 y obliga a tocar `core-ui` o a hacer un
+override. Los valores del Figma son **ejemplos documentados, no el conjunto de
+lo posible**.
+
+> El `--variants` de este comando solo sabe generar enumeraciones, así que
+> sirve para los ejes estructurales. Los de estilo se escriben a mano en el
+> schema. Está recogido en HU-015.
+
 ## Restricciones
 
 - Nombres en PascalCase acabados en `Block` (ej: `HeroBlock`, `GalleryBlock`).
@@ -305,17 +354,78 @@ Siguientes pasos:
   4. Completar los tests con casos reales
 ```
 
+## Al terminar el bloque
+
+Generar es el 10%. Antes de dar el bloque por hecho:
+
+1. **Comparar con el export de Figma**, no de memoria. Los tests comprueban que
+   el dato sale; ninguno comprueba que salga como el diseño manda. El
+   procedimiento está en `specs/figma/analisis.md`, sección "Verificar contra
+   el diseño"
+2. **Comprobar que cada elemento usa el token que le asigna el lenguaje visual**
+   del cliente — y que ese token se usa así en el export, no solo que esté
+   declarado
+3. **Respetar el ritmo vertical y el contenedor** del cliente, en vez de
+   inventar espaciado por sección
+4. **Si el bloque añade campos a Payload, el schema Zod tiene que seguirlos** o
+   falla el test de paridad (`parity.test.ts`). Compara nombres de campo y
+   también las opciones de los `select` contra sus enums
+5. **Listar las diferencias con el diseño y por qué.** Las deliberadas son
+   legítimas —el export trae fallos de accesibilidad y SEO que no se copian—;
+   las no detectadas, no
+
+## Slots: el adorno de un solo uso
+
+Cuando una sección trae un elemento que ningún eje describe —un medallón sobre
+la imagen, una esquina decorativa—, **no se parametriza por lo que es sino por
+lo que ocupa**: un slot llamado por su posición, no por su contenido.
+
+Perseguir el píxel exacto con un eje propio vuelve el bloque específico de un
+cliente, y un bloque específico es un bloque que el cliente siguiente
+sobrescribe. Solo se abren los slots que un diseño real pide.
+
+Detalle en `docs/arquitectura/bloques.md`.
+
 ## Bloques de cliente (override)
 
-Este comando scaffolda bloques de plataforma en `@hwe-platform/core-ui`.
-Para overrides de cliente (~15% de los casos), no se necesita un
-comando — el desarrollador crea manualmente:
+Este comando genera en `@hwe-platform/core-ui`, es decir **bloques de
+plataforma**. Un override de cliente todavía se hace a mano, y hasta que HU-015
+añada `--target client` hay que hacerlo con cuidado, porque son tres pasos y
+el tercero se olvida siempre:
 
-1. Un archivo `{Name}Block.tsx` en `src/blocks/{name}/` del cliente
-2. Lo registra en `block-registry.ts` del cliente
+1. `{Name}Block.tsx` en `src/blocks/{name}/` del repo del cliente. Puede
+   importar piezas del bloque de plataforma en vez de copiarlo entero
+2. Registrarlo en el `block-registry.ts` del cliente, con la **misma clave**
+   que el de plataforma: gana el del cliente
+3. **Anotar por qué el bloque de plataforma no llegaba.** Este es el que se
+   salta, y sin él el catálogo no mejora nunca
 
-El 80% de los clientes usan los bloques de plataforma tal cual.
-La personalización visual viene de los tokens (`theme.css`).
+### Por qué el tercer paso no es burocracia
+
+Hay dos causas posibles y piden respuestas opuestas:
+
+| Causa                        | Qué significa                                                               | Qué hacer                            |
+| ---------------------------- | --------------------------------------------------------------------------- | ------------------------------------ |
+| **Carencia de plataforma**   | Falta un eje que debería existir: _"`media-text` no soporta reparto 50/50"_ | Candidato a **promover** a `core-ui` |
+| **Singularidad del cliente** | Diseño propio que nadie más va a querer                                     | El override es correcto y se queda   |
+
+**Regla del tercero:** el primer override es normal, un segundo idéntico avisa,
+al tercero se promueve. Es un disparador concreto en lugar de "si parece
+reutilizable", que no dispara nunca porque quien hace el cliente siguiente va
+con fecha y su override ya funciona.
+
+**Regla de seguridad:** promover **añade una variante nueva; nunca cambia el
+comportamiento por defecto**. Así no puede romper la web de un cliente ya en
+producción — y si es barato y seguro, se hace.
+
+El inventario de overrides se mantiene en `hwe-tools`, no enterrado en el repo
+de cada cliente: la deuda vive donde se planifica.
+
+### El ratio es el termómetro
+
+Si los overrides pasan del 15%, el problema no es el cliente: es que `core-ui`
+está mal parametrizado. Matiz: con el primer cliente el ratio no significa nada
+—se está construyendo el catálogo—; empieza a medir del segundo o tercero.
 
 ## Casos de rechazo
 

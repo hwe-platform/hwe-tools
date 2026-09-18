@@ -1,11 +1,11 @@
 ---
 id: HU-007
 titulo: Layout components (TopBar, SecondaryNav, Footer, MobileMenu, Banner)
-estado: en-revisión
+estado: hecha
 prioridad: 2
 hito: 1
 agente: code-builder
-rama: feat/HU-007-layout
+rama: feat/HU-007-layout (mergeada)
 dependencias: [HU-005, HU-006]
 ---
 

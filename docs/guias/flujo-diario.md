@@ -45,6 +45,28 @@ fina. Es lo que se hizo con los hooks de Payload y con la resolución de rutas.
 
 ---
 
+## 3b. Si lo que construyes es un bloque
+
+La primera pregunta no es cómo hacerlo, sino **si hace falta**. Lo habitual
+—el 80% según `bloques.md`— es que un bloque de plataforma ya sirva variando
+un eje, y eso no es código: son datos en Payload.
+
+Cuando sí hace falta, `/scaffold-block` crea la estructura. Lleva delante lo
+que conviene tener en la cabeza: cuándo un eje va por mapa y cuándo por
+variantes de estilo, por qué se diseña por dominio y no por los valores del
+primer cliente, qué es un slot, y los tres pasos de un override —incluido el
+tercero, anotar por qué el bloque de plataforma no llegaba, que es el que hace
+que el catálogo mejore en vez de llenarse de copias.
+
+Dos cosas que el comando **no** decide y tú sí:
+
+- **Los ejes los fija la historia del bloque**, no el andamio. Si el comando
+  genera un enum donde la historia pide un número, manda la historia
+- **El aspecto lo fija el `lenguaje-visual.md` del cliente**, que se lee antes
+  de escribir JSX, no después de que no se parezca
+
+---
+
 ## 4. Verificar
 
 Los tests comprueban que el dato sale. **Ninguno comprueba que salga como el
