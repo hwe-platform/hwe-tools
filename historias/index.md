@@ -16,7 +16,7 @@ esta tabla para saber qué es lo siguiente.
 | HU-005 | Colecciones y globals de Payload derivadas de schemas Zod | 1 | 1 | hecha | code-builder | main | HU-002, HU-004 |
 | HU-006 | Sistema de tokens y primitivas base | 1 | 2 | hecha | code-builder | main | HU-001 |
 | HU-007 | Layout components (TopBar, SecondaryNav, Footer, MobileMenu, Banner) | 1 | 2 | hecha | code-builder | main | HU-005, HU-006 |
-| HU-008 | BlockRenderer, registry de bloques y catch-all routing | 1 | 1 | spec-lista | — | — | HU-005, HU-006 |
+| HU-008 | BlockRenderer, registry de bloques y catch-all routing | 1 | 1 | hecha | code-builder | main | HU-005, HU-006 |
 | HU-009 | Bloques Hero y MediaText | 1 | 2 | spec-lista | — | — | HU-008 |
 | HU-010 | Bloques IconGrid, CardGrid y ReviewsGrid | 1 | 3 | spec-lista | — | — | HU-008 |
 | HU-011 | Bloques Gallery, Map, SpecBar y EquipmentList | 1 | 3 | spec-lista | — | — | HU-008 |

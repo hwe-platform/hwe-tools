@@ -1,11 +1,11 @@
 ---
 id: HU-008
 titulo: BlockRenderer, registry de bloques y catch-all routing
-estado: spec-lista
+estado: hecha
 prioridad: 1
 hito: 1
-agente: —
-rama: —
+agente: code-builder
+rama: main (mergeada)
 dependencias: [HU-005, HU-006]
 ---
 
@@ -105,20 +105,39 @@ no hay site.
 
 ## Criterios de aceptación
 
-- [ ] BlockRenderer renderiza un array de bloques desde Payload
-- [ ] Registry del cliente tiene prioridad sobre el de plataforma
-- [ ] Bloque desconocido no rompe la página (warning en dev, null en prod)
-- [ ] URL `/le-camping` resuelve la page con slug `le-camping`
-- [ ] URL inexistente devuelve 404
-- [ ] Home (`/`) resuelve la page con type `home`
-- [ ] Middleware de idioma detecta locale desde prefijo URL
+- [x] BlockRenderer renderiza un array de bloques desde Payload
+- [x] Registry del cliente tiene prioridad sobre el de plataforma
+- [x] Bloque desconocido no rompe la página (warning en dev, null en prod)
+- [x] Una URL resuelve la page con ese slug — comprobado con `/accueil`, la única
+      página sembrada. `/le-camping` no existe todavía: la creará HU-012
+- [x] URL inexistente devuelve 404
+- [x] Home (`/`) resuelve la page con type `home`
+- [x] Middleware de idioma detecta locale desde prefijo URL — `/fr`, `/en` y `/es`
+      responden 200; `/fr/algo` da 404, así que el prefijo no se traga la ruta
 - [ ] ~~`generateStaticParams` genera rutas para todas las colecciones~~ —
       **aplazado a HU-012**, ver el paso 6 y `paginas-routing.md`
-- [ ] Tests del BlockRenderer — cobertura >80%
-- [ ] Tests de la resolución de slug — cobertura >60%
-- [ ] Una página montada en el panel con `rich-text` y `cta` se ve en el navegador, con los
+- [x] Tests del BlockRenderer — cobertura **100%** en `renderer/`
+- [x] Tests de la resolución de slug — **100%** de líneas en `resolve-route.ts`
+- [x] Una página montada en el panel con `rich-text` y `cta` se ve en el navegador, con los
       colores y la tipografía del cliente
 
 ## Retrospectiva
 
-_(se llena después si aplica)_
+**Se implementó y se mergeó sin marcar un solo criterio.** El índice la dio por
+`spec-lista` durante toda la construcción del layout, con el código ya en
+`main`. No rompió nada, pero deja el índice inservible: es la tabla que se
+consulta para saber qué es lo siguiente, y decía que faltaba algo que estaba
+hecho.
+
+Al repasarla después salieron dos cosas que el cierre en caliente habría pillado:
+
+- **La única página sembrada no tenía ningún bloque `cta`**, así que el criterio
+  de "se ve en el navegador con rich-text y cta" no se podía comprobar. Se añadió
+  uno para verificarlo de verdad
+- `field-parity.ts` estaba al **28% de cobertura**, por debajo del umbral del
+  propio proyecto, sin que nada avisara: CI ejecuta `pnpm test`, no
+  `test:coverage`. El umbral existe y no lo mira nadie
+
+Regla que se lleva: **una historia se cierra cuando se mergea, no cuando se
+recuerda**. Y si un criterio no se puede comprobar porque falta contenido, eso
+es parte del trabajo, no una excusa para dejarlo sin marcar.

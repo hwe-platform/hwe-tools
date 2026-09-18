@@ -110,9 +110,24 @@ Generan un informe con lo encontrado. El humano decide qué corregir.
 | Layout | >70% | Estables una vez construidos |
 | Routing/glue | >60% | Mejor cubierto con E2E |
 
-Si la cobertura de una capa cae por debajo de su mínimo, el CI
-da warning. El objetivo no es llegar al 100% — es cubrir lo que
-importa.
+Si la cobertura de una capa cae por debajo de su mínimo, **CI falla**. No es
+un aviso: los umbrales están configurados en el `vitest.config` de cada
+paquete y CI ejecuta `pnpm test:coverage`, que es `pnpm test` más la
+comprobación de los umbrales.
+
+El objetivo no es llegar al 100% — es cubrir lo que importa.
+
+> **Por qué se cambió.** Durante un tiempo CI ejecutaba `pnpm test`, que no
+> mira los umbrales, así que estaban escritos y no los comprobaba nadie:
+> `field-parity.ts` llegó a estar al 28% con la tabla de arriba pidiendo un
+> 70%, sin que nada avisara. Un umbral que no se ejecuta no es un umbral, es
+> una intención.
+
+Para verlo en local, con el desglose por fichero:
+
+```bash
+pnpm test:coverage
+```
 
 ---
 
