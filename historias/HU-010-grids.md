@@ -130,3 +130,10 @@ Ver `specs/figma/analisis.md`, sección "Verificar contra el diseño".
 ## Retrospectiva
 
 _(se llena después si aplica)_
+
+## Aprendizajes
+
+| Qué se descubrió | Dónde se documenta | Propagado |
+|------------------|-------------------|-----------|
+
+_(se llena durante la implementación)_
