@@ -76,7 +76,7 @@ El resultado de aplicarlo a un cliente vive en el repo de ese site, no aquí (DE
 
 | Archivo | Contenido | Estado |
 |---------|-----------|--------|
-| schemas/ | Templates JSON-LD | 🔲 Pendiente |
+| [schemas/](seo-geo/schemas/index.md) | 12 schemas JSON-LD por tipo de página | ✅ Definido |
 | llms/ | robots.txt, llms.txt | 🔲 Pendiente |
 
 ### seguridad/
