@@ -68,7 +68,9 @@ tenerlo**, porque quien lo lee deja de mirar el diseño. Por eso cada afirmació
 sobre un color o un tamaño lleva al lado el fichero y la línea de donde salió.
 
 **2. Dar por bueno un verde de turbo.** La caché puede dar verde sobre código
-que no se ha ejecutado. Cuando la verificación importa: `TURBO_FORCE=true`.
+que no se ha ejecutado. Cuando la verificación importa: `TURBO_FORCE=true` —
+y si el resultado no cuadra, borrar `.turbo` y repetir, porque `TURBO_FORCE`
+tampoco la invalida siempre.
 
 ---
 

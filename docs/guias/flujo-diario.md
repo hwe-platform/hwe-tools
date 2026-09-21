@@ -76,6 +76,10 @@ diseño manda**, así que hacen falta las dos cosas:
 TURBO_FORCE=true CI=true pnpm lint && pnpm format:check && pnpm test && pnpm build
 ```
 
+Si algún número no cuadra —menos tests de los que hay, un umbral que falla sin
+motivo— borra la caché y repite: `TURBO_FORCE` no siempre la invalida. Ver
+`docs/guias/entorno-local.md`.
+
 Y, si la historia produce algo visual, la comparación contra el export descrita
 en `specs/figma/analisis.md`, sección *Verificar contra el diseño*. Resumida:
 

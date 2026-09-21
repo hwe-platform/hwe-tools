@@ -188,6 +188,20 @@ TURBO_FORCE=true CI=true pnpm test
 Ojo con la forma: `pnpm lint -- --force` **no** vale, porque el flag le llega a
 ESLint y no a turbo.
 
+**Y `TURBO_FORCE` tampoco basta siempre.** En HU-009 dio 308 tests y la
+cobertura al 55% mientras una ejecución directa daba 325 y los umbrales
+pasaban. Cuando el resultado no cuadre con lo que esperas —menos tests de los
+que hay, un umbral que falla sin motivo—, borra la caché a mano antes de
+creerte el número:
+
+```bash
+rm -rf .turbo apps/*/.turbo packages/*/.turbo
+TURBO_FORCE=true CI=true pnpm test
+```
+
+La señal a la que hay que reaccionar es esa: **un resultado que no cuadra no
+se interpreta, se vuelve a medir sin caché.**
+
 ---
 
 ## Fallos habituales

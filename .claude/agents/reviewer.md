@@ -49,7 +49,13 @@ Abre la historia correspondiente (HU-XXX) y lee:
 ### 2. Ejecutar verificaciones automáticas
 
 Siempre con `TURBO_FORCE=true`: la caché de turbo puede dar verde sobre
-código que no se ha ejecutado.
+código que no se ha ejecutado. **Y bórrala a mano antes de empezar**, porque
+`TURBO_FORCE` tampoco la invalida siempre —en HU-009 informó de 308 tests
+cuando había 325—:
+
+```bash
+rm -rf .turbo apps/*/.turbo packages/*/.turbo
+```
 
 ```bash
 TURBO_FORCE=true CI=true pnpm lint           # ESLint sin errores ni avisos

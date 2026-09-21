@@ -1,11 +1,11 @@
 ---
 id: HU-009
 titulo: Bloques Hero y MediaText
-estado: en-revisión
+estado: hecha
 prioridad: 2
 hito: 1
 agente: code-builder
-rama: feat/HU-009-hero-mediatext
+rama: main
 dependencias: [HU-008]
 ---
 
@@ -213,5 +213,5 @@ _(se llena después si aplica)_
 | Un campo title único no puede expresar titular partido en dos colores | Resuelto con titleAccent (esta HU) | ✅ |
 | Los slots documentados en bloques.md no tenían mecanismo en el renderer | Resuelto con slotRegistry (esta HU) | ✅ |
 | Lexical no tiene formato "párrafo destacado" nativo | Pendiente futuro, no bloquea | ⬜ |
-| `TURBO_FORCE=true` no siempre invalida la caché de turbo: hubo que borrar `.turbo` para obtener resultados fiables | docs/guias/entorno-local.md, «Verificar antes de dar algo por hecho». Referencian el mismo consejo, y también habría que corregirlos: .claude/agents/reviewer.md (paso 2), docs/guias/flujo-diario.md, docs/guias/primer-dia.md | ⬜ |
-| El Reviewer lee docs/ (submodule) que puede estar desactualizado respecto a hwe-tools. Cada vez que se edita hwe-tools hay que actualizar el puntero en hwe-core o el Reviewer revisa documentación vieja. | docs/decisiones/DEC-007-repos.md o CLAUDE.md | ⬜ |
+| `TURBO_FORCE=true` no siempre invalida la caché de turbo: hubo que borrar `.turbo` para obtener resultados fiables | docs/guias/entorno-local.md, «Verificar antes de dar algo por hecho», y los tres sitios que repetían el consejo incompleto: .claude/agents/reviewer.md (paso 2), docs/guias/flujo-diario.md, docs/guias/primer-dia.md | ✅ |
+| El Reviewer lee docs/ (submodule) que puede estar desactualizado respecto a hwe-tools. Cada vez que se edita hwe-tools hay que actualizar el puntero en hwe-core o el Reviewer revisa documentación vieja. | docs/decisiones/DEC-007-repos.md, sección «La copia de docs/ va por detrás» | ✅ |

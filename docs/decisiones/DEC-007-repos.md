@@ -45,6 +45,28 @@ consultan specs — consumen el paquete publicado y no necesitan ese acceso.
 `hwe-tools` se monta como git submodule en `docs/` de `hwe-core`
 únicamente. `hwe-template` y los repos de cliente NO tienen submodule.
 
+### La copia de `docs/` va por detrás
+
+El submódulo no es una vista de `hwe-tools`: es **una copia de trabajo
+distinta, clavada en el commit al que apunta `hwe-core`**. Editar en
+`hwe-tools` no cambia nada dentro de `hwe-core/docs/` hasta que alguien
+commitea allí y mueve el puntero aquí.
+
+Eso tiene una consecuencia que ya costó una revisión entera: el Reviewer lee
+`docs/`, y en HU-009 dictaminó que la historia «estaba sin tocar» cuando los
+criterios llevaban marcados un buen rato. Leía la copia vieja.
+
+Así que, cada vez que se edita `hwe-tools`:
+
+```bash
+cd hwe-core/docs && git fetch origin && git checkout <commit>
+cd .. && git add docs && git commit -m "chore: apuntar el submodule docs a <commit>"
+```
+
+Y mientras haya cambios sin commitear en `hwe-tools`, quien revise tiene que
+saber que la copia de `docs/` **no** los tiene, y leer de `hwe-tools`
+directamente.
+
 ### Durante el Hito 1 — `workspace:*`
 
 `apps/site-demo/` declara `"@hwe-platform/core-ui": "workspace:*"` en su
