@@ -354,6 +354,7 @@ site-config
 │   ├── logo                (upload — media)
 │   ├── logoInverted        (upload — media — versión para fondos oscuros)
 │   ├── stars               (number, opcional — clasificación)
+│   ├── businessType        (select: campground, hotel, resort, guesthouse)
 │   └── openingDates        (text, localized — "1er avril au 30 septembre")
 │
 ├── contact

@@ -68,7 +68,6 @@ reimportación.
 ## Leer antes
 
 - specs/payload/modelo-datos.md (sección `media`)
-- docs/decisiones/DEC-010-media-storage.md
 - docs/estandares/codigo.md
 
 ## Criterios de aceptación
@@ -88,7 +87,7 @@ reimportación.
 por Payload (ver la nota en `specs/payload/modelo-datos.md`). Esta historia se
 apoya en las carpetas para el listado y los filtros, así que hay que revisarla
 al actualizar Payload. **No derivar de la carpeta la ruta física de los
-ficheros**: eso corresponde al `prefix` del adapter de nube (DEC-010) y
+ficheros**: eso corresponde al `prefix` del adapter de nube y
 acoplarlo aquí obligaría a mover archivos cada vez que alguien renombre una
 carpeta.
 

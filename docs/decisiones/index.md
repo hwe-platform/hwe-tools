@@ -13,7 +13,6 @@ Registro de decisiones técnicas (DECs) tomadas en el proyecto.
 | [DEC-007](DEC-007-repos.md) | Tres repositorios | Aceptada |
 | [DEC-008](DEC-008-site-demo.md) | Site demo | Aceptada |
 | [DEC-009](DEC-009-rutas.md) | Rutas y URLs | Aceptada |
-| [DEC-010](DEC-010-media-storage.md) | Media storage | Pendiente |
 
 ## Regla general
 

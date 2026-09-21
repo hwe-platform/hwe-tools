@@ -26,7 +26,7 @@ primera que despliega de verdad:
 
 | Asunto | Qué falta | Dónde está el análisis |
 |---|---|---|
-| **Storage de media** | Elegir proveedor y montar el adapter. En local vale el filesystem; en Vercel las subidas del editor se evaporan en cada deploy | DEC-010, y el paso 1 de esta historia |
+| **Storage de media** | Elegir proveedor y montar el adapter. En local vale el filesystem; en Vercel las subidas del editor se evaporan en cada deploy | El paso 1 de esta historia, y «Análisis de storage» más abajo |
 | **ISR** | La ruta renderiza en cada petición. Montar el cacheado exige `'use cache'` de Next 16 y una bandera experimental que afecta al admin de Payload | `docs/arquitectura/paginas-routing.md`, sección "Pendiente" |
 | **Carpetas de media** | Payload las marca como experimentales; hay que comprobar que siguen funcionando en la versión que se despliegue | `specs/payload/modelo-datos.md`, sección `media` |
 | **Migraciones sin aplicar** | `20260917_103556_carpetas_media` está pendiente. En local no se nota —el adapter sincroniza el esquema solo en desarrollo—, pero en producción no hay esa red | `docs/guias/entorno-local.md`, "Migraciones" |
@@ -86,6 +86,70 @@ dentro sale más caro.
     de esta historia, extraer su código como el repo `hwe-template`
     (ver DEC-007) — el template real que se clona para crear cada
     site de cliente
+
+## Análisis de storage
+
+> **Análisis previo escrito por el Code Builder. No es una decisión
+> aprobada** — el Planner decidirá el proveedor cuando se ejecute esta
+> historia.
+
+Concreta la parte de media de [DEC-003](../docs/decisiones/DEC-003-hosting.md),
+que dejaba el almacenamiento de archivos como «Blob Storage o equivalente».
+
+Mientras el proyecto se trabaje en local no hace falta: Payload guarda en el
+filesystem por defecto, sin adapter ni credenciales, y eso es lo que hay
+configurado hoy. Esto existe para no rehacer el análisis el día que toque
+decidir, que es el paso 1 de esta historia.
+
+### Opción de partida
+
+`@payloadcms/storage-vercel-blob` como adapter de almacenamiento de imágenes
+en producción, manteniendo el filesystem en desarrollo local.
+
+Así todo el stack queda en Vercel —app Next.js, Postgres y Blob— y cada site
+de cliente tiene su propio proyecto Vercel con su Postgres y su Blob
+aislados, en línea con el aislamiento por cliente de DEC-003.
+
+La alternativa seria es Cloudflare R2 a través de `@payloadcms/storage-s3`:
+API S3-compatible y sin coste de salida. En webs de hospitality las imágenes
+son casi todo el tráfico, así que el egress —lo que Vercel cobra caro y R2 da
+gratis— es lo que puede decantar la decisión.
+
+### Por qué la opción de partida es Vercel Blob
+
+Un solo proveedor mientras el proyecto es pequeño: un dashboard, una factura,
+una sola integración que mantener. Vercel Blob se configura con una variable
+de entorno y el adapter oficial de Payload, sin cuentas ni buckets aparte.
+
+El coste de equivocarse es bajo, que es lo que permite decidir ya en lugar de
+analizar. El egress de Vercel Blob es lo que puede doler con muchos sitios
+con muchas fotos — por eso la revisión es de coste, no de funcionalidad.
+
+### Qué cuesta cambiar de opinión
+
+En código, poco: se sustituye el plugin en `payload.config.ts` y cambian las
+variables de entorno. Las colecciones no se tocan, porque el adapter es
+transparente para ellas.
+
+En datos, algo más de lo que parece. Vercel Blob **no es S3-compatible** —
+tiene su propio SDK—, así que no es cuestión de apuntar las mismas
+credenciales a otro endpoint: hay que **copiar los ficheros existentes** al
+bucket nuevo. Lo que no hay que migrar es la base de datos: Payload guarda
+`filename` y deriva la URL a través del adapter, así que los documentos de
+`media` siguen siendo válidos una vez movidos los archivos.
+
+Conviene hacer el cambio, si se hace, antes de acumular muchos clientes: la
+migración es por proyecto Vercel.
+
+### Qué falta para decidir
+
+- Medir coste real (almacenamiento + egress) con los primeros clientes en
+  producción, junto a la evaluación de proveedor de DEC-003.
+- Fijar un disparador concreto de revisión — «cuando haya volumen» no se
+  dispara nunca. Algo como «al llegar a 5 clientes en producción o a X GB de
+  egress al mes, lo que ocurra antes».
+- Decidir si el bucket es uno por cliente (coherente con el aislamiento
+  actual) o compartido con prefijos, cuando haya volumen.
 
 ## Leer antes
 
