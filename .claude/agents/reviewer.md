@@ -220,8 +220,13 @@ Devuelvo al Code Builder.
 
 - [ ] La sección `## Aprendizajes` de la historia está completa (si hubo descubrimientos)
 - [ ] Cada aprendizaje tiene un documento destino asignado
-- [ ] Todos los aprendizajes están propagados (columna `Propagado: ✅`)
-- [ ] Si alguno no está propagado, devolver al Code Builder antes de aprobar
+- [ ] Cada aprendizaje sin propagar (`⬜`) dice a qué documento va
+
+La propagación ocurre **después del merge**, no antes: escribir en una guía o
+un estándar lo que todavía puede cambiar en revisión ensucia documentos que
+lee todo el mundo. Un `⬜` con destino asignado es el estado correcto de una
+historia en revisión — **no devuelvas por eso**. Lo que sí es un fallo es un
+aprendizaje sin destino, porque nadie sabrá dónde llevarlo.
 
 ---
 
