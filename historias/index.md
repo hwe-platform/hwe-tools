@@ -17,7 +17,7 @@ esta tabla para saber qué es lo siguiente.
 | HU-006 | Sistema de tokens y primitivas base | 1 | 2 | hecha | code-builder | main | HU-001 |
 | HU-007 | Layout components (TopBar, SecondaryNav, Footer, MobileMenu, Banner) | 1 | 2 | hecha | code-builder | main | HU-005, HU-006 |
 | HU-008 | BlockRenderer, registry de bloques y catch-all routing | 1 | 1 | hecha | code-builder | main | HU-005, HU-006 |
-| HU-009 | Bloques Hero y MediaText | 1 | 2 | spec-lista | — | — | HU-008 |
+| HU-009 | Bloques Hero y MediaText | 1 | 2 | en-revisión | code-builder | feat/HU-009-hero-mediatext | HU-008 |
 | HU-010 | Bloques IconGrid, CardGrid y ReviewsGrid | 1 | 3 | spec-lista | — | — | HU-008 |
 | HU-011 | Bloques Gallery, Map, SpecBar y EquipmentList | 1 | 3 | spec-lista | — | — | HU-008 |
 | HU-012 | Crear site demo con contenido real y deploy en Vercel | 1 | 3 | spec-lista | — | — | HU-007, HU-009, HU-010, HU-011 |
@@ -109,6 +109,14 @@ _(vacía al crear — se llena si la historia necesitó correcciones significati
 ### Qué falló
 ### Causa raíz
 ### Corrección aplicada
+
+## Aprendizajes
+
+| Qué se descubrió | Dónde se documenta | Propagado |
+|------------------|-------------------|-----------|
+
+_(se llena durante la implementación — el Code Builder documenta aquí
+lo que descubre y dónde debería quedar registrado)_
 ```
 
 ---

@@ -158,3 +158,10 @@ entrará cada bloque del proyecto, y lo que decida ahí se paga en cada cliente.
 ## Retrospectiva
 
 _(vacía al crear — se llena si la historia necesitó correcciones significativas)_
+
+## Aprendizajes
+
+| Qué se descubrió | Dónde se documenta | Propagado |
+|------------------|-------------------|-----------|
+
+_(se llena durante la implementación)_

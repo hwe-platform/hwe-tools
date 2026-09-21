@@ -91,3 +91,10 @@ carpeta.
 ## Retrospectiva
 
 _(vacía al crear — se llena si la historia necesitó correcciones significativas)_
+
+## Aprendizajes
+
+| Qué se descubrió | Dónde se documenta | Propagado |
+|------------------|-------------------|-----------|
+
+_(se llena durante la implementación)_

@@ -1,11 +1,11 @@
 ---
 id: HU-009
 titulo: Bloques Hero y MediaText
-estado: spec-lista
+estado: en-revisión
 prioridad: 2
 hito: 1
-agente: —
-rama: —
+agente: code-builder
+rama: feat/HU-009-hero-mediatext
 dependencias: [HU-008]
 ---
 
@@ -131,25 +131,87 @@ Ver `specs/figma/analisis.md`, sección "Verificar contra el diseño".
 
 ## Criterios de aceptación
 
-- [ ] HeroVideo renderiza vídeo fullscreen con overlay
-- [ ] HeroImage renderiza imagen con gradient y breadcrumbs
-- [ ] Hero resuelve variante por mapa, no if/switch
-- [ ] La página tiene un `<h1>` legible aunque el hero muestre el logo
-- [ ] MediaText renderiza en dos columnas con imagen izquierda o derecha
-- [ ] MediaText acepta imagen, iframe y carrusel como medio
-- [ ] MediaText admite cualquier reparto de columnas, no solo los del Figma
-- [ ] El slot `aside` acepta las tres cajas distintas del Figma (horarios,
+- [x] HeroVideo renderiza vídeo fullscreen con overlay
+- [x] HeroImage renderiza imagen con gradient y breadcrumbs
+- [x] Hero resuelve variante por mapa, no if/switch
+- [x] La página tiene un `<h1>` legible aunque el hero muestre el logo
+- [x] MediaText renderiza en dos columnas con imagen izquierda o derecha
+- [x] MediaText acepta imagen, iframe y carrusel como medio
+- [x] MediaText admite cualquier reparto de columnas, no solo los del Figma
+- [x] El slot `aside` acepta las tres cajas distintas del Figma (horarios,
       features y estadísticas) sin cambiar el bloque
-- [ ] El site rellena `sobreLaImagen` con el medallón, y el bloque de
-      plataforma sigue sin saber nada de él
-- [ ] MediaText es responsive (apila en mobile)
-- [ ] Ambos bloques usan primitivas de @hwe-platform/core-ui (Image, Button, Link)
-- [ ] Ambos bloques usan tokens de Tailwind, no estilos inline
-- [ ] Ambos pasan vitest-axe sin violaciones
-- [ ] Tests — cobertura >80%
-- [ ] Schema Zod valida datos correctos y rechaza incorrectos
-- [ ] Registrados en blockRegistry y renderizan desde BlockRenderer
+- [x] El site rellena `sobreLaImagen` con la insignia por `slotId`, y el
+      bloque de plataforma sigue sin saber nada de ella
+- [x] MediaText es responsive (apila en mobile)
+- [x] Ambos bloques usan primitivas de @hwe-platform/core-ui (Image, Button, Link)
+- [x] Ambos bloques usan tokens de Tailwind, no estilos inline
+- [x] Ambos pasan vitest-axe sin violaciones
+- [x] Tests — cobertura >80%
+- [x] Schema Zod valida datos correctos y rechaza incorrectos
+- [x] Registrados en blockRegistry y renderizan desde BlockRenderer
+
+## Diferencias con el diseño
+
+Comparado contra el export (`App.tsx:466-503`, `522-566`, `831-880`;
+`LeCampingPage.tsx:59-95`). Cada diferencia lleva su motivo; las no listadas
+son fallos.
+
+### Deliberadas — no se copian (DEC-002)
+
+| Qué | Por qué |
+|---|---|
+| La home del export no tiene `<h1>`: el título es el logo | Se pinta un `<h1>` oculto con el nombre del site. Accesibilidad y SEO |
+| El hero interior apila una imagen a `opacity-20` bajo otra capa de fondo | Residuo del export: dos técnicas para el mismo resultado. Se usa una imagen a `opacity-40` con el degradado de marca |
+| El export usa `items-left` / `justify-left` | Clases inexistentes en Tailwind; lo que se ve es el valor por defecto |
+| Primer nivel de migas | El export pone «Accueil»; se replica como rótulo del site, no como nombre del site |
+
+### Resueltas por el Planner
+
+| Qué | Decisión | Estado |
+|---|---|---|
+| Titular a dos líneas | Campo `titleAccent`, segunda línea en `text-secondary` | Implementado |
+| Fondo de sección | Campo `background`: `default` \/ `muted` \/ `none` | Implementado |
+| Slots por instancia | `slotId` en el bloque + `slotRegistry` que el site pasa al renderer | Implementado |
+| Forma del botón | Sale de tokens del cliente (`--button-px`, `--button-py`, `--button-font-size`, `--button-font-weight`, `--button-shadow`), con respaldo. `sm` y `lg` siguen fijos | Implementado |
+| Flecha del botón | Campo `icon` en los enlaces, a la derecha del texto | Implementado |
+| Línea de acento del antetítulo | Campo `eyebrowRule`, que activa la `rule` de la primitiva `Eyebrow`. Es un eje, no un adorno constante: la llevan 2 de los 17 antetítulos del diseño (`App.tsx:548` y `LeCampingPage.tsx:111`) | Implementado |
+
+### Pendiente del Planner
+
+| Qué | Evidencia | Opciones |
+|---|---|---|
+| **El «párrafo destacado» no se puede marcar** | El editor es `lexicalEditor()` con su configuración por defecto, y su juego de formatos es negrita, cursiva, subrayado, tachado, encabezados, listas, citas y enlaces. **No existe «destacado»**: los formatos de texto de Lexical son una máscara de bits cerrada y los de párrafo son alineación e indentación. El diseño lo usa a tres tamaños distintos: 22px con peso medio en la intro (`App.tsx:560`), 20px en Piscine (`App.tsx:845`), 18px en Restaurant (`App.tsx:791`) | Añadir una *feature* al editor Lexical; o aceptar que el párrafo va en cuerpo normal; o que el bloque lo estile por convención, lo que ya se probó y acertaba en una de tres |
+
+### Menores, aceptadas por la humana tras verlas en el navegador
+
+| Qué | Export | Bloque |
+|---|---|---|
+| Color del `<h2>` | `text-primary` en las dos secciones | **Corregido**: `text-primary` |
+| Imagen de Piscine a altura fija 340/520/680 sin degradado | Sí | `ratio: landscape` (4/3) con degradado suave. Misma proporción visual |
+| `gap` de la retícula | `lg:gap-32` en Piscine | `lg:gap-24`, el del lenguaje visual. Menor |
+| Ritmo vertical de la sección | `py-12 md:py-20 lg:py-32` en la intro, `py-16 md:py-24 lg:py-32` en Piscine | `py-16 md:py-24 lg:py-32` para las dos: el ritmo estándar del lenguaje visual. El export no es consistente consigo mismo, así que copiarlo literalmente sería copiar la inconsistencia |
+| Margen bajo el `<h2>` | `mb-10` en la intro, `mb-8` en Piscine | `mb-6` en las dos. Misma razón: un valor de escala en lugar de dos medidas sueltas |
+| Margen bajo el antetítulo | `mb-6` en la intro, `mb-4` en Piscine | `mb-4` en las dos |
+| Margen bajo el supertítulo del hero | `mb-8` en la home, `mb-6` en las interiores | `mb-6 md:mb-8`: la diferencia del export coincide con el salto de tamaño de pantalla, así que va como escala y no como caso |
+| El párrafo de entrada, más grande que el cuerpo | `text-[22px] font-medium` en la intro, 20px en Piscine, 18px en Restaurant | Cuerpo normal. **No es una diferencia aceptada sino una carencia**: falta el mecanismo para marcarlo. Ver «Pendiente del Planner» |
+| Cuarto valor del eje `ratio` | — | Se retiró `auto`. El marco solo contiene elementos en posición absoluta, así que sin proporción se quedaba a cero de alto: un valor que no dibuja no es un valor del eje |
+| Tamaño de los antetítulos con línea | 12px y `whitespace-nowrap` en los dos que la llevan | 14px, que es lo que prescribe `lenguaje-visual.md` para un antetítulo de sección. Se sigue el lenguaje visual, no la excepción del export |
+| Ancho máximo del `<h2>` | `max-w-3xl` en la intro | Sin límite propio: el titular ocupa su columna. No replicado |
+| Color de los `<strong>` del cuerpo | `text-primary` | Negrita a secas. `RichText` pinta el formato de Lexical, y «negrita en color de marca» no es un formato: sería estilar por convención lo que el editor no puede expresar |
+| Variante `minimal` y ejes `ratio`, `eyebrow`, `titleMode` | No están en el export | Salen del modelo de datos existente y de comparar los tres heros. Justificados en JSDoc y en `modelo-datos.md` |
 
 ## Retrospectiva
 
 _(se llena después si aplica)_
+
+## Aprendizajes
+
+| Qué se descubrió | Dónde se documenta | Propagado |
+|------------------|-------------------|-----------|
+| Payload devuelve null en opcionales vacíos, Zod espera undefined | specs/payload/modelo-datos.md | ⬜ |
+| El export de Figma trae imágenes decorativas residuales | .claude/commands/import-figma.md | ⬜ |
+| Un campo title único no puede expresar titular partido en dos colores | Resuelto con titleAccent (esta HU) | ✅ |
+| Los slots documentados en bloques.md no tenían mecanismo en el renderer | Resuelto con slotRegistry (esta HU) | ✅ |
+| Lexical no tiene formato "párrafo destacado" nativo | Pendiente futuro, no bloquea | ⬜ |
+| `TURBO_FORCE=true` no siempre invalida la caché de turbo: hubo que borrar `.turbo` para obtener resultados fiables | docs/guias/entorno-local.md, «Verificar antes de dar algo por hecho». Referencian el mismo consejo, y también habría que corregirlos: .claude/agents/reviewer.md (paso 2), docs/guias/flujo-diario.md, docs/guias/primer-dia.md | ⬜ |
+| El Reviewer lee docs/ (submodule) que puede estar desactualizado respecto a hwe-tools. Cada vez que se edita hwe-tools hay que actualizar el puntero en hwe-core o el Reviewer revisa documentación vieja. | docs/decisiones/DEC-007-repos.md o CLAUDE.md | ⬜ |

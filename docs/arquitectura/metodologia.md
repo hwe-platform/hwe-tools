@@ -102,6 +102,27 @@ El agente de nivel 2 consulta las historias, ordena por prioridad, filtra por `s
 
 ---
 
+## Decisiones que aparecen al implementar
+
+La retroalimentación de abajo cubre lo que **sale mal**. Esto cubre lo que la
+spec **no previó**, que no es un fallo de nadie: hay cosas que solo se ven con
+el código delante.
+
+Cuando el Code Builder encuentra durante la implementación una decisión de
+arquitectura o de modelo de datos:
+
+1. La documenta en la historia, bajo una sección `## Pendiente del Planner`,
+   con **la evidencia** —qué se observó y dónde— y **las opciones** con su
+   consecuencia
+2. **Para.** No la resuelve: es nivel 3
+3. La historia se queda en `en-curso`
+4. El Planner las revisa al inicio de cada sesión
+
+Sin este canal, esas decisiones viajan como mensajes sueltos y se pierden. La
+sección en la historia es lo que las hace acumulables y encontrables.
+
+---
+
 ## Retroalimentación
 
 Cuando una tarea necesita correcciones significativas (no un typo, sino un error de enfoque):
@@ -140,6 +161,43 @@ El error se corrige en su origen:
 ### 4. Se verifica en la siguiente tarea
 
 La siguiente tarea del mismo tipo valida que la corrección funcionó. Si el mismo error reaparece, se escala a test automático o regla ESLint.
+
+---
+
+## Tres canales de mejora
+
+### Canal 1 — Retro de historia (cuando algo sale mal)
+
+Ya definido arriba. El Code Builder documenta Qué falló / Causa raíz /
+Corrección aplicada. La corrección se propaga al skill o estándar.
+**La retro no se cierra hasta que el documento destino esté actualizado.**
+
+### Canal 2 — Pendiente del Planner (decisiones de arquitectura)
+
+Cuando el Code Builder encuentra algo que es nivel 3 durante la
+implementación, lo documenta en la historia bajo una sección
+`## Pendiente del Planner` con la evidencia y las opciones, y para.
+La historia se queda en `en-curso`. El Planner revisa al inicio
+de cada sesión de planificación.
+
+### Canal 3 — Aprendizajes (descubrimientos técnicos)
+
+No son fallos ni decisiones — son cosas descubiertas durante la
+implementación que deben documentarse en algún sitio. Ejemplos:
+Payload devuelve null donde Zod espera undefined, ESLint config-next
+no funciona en librerías, el export de Figma trae imágenes residuales.
+
+El Code Builder los documenta en la sección `## Aprendizajes` de
+la historia con una tabla: qué se descubrió, dónde se documenta,
+si ya se propagó. El Reviewer verifica que todo esté propagado
+antes de aprobar.
+
+| Tipo de mejora | Quién detecta | Dónde se documenta | Quién propaga | Quién verifica |
+|----------------|---------------|-------------------|---------------|----------------|
+| Fallo en la tarea | Code Builder | Historia → Retrospectiva | Code Builder | Reviewer |
+| Decisión de arquitectura | Code Builder | Historia → Pendiente del Planner | Planner | Planner |
+| Aprendizaje técnico | Code Builder | Historia → Aprendizajes | Code Builder | Reviewer |
+| Mejora de proceso | Planner o humano | Metodología o estándares | Claude Code aplica | Humano |
 
 ---
 

@@ -178,6 +178,19 @@ const buttonVariants = cva('inline-flex items-center font-bold rounded-2xl', {
 
 ## Ejes de variación y slots
 
+> **Un eje se diseña por la dimensión que varía, no por los valores que toma el
+> primer cliente.**
+>
+> `split: number` cuesta lo mismo que `split: '5/7' | '7/5'` y absorbe diseños
+> que aún no se han visto; la enumeración se rompe con el cliente que quiera
+> otro reparto y obliga a tocar `core-ui` o a hacer un override. Los valores
+> observados en un Figma son **ejemplos documentados, no el conjunto de lo
+> posible**.
+>
+> La prueba está en que La Civelle sola ya usa tres repartos —5, 6 y 7 de doce—:
+> una enumeración de "los que hemos visto" se habría roto con el propio cliente
+> que la inspiró.
+
 Un bloque sirve para muchos clientes por dos mecanismos distintos, y confundirlos
 es lo que hace que un bloque acabe siendo inservible o inmantenible.
 
@@ -223,15 +236,15 @@ El bloque de plataforma deja el hueco:
 ```tsx
 type MediaTextSlots = {
   /** Se pinta encima de la imagen. Si nadie lo rellena, no hay nada. */
-  sobreLaImagen?: () => ReactNode
+  sobreLaImagen?: ReactNode
 }
 
-export function MediaTextBlock({ data, slots }: MediaTextProps) {
+export function MediaTextBlock({ data, sobreLaImagen }: MediaTextProps) {
   return (
     <section className="grid gap-24 lg:grid-cols-12">
       <div className="relative lg:col-span-5">
-        <Image src={data.image} alt={data.alt} aspectRatio="4/3" />
-        {slots?.sobreLaImagen?.()}
+        <Image src={mediaUrl(data.image)} alt={mediaAlt(data.image)} fill />
+        {sobreLaImagen}
       </div>
       <div className="lg:col-span-7">{/* ... */}</div>
     </section>
@@ -239,16 +252,21 @@ export function MediaTextBlock({ data, slots }: MediaTextProps) {
 }
 ```
 
-Y el cliente lo rellena en su repo, sin tocar plataforma:
+Y el cliente lo rellena desde su repo, sin tocar plataforma y **sin envolver el
+bloque**: declara qué va en cada hueco de **cada instancia** y el renderer lo
+entrega.
 
 ```tsx
-export function MediaTextBlock(props: MediaTextProps) {
-  return <BaseMediaText {...props} slots={{ sobreLaImagen: Medallon }} />
+// apps/{site}/src/slot-registry.tsx
+export const slotRegistry: SlotRegistry = {
+  'intro-medallion': { sobreLaImagen: <Insignia etiqueta="Depuis" valor={30} sufijo="Ans" /> },
 }
 ```
 
 El cliente conserva las dos columnas, el responsive, la accesibilidad y los
-tests de plataforma; si mañana se corrige un fallo ahí, lo recibe.
+tests de plataforma; si mañana se corrige un fallo ahí, lo recibe. El mecanismo
+completo —de dónde sale `intro-medallion` y por qué va por instancia— está al
+final de este documento, en «Slots por instancia».
 
 **Un slot se abre cuando un diseño real lo pide, nunca "por si acaso".** Poner
 slots en todas partes es tan malo como no ponerlos: multiplica la superficie del
@@ -329,15 +347,19 @@ export { MediaTextBlock } from '@hwe-platform/core-ui'
 
 ### Nivel 2 — Slots (~15%)
 
-El cliente conserva el bloque de plataforma y sustituye **una pieza concreta**:
+El cliente conserva el bloque de plataforma y **rellena un hueco** en la
+instancia que lo pide, sin escribir un componente envoltorio:
 
 ```tsx
-import { MediaTextBlock as Base } from '@hwe-platform/core-ui'
-
-export function MediaTextBlock(props: MediaTextProps) {
-  return <Base {...props} slots={{ sobreLaImagen: Medallon }} />
+// apps/{site}/src/slot-registry.tsx
+export const slotRegistry: SlotRegistry = {
+  'intro-medallion': { sobreLaImagen: <Insignia etiqueta="Depuis" valor={30} sufijo="Ans" /> },
 }
 ```
+
+El editor pone `intro-medallion` en el campo `slotId` del bloque, y el
+renderer entrega ese contenido solo ahí. Envolver el bloque también funcionaría
+y está mal: el adorno saldría en **todas** sus instancias.
 
 Es el nivel que evita el salto de "uso el de plataforma" a "lo reescribo
 entero". Conserva retícula, responsive, accesibilidad y tests compartidos.
@@ -546,3 +568,49 @@ tipados. La validación es una red de seguridad, no el flujo principal.
 - Nunca `if (client === 'nombre')` en `@hwe-platform/core-ui` — usar el registry del cliente
 - La resolución del registry es: cliente → plataforma → warning
 - Los bloques de referencia no duplican datos — configuran una query
+
+---
+
+## Slots por instancia: `slotId`
+
+Un slot es un hueco que el bloque abre para que el site meta **código suyo**:
+el medallón sobre una imagen, la caja de horarios junto a un texto. No son
+datos, así que no pueden viajar por Payload.
+
+Lo que sí viaja es un identificador. El editor pone un `slotId` en la
+instancia del bloque, y el site declara qué va en ese identificador:
+
+```tsx
+// apps/{site}/src/slot-registry.tsx
+export const slotRegistry: SlotRegistry = {
+  'intro-medallion': { sobreLaImagen: <Insignia etiqueta="Depuis" valor={30} sufijo="Ans" /> },
+  'restaurant-horarios': { aside: <Horarios /> },
+};
+```
+
+El site se lo pasa al renderer junto al registry de bloques:
+
+```tsx
+<BlockRenderer blocks={page.blocks} customRegistry={blockRegistry} slotRegistry={slotRegistry} />
+```
+
+**El renderer no importa el registry del cliente**, lo recibe. `core-ui` es
+plataforma: si importara de un site concreto, el paquete dejaría de servir para
+los demás.
+
+### Por qué por instancia y no por tipo
+
+La alternativa era envolver el bloque en el registry del cliente y pasarle el
+slot ahí. Es más corto y está mal: el adorno aparecería en **todas** las
+instancias de ese bloque. En el diseño de referencia el medallón está en la
+sección de introducción y no en la de la piscina, que usa el mismo bloque.
+
+### Cuándo abrir un slot
+
+Solo cuando un diseño real lo pida, y **parametrizado por lo que ocupa, no por
+lo que es**: `sobreLaImagen`, no `medallonDeAniversario`. Un slot nombrado por
+su contenido vuelve el bloque específico de un cliente, y un bloque específico
+es un bloque que el siguiente sobrescribe.
+
+Un contenido de slot que se repita en tres clientes es candidato a promoción,
+por la regla del tercero.

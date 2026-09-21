@@ -208,15 +208,18 @@ pages
 ├── type                    (select: home, landing, static, listing, contact, faq)
 ├── parent                  (relationship — pages, opcional — para breadcrumbs)
 │
-├── hero                    (group, opcional)
-│   ├── variant             (select: video, image, minimal, none)
+├── hero                    (group, opcional — no es un bloque: lo pinta la plantilla)
+│   ├── variant             (select: video, image, minimal, none — eje estructural, por mapa)
 │   ├── media               (upload — media)
+│   ├── eyebrow             (text, localized, opcional — supertítulo; en el diseño, la localización)
 │   ├── title               (text, localized, opcional — override)
 │   ├── subtitle            (text, localized, opcional)
+│   ├── titleMode           (select: text, logo — con logo, el h1 se pinta oculto)
+│   ├── align               (select: left, center — alineación horizontal del contenido)
 │   └── showBreadcrumbs     (boolean)
 │
 ├── blocks                  (blocks field — secuencia de bloques)
-│   ├── media-text           — imagen + texto en dos columnas
+│   ├── media-text           — medio + texto en dos columnas (ver detalle abajo)
 │   ├── icon-grid            — grid de iconos con labels
 │   ├── card-grid            — grid de tarjetas con imagen
 │   ├── reviews-grid         — tarjetas de reseñas
@@ -299,6 +302,43 @@ categories
 ```
 
 ---
+
+### Bloque `media-text`
+
+Es el bloque de mayor impacto del catálogo: cubre siete secciones de las tres
+páginas de La Civelle. Sus campos salen de comparar esas siete, y se diseñan
+por la dimensión que varía, no por los valores del primer cliente
+(`docs/arquitectura/bloques.md`, "Ejes de variación"):
+
+```
+media-text
+├── title                   (text, localized, opcional)
+├── subtitle                (text, localized, opcional — la etiqueta dorada)
+├── content                 (richText, localized, opcional)
+├── media                   (select: image, embed, carousel — eje estructural, por mapa)
+├── image                   (upload — media — si media = image)
+├── images                  (upload — media, hasMany — si media = carousel)
+├── embedUrl                (text — si media = embed)
+├── split                   (number 1–11 — columnas del medio sobre doce; no enum)
+├── reverse                 (boolean — medio a la derecha)
+├── align                   (select: start, center — alineación vertical de las dos columnas)
+├── ratio                   (select: portrait, landscape, square, auto)
+└── ctas                    (array — label, url, variant)
+```
+
+El schema exige el campo que corresponde a cada `media`: un carrusel sin
+imágenes no se guarda. `split` es número porque La Civelle ya usa 5, 6 y 7;
+una enumeración de los repartos vistos se rompe con el cliente siguiente.
+
+**Slots**, que no son campos sino huecos que el site rellena con código:
+`aside` (una caja bajo el texto — horarios, features, estadísticas) y
+`sobreLaImagen` (un adorno flotante sobre el medio). Cómo un site declara qué
+slot va en qué instancia está pendiente de decisión: hoy el renderer solo
+entrega datos.
+
+**Pendiente del Planner:** el titular a dos líneas con la segunda en color de
+acento —patrón deliberado según `lenguaje-visual.md`— no se puede expresar
+con un solo `title`. Necesita un campo (`titleAccent` o similar).
 
 ## Globals
 
