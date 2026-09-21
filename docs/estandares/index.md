@@ -12,8 +12,8 @@ Los agentes IA leen estos documentos antes de escribir código.
 | [commits.md](commits.md) | Git: commits, ramas, PRs, trazabilidad con historias | ✅ Definido |
 | [herramientas.md](herramientas.md) | Prettier + ESLint: qué son, configuración concreta | ✅ Definido |
 | [testing.md](testing.md) | Herramientas, niveles, cobertura y convenciones de testing | ✅ Definido |
-| [seguridad.md](seguridad.md) | Reglas de seguridad en código | 🔲 Pendiente |
-| [seo.md](seo.md) | Reglas de SEO/rendimiento en código | 🔲 Pendiente |
+| [seguridad.md](seguridad.md) | Reglas de seguridad en código |  ✅ Definido |
+| [seo.md](seo.md) | Reglas de SEO/rendimiento en código |  ✅ Definido |
 
 Los niveles de mejora autónoma están cubiertos por [../arquitectura/metodologia.md](../arquitectura/metodologia.md).
 
