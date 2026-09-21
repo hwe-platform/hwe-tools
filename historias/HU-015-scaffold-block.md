@@ -1,15 +1,19 @@
 ---
 id: HU-015
 titulo: /scaffold-block como herramienta permanente — destino explícito, ejes por dominio y evitar duplicados
-estado: spec-lista
+estado: idea
 prioridad: 3
-hito: 1
+hito: —
 agente: —
 rama: —
 dependencias: [HU-009, HU-010, HU-011]
 ---
 
 ## Contexto
+
+> **Reasignada por el Planner.** Partes A+B se activan después de HU-011
+> (cuando haya 11+ bloques). Partes C+E se activan en hitos posteriores
+> (cuando haya clientes reales).
 
 `/scaffold-block` genera siempre en `packages/core-ui`. Eso es correcto **ahora**,
 mientras se construye el catálogo, y deja de serlo en cuanto haya clientes: según

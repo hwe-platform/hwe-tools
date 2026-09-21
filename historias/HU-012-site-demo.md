@@ -26,7 +26,7 @@ primera que despliega de verdad:
 
 | Asunto | Qué falta | Dónde está el análisis |
 |---|---|---|
-| **Storage de media** | Elegir proveedor y montar el adapter. En local vale el filesystem; en Vercel las subidas del editor se evaporan en cada deploy | DEC-010, HU-013 |
+| **Storage de media** | Elegir proveedor y montar el adapter. En local vale el filesystem; en Vercel las subidas del editor se evaporan en cada deploy | DEC-010, y el paso 1 de esta historia |
 | **ISR** | La ruta renderiza en cada petición. Montar el cacheado exige `'use cache'` de Next 16 y una bandera experimental que afecta al admin de Payload | `docs/arquitectura/paginas-routing.md`, sección "Pendiente" |
 | **Carpetas de media** | Payload las marca como experimentales; hay que comprobar que siguen funcionando en la versión que se despliegue | `specs/payload/modelo-datos.md`, sección `media` |
 | **Migraciones sin aplicar** | `20260917_103556_carpetas_media` está pendiente. En local no se nota —el adapter sincroniza el esquema solo en desarrollo—, pero en producción no hay esa red | `docs/guias/entorno-local.md`, "Migraciones" |
@@ -39,9 +39,12 @@ dentro sale más caro.
 
 ### Desplegar el site
 
-1. Configurar Vercel project para `apps/site-demo/` con dominio propio (ej: demo.hwe.dev)
-2. Configurar Vercel Postgres (base de datos propia para el demo)
-3. Configurar variables de entorno en Vercel
+1. Configurar storage adapter para media en Vercel (Vercel Blob o
+   equivalente, condicional por entorno: solo producción, no local). Añadir
+   `BLOB_READ_WRITE_TOKEN` a `.env.example`
+2. Configurar Vercel project para `apps/site-demo/` con dominio propio (ej: demo.hwe.dev)
+3. Configurar Vercel Postgres (base de datos propia para el demo)
+4. Configurar variables de entorno en Vercel
 
 ### Cargar contenido
 
@@ -108,6 +111,7 @@ dentro sale más caro.
 - [ ] JSON-LD básico presente
 - [ ] Lighthouse performance score >80
 - [ ] Tests E2E Playwright pasan
+- [ ] Media se almacena en Vercel Blob en producción y en filesystem en local
 - [ ] `hwe-template` extraído como repo independiente a partir de `apps/site-demo/`
 
 ## Retrospectiva

@@ -1,15 +1,19 @@
 ---
 id: HU-014
 titulo: Biblioteca de medios — duplicados, listado visual y metadatos
-estado: spec-lista
+estado: idea
 prioridad: 2
-hito: 1
+hito: 2
 agente: —
 rama: —
 dependencias: [HU-005]
 ---
 
 ## Contexto
+
+> **Reasignada al Hito 2 por el Planner.** La detección de duplicados es
+> necesaria antes del pipeline de importación (contenido-IA), no antes del
+> site demo.
 
 El flujo real de la agencia es: el cliente manda una foto nueva para una
 galería y alguien la sube al panel. Para eso hacen falta tres cosas que hoy no
