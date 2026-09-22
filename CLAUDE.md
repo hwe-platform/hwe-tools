@@ -26,6 +26,18 @@ agentes y comandos.
 
 ---
 
+## Eficiencia de tokens
+
+- Lee archivos antes de escribir código. No releas un archivo que no haya cambiado.
+- Sin preámbulos ("¡Claro!", "¡Buena pregunta!") ni cierres de cortesía.
+- Prefiere ediciones quirúrgicas sobre reescrituras completas de archivo.
+- No repitas lo que el humano acaba de decir.
+- No añadas sugerencias no solicitadas más allá de lo pedido.
+- Cuando termines, para. No sigas puliendo código que ya pasa tests.
+- Las instrucciones del humano siempre ganan sobre estas reglas.
+
+---
+
 ## Archivos que SIEMPRE se cargan
 
 | Archivo | Qué es |
