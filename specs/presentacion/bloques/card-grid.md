@@ -71,6 +71,7 @@ siguiente.
 |-----|--------------|------|---------|
 | Cuándo llega el reparto asimétrico | La rejilla pasa a doce columnas en `md`, pero los repartos por tarjeta solo existen en `lg` | Las doce columnas y los repartos llegan juntos, en `lg` | **Corrección deliberada.** En el export, entre `md` y `lg` cada tarjeta ocupa una de doce columnas y queda en una astilla. Es un defecto del diseño exportado (DEC-002) |
 | Separación | `gap-10` fijo | `gap-8 md:gap-10` | Coincide a partir de `md`; por debajo respira algo menos |
+| Rampa de cuatro columnas | `grid-cols-1 sm:grid-cols-2 lg:grid-cols-4` en «Les Alentours» | `grid-cols-2 md:grid-cols-3 lg:grid-cols-4` | La rampa se deriva del número de columnas en `icon-grid` y la comparten los tres bloques. Reproducir esta pediría una parada en `sm` que ninguna otra sección usa |
 
 `CardOverlay` reproduce las dos escalas del export a través del eje
 `cardSize`: `default` es «Nos Hébergements» y `compact` es «Les Alentours»,
