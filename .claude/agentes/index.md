@@ -9,7 +9,7 @@ Definición de los agentes IA que operan sobre el proyecto HWE.
 | [definiciones.md](definiciones.md) | Los 6 agentes: Planner, Code Builder, Reviewer, Content Generator, Bulk Operator, Content Editor | ✅ Definido |
 | [code-builder.md](code-builder.md) | Instrucciones operativas del Code Builder | ✅ Definido |
 | [../agents/reviewer.md](../agents/reviewer.md) | Instrucciones operativas del Reviewer | ✅ Definido |
-
+| Researcher | Haiku (Claude Code subagente) | 1 | Busca en el repo sin inflar el contexto del Code Builder |
 ## Documentos frente a agentes
 
 Esta carpeta describe **roles**. Un rol no se ejecuta: es prosa que alguien
