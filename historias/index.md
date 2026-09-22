@@ -21,6 +21,7 @@ esta tabla para saber qué es lo siguiente.
 | HU-010 | Bloques IconGrid, CardGrid y Blog | 1 | 3 | spec-lista | — | — | HU-008 |
 | HU-011 | Bloques Gallery, Map, SpecBar y EquipmentList | 1 | 3 | spec-lista | — | — | HU-008 |
 | HU-012 | Crear site demo con contenido real y deploy en Vercel | 1 | 3 | spec-lista | — | — | HU-007, HU-009, HU-010, HU-011 |
+| HU-013 | Datos estructurados JSON-LD | 1 | 2 | spec-lista | — | — | HU-007, HU-008 |
 | HU-014 | Biblioteca de medios — duplicados, listado visual y metadatos | 2 | 2 | idea | — | — | HU-005 |
 | HU-015 | /scaffold-block como herramienta permanente — destino explícito, ejes por dominio y evitar duplicados | — | 3 | idea | — | — | HU-009, HU-010, HU-011 |
 | HU-016 | Bloque ReviewsGrid con fuente externa | 1 | — | idea | — | — | HU-008 |
