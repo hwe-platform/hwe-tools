@@ -27,11 +27,11 @@ Resueltas por mapa (`CardOverlay`, `CardStacked`).
 | `title` | text, localized | no | — | |
 | `subtitle` | text, localized | no | — | |
 | `description` | text, localized | no | — | Párrafo bajo el título |
-| `card` | select | sí | `overlay` | overlay \| stacked |
+| `card` | select | sí | `stacked` | overlay \| stacked |
 | `columns` | number | no | 3 | Columnas en desktop |
 | `spans` | array of numbers | no | — | Reparto asimétrico (ej: [5,7]), se recicla en ciclo |
 | `background` | select | no | `default` | Fondo de sección |
-| `items` | array | sí | — | image, title, subtitle, tag, url, date?, readMoreLabel? |
+| `items` | array | sí | — | image, title, subtitle, tag, url, date?, readMoreLabel?, variant |
 | `source` | select | no | `manual` | manual \| accommodations \| entities \| articles |
 | `sourceConfig` | group | no | — | category, limit, featured — para resolución futura |
 | `ctas` | array | no | — | Botones bajo el grid |

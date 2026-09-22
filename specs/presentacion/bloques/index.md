@@ -1,13 +1,12 @@
-# Bloques de presentacion
-
-Especificaciones de los bloques del constructor de páginas para presentar.
-
 # Bloques de presentación
- 
+
+Especificaciones de los bloques del constructor de páginas.
+
 | Bloque | Estado | Variantes | HU |
 |--------|--------|-----------|----|
-| [Hero](hero.md) | ✅ | full, split | HU-009 |
-| [MediaText](media-text.md) | ✅ | image-left, image-right | HU-009 |
-| [IconGrid](icon-grid.md) | ✅ | card, bare | HU-010 |
+| [Hero](hero.md) | ✅ | video, image, minimal, none | HU-009 |
+| [MediaText](media-text.md) | ✅ | image, embed, carousel | HU-009 |
+| [IconGrid](icon-grid.md) | ✅ | bare, card | HU-010 |
 | [CardGrid](card-grid.md) | ✅ | overlay, stacked | HU-010 |
+| [Blog](blog.md) | ✅ | — (tarjeta de CardGrid) | HU-010 |
 | Gallery | 📋 | slider, slider-thumbs, grid, masonry, collage | HU-011 |
