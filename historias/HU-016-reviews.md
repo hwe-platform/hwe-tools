@@ -3,7 +3,7 @@ id: HU-016
 titulo: Bloque ReviewsGrid con fuente externa
 estado: idea
 prioridad: —
-hito: 1
+hito: 2
 agente: —
 rama: —
 dependencias: [HU-008]

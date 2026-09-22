@@ -19,12 +19,15 @@ esta tabla para saber qué es lo siguiente.
 | HU-008 | BlockRenderer, registry de bloques y catch-all routing | 1 | 1 | hecha | code-builder | main | HU-005, HU-006 |
 | HU-009 | Bloques Hero y MediaText | 1 | 2 | hecha | code-builder | main | HU-008 |
 | HU-010 | Bloques IconGrid, CardGrid y Blog | 1 | 3 | spec-lista | — | — | HU-008 |
-| HU-011 | Bloques Gallery, Map, SpecBar y EquipmentList | 1 | 3 | spec-lista | — | — | HU-008 |
+| HU-011 | Bloques Gallery | 1 | 3 | spec-lista | — | — | HU-008 |
 | HU-012 | Crear site demo con contenido real y deploy en Vercel | 1 | 3 | spec-lista | — | — | HU-007, HU-009, HU-010, HU-011 |
 | HU-013 | Datos estructurados JSON-LD | 1 | 2 | spec-lista | — | — | HU-007, HU-008 |
 | HU-014 | Biblioteca de medios — duplicados, listado visual y metadatos | 2 | 2 | idea | — | — | HU-005 |
 | HU-015 | /scaffold-block como herramienta permanente — destino explícito, ejes por dominio y evitar duplicados | — | 3 | idea | — | — | HU-009, HU-010, HU-011 |
-| HU-016 | Bloque ReviewsGrid con fuente externa | 1 | — | idea | — | — | HU-008 |
+| HU-016 | Bloque ReviewsGrid con fuente externa | 2 | — | idea | — | — | HU-008 |
+| HU-017 | Ficha de alojamiento — SpecBar, EquipmentList y template de detalle | 1 | 3 | spec-lista | code-builder | feat/HU-017-accommodation-detail | HU-008, HU-009 |
+| HU-018 | Bloque Map con compliance RGPD | 1 | 3 | spec-lista | code-builder | feat/HU-018-map-block | HU-008 |
+| HU-019 | Booking config completa en Payload — campos por motor con validación Zod | 1 | 2 | spec-lista | code-builder | feat/HU-019-booking-config | HU-005 |
 
 ### Orden de ejecución
 

@@ -210,5 +210,9 @@ _(se llena después si aplica)_
 
 | Qué se descubrió | Dónde se documenta | Propagado |
 |------------------|-------------------|-----------|
+| Al verificar sobre HTML/CSS servido, usar `grep -o patrón | wc -l` y `grep -F`, nunca `grep -c` con patrones escapados: `-c` cuenta líneas y el HTML servido va en una sola | docs/estandares/testing.md o CLAUDE.md, como regla de verificación | ⬜ |
+| Una clase presente en el HTML no es una clase aplicada: `tailwind-merge` no reconoce las utilidades de token (`text-(length:--x)`) como rivales de `text-xl`, así que las dos llegan al elemento y gana la que la hoja emita más tarde. Verificar la hoja, no el atributo | docs/estandares/testing.md, junto a la regla de verificación sobre HTML servido | ⬜ |
+| Los tokens de forma de un botón no deben vivir en el eje de talla: caen sobre variantes que no son botones y luego hay que deshacerlos. Van en compuesta, acotados a las variantes que sí lo son | docs/arquitectura/bloques.md o el estándar de primitivas | ⬜ |
+| Las specs de bloque escritas desde la historia y no desde el código describen bloques que no existen: cuatro de las cinco tenían variantes, campos y defaults que no eran los del código | docs/estandares/documentacion.md o la regla 8 de CLAUDE.md | ⬜ |
 
 _(se llena durante la implementación)_

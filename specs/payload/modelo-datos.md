@@ -408,8 +408,28 @@ site-config
 │   └── requiresConsent     (boolean)
 │
 └── booking
-    ├── engine              (select: thr, witbooking, mastercamping, resalys)
-    └── ... (campos específicos según engine)
+    ├── engine              (select: thr, mastercamping, witbooking, resalys, none)
+    │
+    │   ── si engine = thr ─────────────────────────
+    ├── codeCamping         (text, requerido — código del camping en THR)
+    ├── siteId              (text, opcional — solo si multi-site)
+    └── features            (group)
+    │   ├── favorites       (boolean, default false — bloque favoritos)
+    │   └── simpleblock     (boolean, default false — bloque dispo rápida)
+    │
+    │   ── si engine = mastercamping ───────────────
+    ├── idProperty          (number, requerido — ID numérico de la propiedad)
+    ├── bookingUrl          (text, requerido — URL del sistema de reservas)
+    └── layout              (select: horizontal, vertical — default horizontal)
+    │
+    │   ── si engine = witbooking ──────────────────
+    │   (campos por definir)
+    │
+    │   ── si engine = resalys ─────────────────────
+    │   (campos por definir)
+    │
+    │   ── si engine = none ────────────────────────
+    │   (sin campos adicionales)
 ```
 
 ### header

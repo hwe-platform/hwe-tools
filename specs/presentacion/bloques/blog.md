@@ -28,7 +28,9 @@ para lo mismo acaba en dos diseños distintos.
 |-----|------|---------|-------|
 | `source` | datos | `latest` \| `featured` \| `byCategory` | Qué se pide, no cómo se pinta |
 | `limit` | datos | number (1–24) | Cuántos se piden |
+| `showExcerpt` | datos | bool | Si la tarjeta lleva el resumen |
 | `background` | estilo | `default` \| `muted` \| `none` | Fondo de sección |
+| `headingTone` | estilo | `default` \| `brand` | Color del titular |
 
 Las columnas **no** son un eje: son 3, constante del componente. El diseño de
 referencia solo usa esa forma y un eje sin segundo valor observado es una
@@ -42,9 +44,11 @@ suposición. Cuando aparezca el segundo, se abre igual que en CardGrid.
 | `subtitle` | text, localized | no | — | |
 | `description` | textarea, localized | no | — | Párrafo entre el titular y las tarjetas |
 | `background` | select | no | `default` | Fondo de sección |
+| `headingTone` | select | no | `default` | Titular en color de texto, o de marca |
 | `source` | select | sí | `latest` | latest \| featured \| byCategory |
 | `category` | text, localized | no | — | Solo visible con `source: byCategory` |
 | `limit` | number | no | 3 | 1–24 |
+| `showExcerpt` | checkbox | no | `false` | Añade el resumen bajo el titular |
 | `showMoreLink` | checkbox | no | `false` | Enlace al listado completo |
 | `showMoreUrl` | text | no | — | Sin él no se pinta aunque el check esté |
 | `showMoreLabel` | text, localized | no | — | «Voir toutes les actualités» en el diseño |
@@ -68,8 +72,8 @@ bloque recién creado es válido y se queda vacío hasta que alguien lo resuelve
 los últimos en lugar de una sección vacía, que es lo que el editor entiende
 como «todavía no he elegido».
 
-`articuloATarjeta()` mapea el artículo a `CardGridItem`: el resumen va de
-subtítulo, la categoría de etiqueta, la URL se compone con `basePath` (por
+`articuloATarjeta()` mapea el artículo a `CardGridItem`: la categoría va de
+etiqueta, el resumen de subtítulo **solo si `showExcerpt`**, la URL se compone con `basePath` (por
 defecto `/blog`) y la fecha se formatea con `Intl.DateTimeFormat` en el idioma
 de la página. Fecha ilegible → la tarjeta se queda sin ella, nunca «Invalid Date».
 
@@ -79,14 +83,28 @@ de la página. Fecha ilegible → la tarjeta se queda sin ella, nunca «Invalid 
   vacía: es una sección que sobra.
 - **Si la consulta falla, el bloque llega con `items: []`** y desaparece. Una
   página no se cae porque un listado no responda.
-- El enlace «ver más» usa la variante `link` de Button con icono `arrowRight`.
+- El enlace «ver más» usa la variante `link-underline`: es el enlace de sección del lenguaje visual —color de marca, cuerpo mayor y línea inferior—, distinto del enlace de tarjeta que usan las tarjetas.
+
+## Diferencias con el diseño de referencia
+
+| Qué | En el export | Aquí | Por qué |
+|-----|--------------|------|---------|
+| Separación entre tarjetas | `gap-10` fijo | `gap-8 md:gap-10` | Coincide a partir de `md`; por debajo respira algo menos. La separación la reparte por ancho la rejilla compartida con `icon-grid` |
+
+El resto —tres columnas, titular en color de texto, categoría en píldora, fecha
+larga, «Lire l'article» pequeño en secundario y el enlace de sección
+subrayado— coincide con el export.
+
+La tarjeta **no lleva resumen por defecto**, igual que la del diseño: píldora,
+fecha, titular y enlace. `showExcerpt` lo añade para quien quiera un listado
+con sinopsis.
 
 ## Dependencias
 
 - `CardStacked` de `card-grid` — acepta `date` y `readMoreLabel` opcionales precisamente para esto
 - `reticulaDe()` de `icon-grid/grid.ts`
 - `Cabecera`, `BlockCtas`, `fondoDe()` de `blocks/seccion.tsx`
-- Variante `link` de Button
+- Variantes `link` (tarjeta) y `link-underline` (sección) de Button
 - Colección `articles` (`title`, `slug`, `excerpt`, `image`, `category`, `publishedAt`, `featured`)
 
 ## Decisiones relevantes
