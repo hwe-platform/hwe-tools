@@ -167,6 +167,48 @@ Se exige que nada se mergee sin tests.
 
 ---
 
+## Verificar sobre lo servido
+
+Cuando la comprobación no es un test sino una mirada al HTML o al CSS que
+sirve el servidor de desarrollo, hay dos formas de equivocarse que ya han
+pasado y que se parecen mucho a acertar.
+
+### Contar ocurrencias, no líneas
+
+```bash
+grep -o "patrón" pagina.html | wc -l    # ✅ ocurrencias
+grep -c "patrón" pagina.html            # ❌ líneas que contienen el patrón
+```
+
+El HTML servido llega en **una sola línea**, así que `grep -c` devuelve 1
+tanto si el texto aparece una vez como si aparece cuatro. Para patrones con
+corchetes o barras —las clases de Tailwind van llenas— usa `grep -F`, o
+`[4.6px]` se interpreta como una clase de caracteres y no encuentra nada.
+
+### Una clase presente no es una clase aplicada
+
+Que una clase esté en el atributo `class` no significa que gane. Si dos
+utilidades tocan la misma propiedad y `tailwind-merge` **no las reconoce
+como rivales**, las dos llegan al elemento y decide el orden de la hoja, no
+el orden del atributo.
+
+Pasó con `text-xl` y `text-(length:--button-font-size,1rem)`: la sintaxis
+de token no se reconoce como tamaño de texto, así que convivían y ganaba la
+que el CSS emite más tarde. El enlace salía a 1rem con su `text-xl` puesto,
+y revisando el HTML parecía correcto.
+
+Ante una duda de precedencia, compara posiciones en la hoja servida:
+
+```bash
+grep -bo ".text-xl {" hoja.css        # la que aparece después gana
+```
+
+Y la lección general: **una clase presente no es una clase aplicada, y una
+edición ejecutada no es una edición correcta**. Si la comprobación importa,
+mira el resultado, no el intento.
+
+---
+
 ## Lo que NO testeamos con tests unitarios
 
 - Estilos visuales (cómo se ve exactamente un componente) — se verifica

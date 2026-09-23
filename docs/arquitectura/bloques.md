@@ -219,6 +219,42 @@ Cada eje se implementa según la regla de "Variantes": si cambia la estructura
 del HTML, componentes separados resueltos por mapa; si solo cambia el aspecto,
 CVA.
 
+### Un eje solo alcanza a lo suyo
+
+Un eje que reparte clases sobre un elemento tiene que **acotar a qué
+variantes se aplica**. Si no, cae también sobre las que no lo quieren, y
+entonces hay que deshacerlo en cada una — que es la señal de que estaba mal
+colocado.
+
+El caso: la primitiva `Button` tenía la forma del cliente —relleno, cuerpo,
+peso y sombra, todo desde tokens CSS— dentro del eje `size`. Pero esos
+tokens son **de botón**, y `size` se aplica a cualquier variante, enlaces
+incluidos. Cada variante de enlace tenía que deshacerlos después.
+
+Y deshacerlos no siempre funciona: `tailwind-merge` no reconoce
+`text-(length:--button-font-size)` como rival de `text-xl`, así que las dos
+llegaban al elemento y ganaba la que la hoja emite más tarde. La clase
+estaba puesta y no se aplicaba.
+
+La forma correcta es una **variante compuesta acotada** a las variantes que
+sí son botones, en lugar de repartir a todos y desandar:
+
+```ts
+// ❌ el eje reparte a todos y cada enlace lo desanda
+size: { md: 'px-(--button-px) text-(length:--button-font-size) …' }
+
+// ✅ el eje no reparte nada; la compuesta alcanza solo a quien le toca
+size: { md: '' },
+compoundVariants: [
+  { variant: ['primary', 'secondary', 'outline', 'ghost'], size: 'md',
+    className: 'px-(--button-px) text-(length:--button-font-size) …' },
+]
+```
+
+Regla práctica: **si un eje necesita que otro lo deshaga, el eje está mal
+puesto.** Y desandar con clases es frágil, porque depende de que la
+herramienta de fusión entienda que las dos compiten.
+
 ### Slots
 
 Un slot es un hueco que el bloque deja para que el cliente meta su propio JSX,
