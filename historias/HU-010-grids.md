@@ -5,7 +5,7 @@ estado: spec-lista
 prioridad: 3
 hito: 1
 agente: —
-rama: —
+rama: feat/HU-010-grids
 dependencias: [HU-008]
 ---
 
@@ -172,35 +172,35 @@ Ver `specs/figma/analisis.md`, sección "Verificar contra el diseño".
 ## Criterios de aceptación
 
 ### IconGrid
-- [ ] Renderiza N columnas según campo `columns` (number)
-- [ ] variant bare: icono circular + texto sin tarjeta
-- [ ] variant card: icono + texto dentro de tarjeta con fondo
-- [ ] Rampa responsive correcta (≤3 desde 1 col, >3 desde 2 col)
-- [ ] iconRegistry resuelve iconos custom del cliente
-- [ ] Fallback cuando el icono no existe en registry ni en lucide
+- [x] Renderiza N columnas según campo `columns` (number)
+- [x] variant bare: icono circular + texto sin tarjeta
+- [x] variant card: icono + texto dentro de tarjeta con fondo
+- [x] Rampa responsive correcta (≤3 desde 1 col, >3 desde 2 col)
+- [x] iconRegistry resuelve iconos custom del cliente
+- [x] Fallback cuando el icono no existe en registry ni en lucide
 
 ### CardGrid
-- [ ] card: overlay renderiza texto sobre imagen con gradient
-- [ ] card: stacked renderiza imagen arriba, texto debajo
-- [ ] Reparto asimétrico (5/7) funciona
-- [ ] Schema incluye campos source y sourceConfig (aunque no se usen aún)
-- [ ] Campos opcionales (date, readMoreLabel) se renderizan si existen
+- [x] card: overlay renderiza texto sobre imagen con gradient
+- [x] card: stacked renderiza imagen arriba, texto debajo
+- [x] Reparto asimétrico (5/7) funciona
+- [x] Schema incluye campos source y sourceConfig (aunque no se usen aún)
+- [x] Campos opcionales (date, readMoreLabel) se renderizan si existen
 
 ### Blog
-- [ ] BlogBlock recibe items resueltos y renderiza tarjetas stacked
-- [ ] showMoreLink muestra enlace "Voir toutes les actualités"
-- [ ] El resolver de site-demo resuelve blog → fetch articles → inyecta items
-- [ ] 3-4 artículos fake seedeados en Payload con datos de La Civelle
-- [ ] La resolución respeta source (latest/featured/byCategory) y limit
+- [x] BlogBlock recibe items resueltos y renderiza tarjetas stacked
+- [x] showMoreLink muestra enlace "Voir toutes les actualités"
+- [x] El resolver de site-demo resuelve blog → fetch articles → inyecta items
+- [x] 3-4 artículos fake seedeados en Payload con datos de La Civelle
+- [x] La resolución respeta source (latest/featured/byCategory) y limit
 
 ### Transversal
-- [ ] Todos los bloques usan primitivas de @hwe-platform/core-ui
-- [ ] Todos usan tokens de Tailwind
-- [ ] Todos pasan vitest-axe
-- [ ] Tests — cobertura >80%
-- [ ] Schemas Zod validan correctamente
-- [ ] Registrados en blockRegistry
-- [ ] Verificados contra el Figma (excepto blog, que no tiene diseño)
+- [x] Todos los bloques usan primitivas de @hwe-platform/core-ui
+- [x] Todos usan tokens de Tailwind
+- [x] Todos pasan vitest-axe
+- [x] Tests — cobertura >80%
+- [x] Schemas Zod validan correctamente
+- [x] Registrados en blockRegistry
+- [x] Verificados contra el Figma (excepto blog, que no tiene diseño)
 
 ## Retrospectiva
 
