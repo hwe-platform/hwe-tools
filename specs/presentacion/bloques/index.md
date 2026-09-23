@@ -9,4 +9,4 @@ Especificaciones de los bloques del constructor de páginas.
 | [IconGrid](icon-grid.md) | ✅ | bare, card | HU-010 |
 | [CardGrid](card-grid.md) | ✅ | overlay, stacked | HU-010 |
 | [Blog](blog.md) | ✅ | — (tarjeta de CardGrid) | HU-010 |
-| Gallery | 📋 | slider, slider-thumbs, grid, masonry, collage | HU-011 |
+| [Gallery](gallery.md) | ✅ | slider, slider-thumbs, grid, masonry, collage | HU-011 |
