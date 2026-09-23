@@ -31,36 +31,73 @@ se montan en momentos distintos (DEC-027).
 
 ## Web Components (ILib v4)
 
-| Widget | Elemento | Adapter |
-|--------|----------|---------|
-| Buscador de disponibilidad | `<thr-search-engine>` | ThrSearchAdapter |
-| Favoritos / categorías | `<thr-favorites>` | ThrFavoritesAdapter |
-| Disponibilidad rápida | `<thr-simpleblock>` | ThrSimpleBlockAdapter |
-| Tarifas | `<thr-tarifs>` | 🔴 futuro |
-| Categorías | `<thr-categories>` | 🔴 futuro |
-
-### Atributos de `<thr-search-engine>`
-
-Solo necesita existir en el DOM. El script de ILib lo detecta y lo hidrata.
-No recibe atributos de config — la config va en la URL del script.
-
-### Atributos de `<thr-favorites>`
-
-Similar: el script lo detecta. Las categorías visibles se controlan desde
-el panel de THR, no desde nuestro lado.
-
-### Atributos de `<thr-simpleblock>`
+### `<thr-search-engine>` — Buscador de disponibilidad
 
 ```html
-<thr-simpleblock categories="['12']"></thr-simpleblock>
+<thr-search-engine title="Réservez votre séjour" type="2"></thr-search-engine>
 ```
 
-- `categories`: array de IDs de categoría como string JSON. Requerido,
-  mínimo 1 elemento. Los IDs se obtienen del panel de THR del cliente.
+| Atributo | Tipo | Obligatorio | Default | Descripción |
+|----------|------|-------------|---------|-------------|
+| `title` | string | no | — | Título sobre el formulario de búsqueda |
+| `type` | `1` / `2` | no | ambos | 1=emplacement (parcela), 2=locatif (alquiler). Sin filtro si se omite |
+| `site` | string | solo multi-site | — | ID del site para cuentas con varios campings |
+| `on-load` | string | no | — | Nombre de función global al cargar |
 
-**Importante:** en ILib v3 este widget se llamaba `<thr-onenight>`. En v4
-es `<thr-simpleblock>` con contrato distinto (array de categorías en vez
-de categoría única).
+**Desde el bloque:** `widgetTitle` → `title`, `accommodationType` → `type`.
+Si `source === 'fromAccommodation'`, el adapter traduce el
+`accommodation.type` (emplacement→1, mobilhome/cottage/chalet/tente→2).
+
+### `<thr-favorites>` — Categorías favoritas
+
+```html
+<thr-favorites quantity="6" quantity-to-show="3"></thr-favorites>
+```
+
+| Atributo | Tipo | Obligatorio | Default | Descripción |
+|----------|------|-------------|---------|-------------|
+| `sites` | string (JSON array) | solo multi-site | todos | Sites a incluir |
+| `quantity` | string (entero) | no | `"6"` | Total de items a cargar |
+| `quantity-to-show` | string (entero) | no | `"3"` | Items visibles a la vez |
+| `on-load` | string | no | — | Nombre de función global al cargar |
+| `on-book` | string | no | — | Nombre de función global al reservar |
+
+**Desde el bloque:** `quantity` → `quantity`, `quantityToShow` → `quantity-to-show`.
+Las categorías visibles se controlan desde el panel de THR.
+
+### `<thr-simpleblock>` — Disponibilidad rápida
+
+```html
+<thr-simpleblock categories="['12','15']" show-picture="true"></thr-simpleblock>
+```
+
+| Atributo | Tipo | Obligatorio | Default | Descripción |
+|----------|------|-------------|---------|-------------|
+| `categories` | string (JSON array) | sí | — | IDs de categorías: `"['12']"` o `"['12','15']"` |
+| `show-picture` | `"true"` / `"false"` | no | `"false"` | Mostrar foto del alojamiento |
+| `search-type` | string | no | — | Tipo de búsqueda |
+| `day` | string | no | — | Día por defecto |
+| `category-type` | string | no | — | Passthrough al motor |
+| `on-load` | string | no | — | Nombre de función global al cargar |
+| `on-book` | string | no | — | Nombre de función global al reservar |
+| `on-search` | string | no | — | Nombre de función global al buscar |
+
+**Desde el bloque:** si `source === 'manual'`, el adapter pasa `categories`
+directamente. Si `source === 'fromAccommodation'`, el adapter lee
+`accommodation.booking.externalId` del AccommodationContext y lo pasa
+como categoría única. `showPicture` → `show-picture`.
+
+**Nota v3→v4:** en ILib v3 este widget se llamaba `<thr-onenight>` con
+atributo `category` (singular, string). En v4 es `<thr-simpleblock>` con
+`categories` (plural, JSON array). El schema Zod refleja el contrato v4.
+
+### `<thr-tarifs>` — Tarifas
+
+Documentación pendiente. Widget existe en ILib v4. No implementado.
+
+### `<thr-categories>` — Listado de categorías
+
+Documentación pendiente. Widget existe en ILib v4. No implementado.
 
 ## Credenciales (campos en Payload)
 
@@ -80,6 +117,12 @@ de categoría única).
 - **Callbacks:** THR emite eventos cuando el usuario interactúa (selección
   de fechas, búsqueda). El runtime los captura para analytics
 - **buildThrScriptUrl:** pure function que compone la URL desde la config
+
+## Consent
+
+THR soporta `thelisresa.setConsentMode()` para gestión de consentimiento.
+Se llama después de que el script de ILib carga. Pendiente de conectar
+con Cookiebot (backlog post-Hito 1).
 
 ## CSS overrides
 
