@@ -1,11 +1,11 @@
 ---
 id: HU-011
 titulo: Bloque Gallery con 5 variantes y lightbox
-estado: spec-lista
+estado: en-curso
 prioridad: 3
 hito: 1
-agente: —
-rama: —
+agente: code-builder
+rama: feat/HU-011-gallery
 dependencias: [HU-008]
 ---
 
@@ -230,6 +230,18 @@ de galería existe en la home y en las fichas de La Civelle).
 
 Ver `specs/figma/analisis.md`, sección "Verificar contra el diseño".
 
+### Diferencias con lo que pide esta historia
+
+Se listan aquí conforme aparecen, que es lo que pide el paso 4b de la
+revisión. Una diferencia no listada cuenta como fallo aunque sea mejora.
+
+| Qué dice la historia | Qué se construyó | Por qué |
+|---|---|---|
+| Sección 5: `aria-roledescription="carousel"` y `"slide"` | `"carrousel"` y `"diapositive"`, con los rótulos del carrusel y traducibles | A diferencia de `role`, `aria-roledescription` **se lee en voz alta**: dejarlo fijo en inglés hace que un site francés anuncie una palabra inglesa. El patrón WAI-ARIA los documenta en inglés porque su documentación lo está, no porque sean palabras clave |
+| Sección 6: «import de módulos Swiper bajo demanda» | Los ocho módulos y sus seis hojas CSS son imports estáticos. Lo que decide la tabla del primitivo es qué módulos **se activan**, no cuáles se empaquetan | Un `import()` por capacidad mete estado de carga y un primer pintado sin carrusel, y no se puede medir hasta que existan las variantes. El ahorro que de verdad importa —que una galería en rejilla no cargue Swiper— se busca en el tramo de las variantes envolviendo las de carrusel con `next/dynamic`, donde sí se mide |
+| Sección 8: ficheros `carousel-primitive.tsx` y `carousel-primitive.test.tsx` | `CarouselPrimitive.tsx` y `CarouselPrimitive.test.tsx` | `docs/estandares/naming.md` manda PascalCase para componentes React y «el nombre del archivo coincide con el nombre de lo que exporta, sin excepciones». Los seis primitivos ya existentes (`Button.tsx`, `Image.tsx`…) lo siguen. Los `.types.ts` y el `index.ts` sí van en kebab-case, como en `card-grid/`. El hook, que la sección 8 no nombraba, es `usePrefersReducedMotion.ts` |
+| Sección 2 (variantes) y el Figma | Solo `slider-thumbs` tiene referencia en el export de La Civelle (la galería de `MobileHomePage.tsx`). `slider`, `grid`, `masonry` y `collage` **no existen en el export** | Se construyen desde esta historia, sin referencia Figma. El criterio «verificado contra el Figma» solo se puede cumplir de verdad para `slider-thumbs` |
+
 ## Criterios de aceptación
 
 ### CarouselPrimitive
@@ -284,5 +296,11 @@ _(se llena después si aplica)_
 
 | Qué se descubrió | Dónde se documenta | Propagado |
 |------------------|-------------------|-----------|
+| Un hook exportado desde un barril que cuelga de `core-ui/index.ts` necesita `'use client'` aunque no sea un componente: el middleware y `payload.config.ts` importan ese barril, así que el módulo entra en el grafo de servidor. `next dev` no llega a ese camino y `next build` sí — el fallo aparece en el build, no en desarrollo | `docs/estandares/codigo.md`, sección nueva sobre `'use client'` | ⬜ |
+| `{ ...POR_DEFECTO, ...props }` **no** equivale a los defaults por parámetro: el spread copia las claves cuyo valor es `undefined` y pisa el default. Importa en cuanto un bloque pasa campos de Payload tal cual, que llegan `undefined` sin rellenar | `docs/estandares/codigo.md`, junto a la regla de complejidad que empuja a usar la tabla | ⬜ |
+| Los valores por defecto por parámetro (`x = false`) cuentan como camino para la regla `complexity` de ESLint: catorce dejaban el componente en 20 sin una sola bifurcación real | `docs/estandares/codigo.md`, sección de límites de complejidad | ⬜ |
+| El `include` de cobertura de `src/primitives/**` era solo `*.tsx`, así que la lógica que no es componente no contaba para el umbral y nada avisaba. Es la misma trampa que `src/blocks/**` ya había corregido a `{ts,tsx}` | `docs/estandares/testing.md`, junto a la nota sobre umbrales que no se ejecutan | ⬜ |
+| Swiper pinta flechas y puntos leyendo sus propias variables CSS, y por defecto son `#007aff`. Sin mapearlas a los tokens del cliente, los controles salen azul iOS en cualquier site | `specs/presentacion/bloques/gallery.md`, al escribirla al cierre | ⬜ |
+| Dejar un módulo fuera del barril de `primitives/` no le ahorra su CSS a nadie mientras `exports` del paquete declare solo `"."`: un `import 'swiper/css'` es un efecto secundario que ningún bundler elimina | `docs/arquitectura/bloques.md` o el `package.json` de `core-ui`, si se añade la subruta | ⬜ |
 
-_(se llena durante la implementación)_
+La propagación ocurre después del merge, no antes.
